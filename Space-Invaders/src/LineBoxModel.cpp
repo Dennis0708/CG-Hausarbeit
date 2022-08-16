@@ -10,12 +10,50 @@
 
 LineBoxModel::LineBoxModel( float Width, float Height, float Depth )
 {
-	// TODO: Add your code (Exercise 1)   
+    float startx = Width / 2;
+    float starty = Height / 2;
+    float startz = Depth / 2;
+
+    // 1. setup vertex buffer
+    VB.begin();
+
+    VB.addVertex(startx, -starty, -startz);
+    VB.addVertex(startx, -starty, startz);
+    VB.addVertex(-startx, -starty, -startz);
+    VB.addVertex(-startx, -starty, startz);
+    VB.addVertex(-startx, -starty, startz);
+    VB.addVertex(startx, -starty, startz);
+    VB.addVertex(-startx, -starty, -startz);
+    VB.addVertex(startx, -starty, -startz);
+
+    VB.addVertex(-startx, -starty, -startz);
+    VB.addVertex(-startx, starty, -startz);
+    VB.addVertex(startx, -starty, -startz);
+    VB.addVertex(startx, starty, -startz);
+    VB.addVertex(-startx, -starty, startz);
+    VB.addVertex(-startx, starty, startz);
+    VB.addVertex(startx, -starty, startz);
+    VB.addVertex(startx, starty, startz);
+
+    VB.addVertex(startx, starty, -startz);
+    VB.addVertex(startx, starty, startz);
+    VB.addVertex(-startx, starty, -startz);
+    VB.addVertex(-startx, starty, startz);
+    VB.addVertex(-startx, starty, startz);
+    VB.addVertex(startx, starty, startz);
+    VB.addVertex(-startx, starty, -startz);
+    VB.addVertex(startx, starty, -startz);
+    
+    VB.end();
 }
 
 void LineBoxModel::draw(const BaseCamera& Cam)
 {
     BaseModel::draw(Cam);
-  
-	// TODO: Add your code (Exercise 1)
+
+    VB.activate();
+
+    glDrawArrays(GL_LINES, 0, VB.vertexCount());
+
+    VB.deactivate();
 }

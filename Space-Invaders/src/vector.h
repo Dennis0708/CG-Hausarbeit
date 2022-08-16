@@ -2,6 +2,9 @@
 #define __SimpleRayTracer__vector__
 
 #include <iostream>
+#include <string>
+
+using namespace std;
 
 class Vector
 {
@@ -26,6 +29,10 @@ public:
     Vector reflection( const Vector& normal) const;
     bool triangleIntersection( const Vector& d, const Vector& a, const Vector& b,
                               const Vector& c, float& s) const;
+
+    float triangleArea(const Vector& a, const Vector& b, const Vector& c) const;
+
+    string toString() const;
  };
 
-#endif /* defined(__SimpleRayTracer__vector__) */
+#endif defined(__SimpleRayTracer__vector__)
