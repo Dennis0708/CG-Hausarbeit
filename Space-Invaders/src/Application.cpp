@@ -151,6 +151,7 @@ void Application::createScene()
 	
 	
 	// spot lights
+
 	SpotLight* sl = new SpotLight();
 	sl->position(Vector(-1.5, 3, 10));
 	sl->color(c);
@@ -182,7 +183,7 @@ void Application::createScene()
 	sl->innerRadius(innerradius);
 	sl->outerRadius(outerradius);
 	ShaderLightMapper::instance().addLight(sl);
-	
+
 	sl = new SpotLight();
 	sl->position(Vector(-1.5, 3, -8));
 	sl->color(c);
