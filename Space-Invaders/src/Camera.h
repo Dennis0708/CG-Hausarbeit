@@ -66,7 +66,7 @@ public:
     virtual void update();
     virtual const Matrix& getViewMatrix() const;
     virtual const Matrix& getProjectionMatrix() const;
-protected:
+//protected:
     void updateMouseInput();
     
     void pan( float dx, float dy);

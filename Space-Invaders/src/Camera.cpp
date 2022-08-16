@@ -35,7 +35,7 @@ Vector Camera::up() const
 void Camera::setPosition( const Vector& Pos)
 {
     m_Position = Pos;
-    m_Panning = m_Rotation = m_Zoom = Vector(0,0,0);
+    m_Panning = m_Rotation = m_Zoom = Vector(0,0,0); 
 
 
 }

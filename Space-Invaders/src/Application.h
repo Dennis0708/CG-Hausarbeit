@@ -30,13 +30,13 @@ public:
     void end();
 protected:
 	void createScene();
-	void createNormalTestScene();
-	void createShadowTestScene();
     Camera Cam;
     ModelList Models;
     GLFWwindow* pWindow;
 	BaseModel* pModel;
 	ShadowMapGenerator ShadowGenerator;
+    int gameWindowWidth = 50;
+    int gameWindowHeight = 200;
 };
 
 #endif /* Application_hpp */
