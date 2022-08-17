@@ -18,7 +18,6 @@
 #include "indexbuffer.h"
 #include "basemodel.h"
 #include "ShadowMapGenerator.h"
-#include "Spieler.h"
 
 class Application
 {
@@ -30,7 +29,7 @@ public:
     void draw();
     void end();
 protected:
-	void createGame();
+	void createScene();
     Camera Cam;
     ModelList Models;
     GLFWwindow* pWindow;
@@ -38,7 +37,6 @@ protected:
 	ShadowMapGenerator ShadowGenerator;
     int gameWindowWidth = 50;
     int gameWindowHeight = 200;
-    Spieler* spieler;
 };
 
 #endif /* Application_hpp */

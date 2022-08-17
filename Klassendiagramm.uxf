@@ -4,8 +4,8 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>510</x>
-      <y>110</y>
+      <x>610</x>
+      <y>220</y>
       <w>210</w>
       <h>130</h>
     </coordinates>
@@ -22,8 +22,8 @@ Application
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>450</x>
-      <y>330</y>
+      <x>550</x>
+      <y>440</y>
       <w>240</w>
       <h>110</h>
     </coordinates>
@@ -38,8 +38,8 @@ Model
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>580</x>
-      <y>230</y>
+      <x>680</x>
+      <y>340</y>
       <w>90</w>
       <h>120</h>
     </coordinates>
@@ -51,8 +51,8 @@ m1=modelList</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>110</x>
-      <y>290</y>
+      <x>210</x>
+      <y>400</y>
       <w>210</w>
       <h>140</h>
     </coordinates>
@@ -69,8 +69,8 @@ Gegner
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>70</x>
-      <y>550</y>
+      <x>170</x>
+      <y>660</y>
       <w>210</w>
       <h>160</h>
     </coordinates>
@@ -86,8 +86,8 @@ Spieler
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>360</x>
-      <y>590</y>
+      <x>460</x>
+      <y>700</y>
       <w>210</w>
       <h>160</h>
     </coordinates>
@@ -102,8 +102,8 @@ Schild
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>630</x>
-      <y>600</y>
+      <x>730</x>
+      <y>710</y>
       <w>210</w>
       <h>160</h>
     </coordinates>
@@ -116,8 +116,8 @@ Projektil
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>650</x>
-      <y>430</y>
+      <x>750</x>
+      <y>540</y>
       <w>110</w>
       <h>190</h>
     </coordinates>
@@ -127,8 +127,8 @@ Projektil
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>460</x>
-      <y>430</y>
+      <x>560</x>
+      <y>540</y>
       <w>140</w>
       <h>180</h>
     </coordinates>
@@ -138,8 +138,8 @@ Projektil
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>180</x>
-      <y>420</y>
+      <x>280</x>
+      <y>530</y>
       <w>290</w>
       <h>150</h>
     </coordinates>
@@ -149,8 +149,8 @@ Projektil
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>310</x>
-      <y>370</y>
+      <x>410</x>
+      <y>480</y>
       <w>160</w>
       <h>30</h>
     </coordinates>
@@ -160,21 +160,21 @@ Projektil
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>710</x>
-      <y>180</y>
-      <w>540</w>
+      <x>810</x>
+      <y>290</y>
+      <w>560</w>
       <h>160</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
-r1=-ui
+r1=-spiel
 m1=1</panel_attributes>
     <additional_attributes>510.0;140.0;510.0;10.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1120</x>
-      <y>320</y>
+      <x>1220</x>
+      <y>430</y>
       <w>210</w>
       <h>100</h>
     </coordinates>
@@ -192,8 +192,8 @@ UserInterface
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>0</x>
-      <y>0</y>
+      <x>100</x>
+      <y>110</y>
       <w>210</w>
       <h>150</h>
     </coordinates>
@@ -206,8 +206,8 @@ GegnerTyp
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>90</x>
-      <y>140</y>
+      <x>190</x>
+      <y>250</y>
       <w>140</w>
       <h>170</h>
     </coordinates>
@@ -217,8 +217,8 @@ GegnerTyp
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>820</x>
-      <y>310</y>
+      <x>920</x>
+      <y>420</y>
       <w>210</w>
       <h>140</h>
     </coordinates>
@@ -234,8 +234,8 @@ Baum
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>710</x>
-      <y>200</y>
+      <x>810</x>
+      <y>310</y>
       <w>270</w>
       <h>130</h>
     </coordinates>
@@ -247,8 +247,8 @@ m1=-baum</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>680</x>
-      <y>370</y>
+      <x>780</x>
+      <y>480</y>
       <w>160</w>
       <h>50</h>
     </coordinates>
