@@ -60,10 +60,14 @@ void Application::update(float dtime)
 	}
 	int links = glfwGetKey(pWindow, GLFW_KEY_LEFT);
 	int rechts = glfwGetKey(pWindow, GLFW_KEY_RIGHT);
+	bool shotFired = glfwGetKey(pWindow, GLFW_KEY_SPACE);
 	spieler->steuern(rechts - links);
-
 	spieler->update(dtime);
+	if (shotFired) {
+		this->spieler->shoot();
+	}
 }
+
 
 void Application::draw()
 {
@@ -101,12 +105,35 @@ void Application::createGame()
 	pModel->shadowCaster(false);
 	Models.push_back(pModel);
 
-	spieler = new Spieler(ASSET_DIRECTORY "Space_Invader.obj", false, 10);
+	Bullet *pBullet = new Bullet(0.1f, 18, 36, 1, Cam.position() + Vector(0, 0, 10), true);
+	PhongShader* pShader = new PhongShader();
+	pShader->ambientColor(Color(0, 0, 0));
+	pBullet->shader(pShader, true);
+
+	spieler = new Spieler(ASSET_DIRECTORY "Space_Invader.obj", false, 10, pBullet);
 	spieler->shader(new PhongShader(), true);
 	m.translation(0, -960, 0);
 	n.scale(0.006f);
 	spieler->transform(n * m);
 	Models.push_back(spieler);
+
+
+	//TriangleSphereModel* triangle = new TriangleSphereModel(0.1f);
+	//PhongShader* phongshader = new PhongShader();
+	//phongshader->ambientColor(Color(0, 0, 0));
+	//triangle->shader(phongshader, true);
+	//Models.push_back(triangle);
+
+	int maxBullets = 10;
+	this->bulletQueue = new queue<Bullet*>();
+	for (int i = 0; i < maxBullets; i++) {
+		pBullet = new Bullet(0.1f, 18, 36, 1, Cam.position() + Vector(0, 0, 10), false);
+		pShader = new PhongShader();
+		pShader->ambientColor(Color(0, 0, 0));
+		pBullet->shader(pShader, true);
+		this->bulletQueue->push(pBullet);
+		Models.push_back(pBullet);
+	}
 
 	// directional lights
 	DirectionalLight* dl = new DirectionalLight();
@@ -114,10 +141,4 @@ void Application::createGame()
 	dl->color(Color(0.25, 0.25, 0.5));
 	dl->castShadows(true);
 	ShaderLightMapper::instance().addLight(dl);
-
-	Color c = Color(1.0f, 0.7f, 1.0f);
-	Vector a = Vector(1, 0, 0.1f);
-	float innerradius = 45;
-	float outerradius = 60;
-
 }

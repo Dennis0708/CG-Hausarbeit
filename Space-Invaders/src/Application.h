@@ -19,6 +19,8 @@
 #include "basemodel.h"
 #include "ShadowMapGenerator.h"
 #include "Spieler.h"
+#include "Bullet.h"
+#include <queue>
 
 class Application
 {
@@ -39,6 +41,7 @@ protected:
     int gameWindowWidth = 50;
     int gameWindowHeight = 200;
     Spieler* spieler;
+    queue<Bullet*> *bulletQueue;
 };
 
 #endif /* Application_hpp */

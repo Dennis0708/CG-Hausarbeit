@@ -89,6 +89,7 @@
     <ClCompile Include="..\..\src\Application.cpp" />
     <ClCompile Include="..\..\src\BaseModel.cpp" />
     <ClCompile Include="..\..\src\BaseShader.cpp" />
+    <ClCompile Include="..\..\src\Bullet.cpp" />
     <ClCompile Include="..\..\src\Camera.cpp" />
     <ClCompile Include="..\..\src\color.cpp" />
     <ClCompile Include="..\..\src\ConstantShader.cpp" />
@@ -117,6 +118,7 @@
     <ClInclude Include="..\..\src\Application.h" />
     <ClInclude Include="..\..\src\BaseModel.h" />
     <ClInclude Include="..\..\src\BaseShader.h" />
+    <ClInclude Include="..\..\src\Bullet.h" />
     <ClInclude Include="..\..\src\Camera.h" />
     <ClInclude Include="..\..\src\color.h" />
     <ClInclude Include="..\..\src\ConstantShader.h" />

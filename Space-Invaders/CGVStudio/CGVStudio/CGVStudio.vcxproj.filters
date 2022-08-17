@@ -100,6 +100,9 @@
     <ClCompile Include="..\..\src\Spieler.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\Bullet.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\Camera.h">
@@ -175,5 +178,6 @@
       <Filter>Quelldateien\utils\Lights</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\Spieler.h" />
+    <ClInclude Include="..\..\src\Bullet.h" />
   </ItemGroup>
 </Project>
