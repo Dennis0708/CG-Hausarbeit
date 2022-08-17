@@ -36,12 +36,12 @@
 Application::Application(GLFWwindow* pWin) : pWindow(pWin), Cam(pWin), pModel(NULL), ShadowGenerator(2048, 2048)
 {
 	Cam.setPosition(Vector(0, 0, 10));
-	createScene();
+	
+	createGame();
 	//createNormalTestScene();
 	//createShadowTestScene();
-	
-
 }
+
 void Application::start()
 {
     glEnable (GL_DEPTH_TEST); // enable depth-testing
@@ -55,9 +55,14 @@ void Application::start()
 void Application::update(float dtime)
 {
     Cam.update();
-	//cout << Cam.position().toString() <<  " : " << Cam.target().toString() << " : " << Cam.up().toString() <<  endl;
-	cout << Cam.m_Position.toString() << " : " << Cam.m_Panning.toString() << " : " << Cam.m_Rotation.toString() << " : " << Cam.m_Zoom.toString() <<  endl;
-	
+	if (glfwGetKey(pWindow, GLFW_KEY_ESCAPE)) {
+		exit(0);
+	}
+	int links = glfwGetKey(pWindow, GLFW_KEY_LEFT);
+	int rechts = glfwGetKey(pWindow, GLFW_KEY_RIGHT);
+	spieler->steuern(rechts - links);
+
+	spieler->update(dtime);
 }
 
 void Application::draw()
@@ -87,7 +92,7 @@ void Application::end()
     Models.clear();
 }
 
-void Application::createScene()
+void Application::createGame()
 {
 	Matrix m,n;
 
@@ -96,12 +101,12 @@ void Application::createScene()
 	pModel->shadowCaster(false);
 	Models.push_back(pModel);
 
-	pModel = new Model(ASSET_DIRECTORY "Space_Invader.obj", false);
-	pModel->shader(new PhongShader(), true);
+	spieler = new Spieler(ASSET_DIRECTORY "Space_Invader.obj", false, 10);
+	spieler->shader(new PhongShader(), true);
 	m.translation(0, -960, 0);
 	n.scale(0.006f);
-	pModel->transform(n * m);
-	Models.push_back(pModel);
+	spieler->transform(n * m);
+	Models.push_back(spieler);
 
 	// directional lights
 	DirectionalLight* dl = new DirectionalLight();
