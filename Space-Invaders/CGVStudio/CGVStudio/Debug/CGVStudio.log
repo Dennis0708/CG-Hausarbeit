@@ -1,40 +1,6 @@
-﻿  Aabb.cpp
-  Application.cpp
-  BaseModel.cpp
-  BaseShader.cpp
-  Camera.cpp
-  color.cpp
-  ConstantShader.cpp
-  Framebuffer.cpp
-  IndexBuffer.cpp
-  ShaderLightMapper.cpp
-  Lights.cpp
-  LineBoxModel.cpp
-  LinePlaneModel.cpp
+﻿  Application.cpp
   main.cpp
-  Matrix.cpp
   Model.cpp
-  PhongShader.cpp
-  rgbimage.cpp
-C:\Users\Dennis\Desktop\CG-Hausarbeit\Space-Invaders\src\rgbimage.cpp(53,20): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
-C:\Users\Dennis\Desktop\CG-Hausarbeit\Space-Invaders\src\rgbimage.cpp(54,21): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
-C:\Users\Dennis\Desktop\CG-Hausarbeit\Space-Invaders\src\rgbimage.cpp(59,59): warning C4244: "Argument": Konvertierung von "int" in "const float", möglicher Datenverlust
-C:\Users\Dennis\Desktop\CG-Hausarbeit\Space-Invaders\src\rgbimage.cpp(66,60): warning C4244: "Argument": Konvertierung von "int" in "const float", möglicher Datenverlust
-C:\Users\Dennis\Desktop\CG-Hausarbeit\Space-Invaders\src\rgbimage.cpp(70,94): warning C4244: "Argument": Konvertierung von "double" in "float", möglicher Datenverlust
-C:\Users\Dennis\Desktop\CG-Hausarbeit\Space-Invaders\src\rgbimage.cpp(70,59): warning C4244: "Argument": Konvertierung von "double" in "float", möglicher Datenverlust
-C:\Users\Dennis\Desktop\CG-Hausarbeit\Space-Invaders\src\rgbimage.cpp(70,24): warning C4244: "Argument": Konvertierung von "double" in "float", möglicher Datenverlust
-C:\Users\Dennis\Desktop\CG-Hausarbeit\Space-Invaders\src\rgbimage.cpp(87,16): warning C4244: "return": Konvertierung von "float" in "unsigned char", möglicher Datenverlust
-C:\Users\Dennis\Desktop\CG-Hausarbeit\Space-Invaders\src\rgbimage.cpp(136,21): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
-  ShadowMapGenerator.cpp
-  Texture.cpp
+  Spieler.cpp
   Code wird generiert...
-C:\Users\Dennis\Desktop\CG-Hausarbeit\Space-Invaders\src\rgbimage.cpp(31): warning C4172: Adresse einer lokalen Variablen oder eines temporären Werts "" wird zurückgegeben
-  Kompilieren...
-  TriangleBoxModel.cpp
-  TrianglePlaneModel.cpp
-  TriangleSphereModel.cpp
-  vector.cpp
-  VertexBuffer.cpp
-  Code wird generiert...
-LINK : warning LNK4098: Standardbibliothek "MSVCRT" steht in Konflikt mit anderen Bibliotheken; /NODEFAULTLIB:Bibliothek verwenden.
   CGVStudio.vcxproj -> C:\Users\Dennis\Desktop\CG-Hausarbeit\Space-Invaders\CGVStudio\Debug\CGVStudio.exe
