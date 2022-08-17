@@ -97,6 +97,9 @@
     <ClCompile Include="..\..\src\ShadowMapGenerator.cpp">
       <Filter>Quelldateien\utils\Lights</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\Spieler.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\Camera.h">
@@ -171,5 +174,6 @@
     <ClInclude Include="..\..\src\ShadowMapGenerator.h">
       <Filter>Quelldateien\utils\Lights</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\Spieler.h" />
   </ItemGroup>
 </Project>
