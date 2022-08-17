@@ -1,2 +1,5 @@
 Space-Invaders/CGVStudio/.vs
 
+*.vsidx
+Space-Invaders/CGVStudio/.vs/CGVStudio/v17/.suo
+*.db
