@@ -24,10 +24,11 @@ class Model : public BaseModel
 {
 public:
     Model();
-    Model(const char* ModelFile, bool FitSize=true);
+    Model(const char* ModelFile, Vector& position = Vector(0,0,0), float size = 1.0f); // bool FitSize gegen float Size getauscht // Vector position mit uebergeben
     virtual ~Model();
 
-    bool load(const char* ModelFile, bool FitSize=true);
+    bool load(const char* ModelFile, float size = 1.0f);
+    virtual void collisionFeld(int nesw) = 0;
     virtual void draw(const BaseCamera& Cam);
     const AABB& boundingBox() const { return BoundingBox; }
     
@@ -62,9 +63,9 @@ protected: // protected types
     };
     
 protected: // protected methods
-    void loadMeshes(const aiScene* pScene, bool FitSize);
+    void loadMeshes(const aiScene* pScene, float size);
     void loadMaterials(const aiScene* pScene);
-    void calcBoundingBox( const aiScene* pScene, AABB& Box);
+    void calcBoundingBox( const aiScene* pScene, AABB& Box, float size); // size mit uebergeben
 
     void loadNodes(const aiScene* pScene);
     void copyNodesRecursive(const aiNode* paiNode, Node* pNode);

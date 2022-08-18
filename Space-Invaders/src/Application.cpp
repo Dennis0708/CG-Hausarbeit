@@ -33,28 +33,30 @@
 #endif
 
 
-Application::Application(GLFWwindow* pWin) : pWindow(pWin), Cam(pWin), pModel(NULL), ShadowGenerator(2048, 2048)
+Application::Application(GLFWwindow* pWin) : bulletQueue(new queue<Bullet*>()), collisionList(new list<BaseModel*>()), pWindow(pWin), Cam(pWin), pModel(NULL), ShadowGenerator(2048, 2048)
 {
 	Cam.setPosition(Vector(0, 0, 10));
-	
+
+	int width, height;
+	glfwGetWindowSize(pWin, &width, &height);
+	this->feld = new AABB(Vector(-(width/2), -(height/2), 0), Vector(width / 2, height / 2, 0));
+
 	createGame();
-	//createNormalTestScene();
-	//createShadowTestScene();
 }
 
 void Application::start()
 {
-    glEnable (GL_DEPTH_TEST); // enable depth-testing
-    glDepthFunc (GL_LESS); // depth-testing interprets a smaller value as "closer"
-    glEnable(GL_CULL_FACE);
-    glCullFace(GL_BACK);
-    glEnable(GL_BLEND);
-    glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glEnable(GL_DEPTH_TEST); // enable depth-testing
+	glDepthFunc(GL_LESS); // depth-testing interprets a smaller value as "closer"
+	glEnable(GL_CULL_FACE);
+	glCullFace(GL_BACK);
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
 
 void Application::update(float dtime)
 {
-    Cam.update();
+	Cam.update();
 	if (glfwGetKey(pWindow, GLFW_KEY_ESCAPE)) {
 		exit(0);
 	}
@@ -68,71 +70,83 @@ void Application::update(float dtime)
 	}
 }
 
+void Application::collisionFeld()
+{
+	for (auto m : *this->collisionList) {
+		if (this->feld->Min.X < m->transform().translation().X || this->feld->Min.Y < m->transform().translation().Y) {
+
+		}
+	}
+}
+
+void Application::collisionBullet()
+{
+	for (auto m : *this->collisionList) {
+		
+	}
+}
 
 void Application::draw()
 {
 	ShadowGenerator.generate(Models);
-	
-    // 1. clear screen
-    glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	// 1. clear screen
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	ShaderLightMapper::instance().activate();
-    // 2. setup shaders and draw models
-    for( ModelList::iterator it = Models.begin(); it != Models.end(); ++it )
-    {
-        (*it)->draw(Cam);
-    }
+	// 2. setup shaders and draw models
+	for (ModelList::iterator it = Models.begin(); it != Models.end(); ++it)
+	{
+		(*it)->draw(Cam);
+	}
 	ShaderLightMapper::instance().deactivate();
-	
-    // 3. check once per frame for opengl errors
-    GLenum Error = glGetError();
-    assert(Error==0);
+
+	// 3. check once per frame for opengl errors
+	GLenum Error = glGetError();
+	assert(Error == 0);
 }
+
 void Application::end()
 {
-    for( ModelList::iterator it = Models.begin(); it != Models.end(); ++it )
-        delete *it;
-    
-    Models.clear();
+	for (ModelList::iterator it = Models.begin(); it != Models.end(); ++it)
+		delete* it;
+
+	Models.clear();
 }
 
 void Application::createGame()
 {
-	Matrix m,n;
+	Matrix m;
+	PhongShader* pShader = new PhongShader();
 
-	pModel = new Model(ASSET_DIRECTORY "skybox.obj", false);
-	pModel->shader(new PhongShader(), true);
-	pModel->shadowCaster(false);
+	pModel = new TriangleBoxModel(this->feld->Max.X - this->feld->Min.X, this->feld->Max.Y - this->feld->Min.Y, 0);
+	pShader->ambientColor(Color(1, 1, 1));
+	pModel->shader(pShader, true);
+	m.translation(0,0,-20);
+	pModel->transform(m);
 	Models.push_back(pModel);
 
-	Bullet *pBullet = new Bullet(0.1f, 18, 36, 1, Cam.position() + Vector(0, 0, 10), true);
-	PhongShader* pShader = new PhongShader();
-	pShader->ambientColor(Color(0, 0, 0));
+	Bullet* pBullet = new Bullet(ASSET_DIRECTORY "Space_Invader.obj", Cam.position() + Vector(0, 0, 10), 0.01f, 10);
+	pShader = new PhongShader();
 	pBullet->shader(pShader, true);
+	this->collisionList->push_back(pBullet);
 
-	spieler = new Spieler(ASSET_DIRECTORY "Space_Invader.obj", false, 10, pBullet);
+	spieler = new Spieler(ASSET_DIRECTORY "Space_Invader.obj", Vector(0, -6, 0), 0.006f, 10, pBullet);
 	spieler->shader(new PhongShader(), true);
-	m.translation(0, -960, 0);
-	n.scale(0.006f);
-	spieler->transform(n * m);
 	Models.push_back(spieler);
-
-
-	//TriangleSphereModel* triangle = new TriangleSphereModel(0.1f);
-	//PhongShader* phongshader = new PhongShader();
-	//phongshader->ambientColor(Color(0, 0, 0));
-	//triangle->shader(phongshader, true);
-	//Models.push_back(triangle);
+	this->collisionList->push_back(spieler);
+	
+	cout << spieler->boundingBox().size().toString() << endl;
 
 	int maxBullets = 10;
-	this->bulletQueue = new queue<Bullet*>();
 	for (int i = 0; i < maxBullets; i++) {
-		pBullet = new Bullet(0.1f, 18, 36, 1, Cam.position() + Vector(0, 0, 10), false);
+		pBullet = new Bullet(ASSET_DIRECTORY "Space_Invader.obj", Cam.position() + Vector(0, 0, 10), 0.001f, 2);
 		pShader = new PhongShader();
-		pShader->ambientColor(Color(0, 0, 0));
+		pShader->ambientColor(Color(0.5f, 0.5f, 0));
 		pBullet->shader(pShader, true);
 		this->bulletQueue->push(pBullet);
 		Models.push_back(pBullet);
+		this->collisionList->push_back(pBullet);
 	}
 
 	// directional lights

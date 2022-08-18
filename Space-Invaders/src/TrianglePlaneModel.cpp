@@ -70,5 +70,4 @@ void TrianglePlaneModel::draw( const BaseCamera& Cam )
     
     IB.deactivate();
     VB.deactivate();
-    
 }

@@ -14,12 +14,14 @@ Model::Model() : pMeshes(NULL), MeshCount(0), pMaterials(NULL), MaterialCount(0)
 {
 
 }
-Model::Model(const char* ModelFile, bool FitSize) : pMeshes(NULL), MeshCount(0), pMaterials(NULL), MaterialCount(0)
+
+Model::Model(const char* ModelFile, Vector& position, float size) : BaseModel(position, size), pMeshes(NULL), MeshCount(0), pMaterials(NULL), MaterialCount(0)
 {
-	bool ret = load(ModelFile, FitSize);
+	bool ret = load(ModelFile, size);
 	if (!ret)
 		throw std::exception();
 }
+
 Model::~Model()
 {
 	delete[] pMeshes;
@@ -39,7 +41,7 @@ void Model::deleteNodes(Node* pNode)
 		delete[] pNode->Meshes;
 }
 
-bool Model::load(const char* ModelFile, bool FitSize)
+bool Model::load(const char* ModelFile, float size)
 {
 	const aiScene* pScene = aiImportFile(ModelFile, aiProcessPreset_TargetRealtime_Fast | aiProcess_TransformUVCoords);
 
@@ -54,22 +56,16 @@ bool Model::load(const char* ModelFile, bool FitSize)
 	if (pos != std::string::npos)
 		Path.resize(pos + 1);
 
-	loadMeshes(pScene, FitSize);
+	loadMeshes(pScene, size);
 	loadMaterials(pScene);
 	loadNodes(pScene);
 
 	return true;
 }
 
-void Model::loadMeshes(const aiScene* pScene, bool FitSize)
+void Model::loadMeshes(const aiScene* pScene, float size)
 {
-	calcBoundingBox(pScene, BoundingBox);
-
-	if (FitSize) {
-		Matrix matrix;
-		matrix.scale(5);
-		transform(matrix);
-	}
+	calcBoundingBox(pScene, BoundingBox, size);
 
 	MeshCount = pScene->mNumMeshes;
 	pMeshes = new Mesh[MeshCount];
@@ -125,29 +121,35 @@ void Model::loadMaterials(const aiScene* pScene)
 	}
 }
 
-void Model::calcBoundingBox(const aiScene* pScene, AABB& Box)
+void Model::calcBoundingBox(const aiScene* pScene, AABB& Box, float size)
 {
-	float minX = FLT_MIN, minY = FLT_MIN, minZ = FLT_MIN,
-		maxX = FLT_MAX, maxY = FLT_MAX, maxZ = FLT_MAX;
+	aiVector3D min, max;
+
+	min = pScene->mMeshes[0]->mVertices[0];
+	max = min;
 
 	for (unsigned int meshNumber = 0; meshNumber < pScene->mNumMeshes; meshNumber++) {
 		for (unsigned int vertixNumber = 0; vertixNumber < pScene->mMeshes[meshNumber]->mNumVertices; vertixNumber++) {
-			aiVector3D& vertice = pScene->mMeshes[meshNumber]->mVertices[vertixNumber];
-			if (vertice.x < minX)
-				minX = vertice.x;
-			if (vertice.y < minY)
-				minY = vertice.y;
-			if (vertice.z < minZ)
-				minZ = vertice.z;
-			if (vertice.x > maxX)
-				maxX = vertice.x;
-			if (vertice.y > maxY)
-				maxY = vertice.y;
-			if (vertice.z > maxZ)
-				maxZ = vertice.z;
+			aiVector3D vertice = pScene->mMeshes[meshNumber]->mVertices[vertixNumber];
+			if (vertice.x < min.x)
+				min.x = vertice.x;
+			if (vertice.y < min.y)
+				min.y = vertice.y;
+			if (vertice.z < min.z)
+				min.z = vertice.z;
+			if (vertice.x > max.x)
+				max.x = vertice.x;
+			if (vertice.y > max.y)
+				max.y = vertice.y;
+			if (vertice.z > max.z)
+				max.z = vertice.z;
 		}
 	}
-	Box = { minX, minY, minZ, maxX, maxY, maxZ };
+
+	min *= size;
+	max *= size;
+
+	Box = { min.x, min.y, min.z, max.x, max.y, max.z };
 }
 
 void Model::loadNodes(const aiScene* pScene)

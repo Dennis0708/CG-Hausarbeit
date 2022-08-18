@@ -2,16 +2,18 @@
 
 #include "TriangleSphereModel.h"
 #include "vector.h"
+#include "Model.h"
 
 
-class Bullet : public TriangleSphereModel
+class Bullet : public Model
 {
 	int strength;
 	Vector upDown;
 public:
-	Bullet(float Radius, int Stacks, int Slices, int strength, Vector coordinates, bool up);
+	Bullet(const char* ModelFile, Vector& positon, float size, int strength);
 	void update(float dtime);
-	void teleport(Vector coordinates);
+	void collisionFeld(int nesw) override;
+	void teleport(Vector& position, Vector& richtung);
 	void stop();
 };
 

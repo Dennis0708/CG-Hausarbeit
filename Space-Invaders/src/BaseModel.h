@@ -19,6 +19,7 @@ class BaseModel
 {
 public:
     BaseModel();
+    BaseModel(Vector& positon, float size=1.0f);
     virtual ~BaseModel();
     virtual void draw(const BaseCamera& Cam);
     const Matrix& transform() const { return Transform; }

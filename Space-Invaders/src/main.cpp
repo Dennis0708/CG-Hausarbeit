@@ -28,9 +28,9 @@ int main () {
     glfwWindowHint (GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 #endif
     
-    int WindowWidth = 1920;
-    int WindowHeight = 1080;
-    GLFWwindow* window = glfwCreateWindow (WindowWidth, WindowHeight, "Computergrafik - Hochschule Osnabrück", glfwGetPrimaryMonitor(), NULL);
+    int WindowWidth = 600;// = 1920;
+    int WindowHeight = 800;// = 1080;
+    GLFWwindow* window = glfwCreateWindow (WindowWidth, WindowHeight, "Computergrafik - Hochschule Osnabrück", NULL/*glfwGetPrimaryMonitor()*/, NULL);
     if (!window) {
         fprintf (stderr, "ERROR: can not open window with GLFW3\n");
         glfwTerminate();

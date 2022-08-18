@@ -1,26 +1,27 @@
 #include "Bullet.h"
 
-Bullet::Bullet(float Radius, int Stacks, int Slices, int strength, Vector coordinates, bool up) : TriangleSphereModel(Radius, Stacks, Slices), strength(strength) {
-	this->teleport(coordinates);
-	if (up) {
-		this->upDown = Vector(0, 10, 0);
-	}
-	else {
-		this->upDown = Vector(0, -10, 0);
-	}
+Bullet::Bullet(const char* ModelFile, Vector& positon, float size, int strength) : Model(ModelFile, positon, size), upDown(Vector(0,0,0)), strength(strength) {
 }
 
 void Bullet::update(float dtime) {
-	Matrix transformMat =  transform();
-	Matrix translationMat;
-	translationMat.translation(this->upDown * dtime);
-	transform(transformMat * translationMat);
+	if (this->upDown.Y != 0) {
+		//cout << upDown.toString() << endl;
+		Matrix translationMat;
+		translationMat.translation(this->upDown * dtime);
+		transform(transform() * translationMat);
+	}
 }
 
-void Bullet::teleport(Vector coordinates) {
+void Bullet::collisionFeld(int nesw)
+{
+}
+
+void Bullet::teleport(Vector& position, Vector& richtung) {
+	this->upDown = richtung;
+	cout << position.toString() << endl;
 	Matrix translationMat;
-	translationMat.translation(coordinates);
-	this->transform(translationMat);
+	translationMat.translation(position);
+	this->transform(transform() * translationMat);
 }
 
 void Bullet::stop() {

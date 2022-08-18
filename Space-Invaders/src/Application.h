@@ -20,6 +20,7 @@
 #include "ShadowMapGenerator.h"
 #include "Spieler.h"
 #include "Bullet.h"
+#include "Aabb.h"
 #include <queue>
 
 class Application
@@ -29,6 +30,8 @@ public:
     Application(GLFWwindow* pWin);
     void start();
     void update(float dtime);
+    void collisionFeld();
+    void collisionBullet();
     void draw();
     void end();
 protected:
@@ -41,6 +44,8 @@ protected:
     int gameWindowWidth = 50;
     int gameWindowHeight = 200;
     Spieler* spieler;
+    AABB* feld;
+    list<BaseModel*> *collisionList;
     queue<Bullet*> *bulletQueue;
 };
 
