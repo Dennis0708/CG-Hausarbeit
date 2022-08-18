@@ -8,13 +8,14 @@
 
 #include "BaseModel.h"
 
-BaseModel::BaseModel() : pShader(NULL), DeleteShader(false), ShadowCaster(true)
+BaseModel::BaseModel() : pShader(NULL), DeleteShader(false), ShadowCaster(true), size(1)
 {
     Transform.identity();
 }
 
 BaseModel::BaseModel(Vector& postion, float size) : BaseModel()
 {
+    this->size = size;
     Matrix scaleMat, posMat;
     scaleMat.scale(size);
     posMat.translation(postion);

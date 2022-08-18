@@ -34,6 +34,7 @@ protected:
     BaseShader* pShader;
     bool DeleteShader;
 	bool ShadowCaster;
+    float size;
         
 };
 

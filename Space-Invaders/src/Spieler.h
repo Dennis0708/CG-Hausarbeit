@@ -5,12 +5,18 @@
 #include "PhongShader.h"
 #include "vector.h"
 
+
+#define NORTH 0
+#define EAST 1
+#define SOUTH 2
+#define WEST 3
+
 class Spieler: public Model
 {
 	int lebenspunkte;
 	float linksRechts;
 	Bullet* spielerBullet;
-	bool shotFired = false;
+	int nesw;
 public:
 	Spieler(const char* ModelFile, Vector& position, float size, int lebenspunkte, Bullet * spielerBullet);
 	void steuern(float lr);

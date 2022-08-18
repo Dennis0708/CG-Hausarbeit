@@ -23,6 +23,11 @@
 #include "Aabb.h"
 #include <queue>
 
+#define NORTH 0
+#define EAST 1
+#define SOUTH 2
+#define WEST 3
+
 class Application
 {
 public:
@@ -34,6 +39,7 @@ public:
     void collisionBullet();
     void draw();
     void end();
+    Vector calc3DRay(float x, float y, Vector& Pos);
 protected:
 	void createGame();
     Camera Cam;
@@ -45,7 +51,7 @@ protected:
     int gameWindowHeight = 200;
     Spieler* spieler;
     AABB* feld;
-    list<BaseModel*> *collisionList;
+    list<Model*> *collisionList;
     queue<Bullet*> *bulletQueue;
 };
 

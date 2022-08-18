@@ -26,6 +26,8 @@
 #include "ShaderLightmapper.h"
 
 
+
+
 #ifdef WIN32
 #define ASSET_DIRECTORY "../../assets/"
 #else
@@ -33,13 +35,26 @@
 #endif
 
 
-Application::Application(GLFWwindow* pWin) : bulletQueue(new queue<Bullet*>()), collisionList(new list<BaseModel*>()), pWindow(pWin), Cam(pWin), pModel(NULL), ShadowGenerator(2048, 2048)
+Application::Application(GLFWwindow* pWin) : bulletQueue(new queue<Bullet*>()), collisionList(new list<Model*>()), pWindow(pWin), Cam(pWin), pModel(NULL), ShadowGenerator(2048, 2048)
 {
 	Cam.setPosition(Vector(0, 0, 10));
 
-	int width, height;
-	glfwGetWindowSize(pWin, &width, &height);
-	this->feld = new AABB(Vector(-(width/2), -(height/2), 0), Vector(width / 2, height / 2, 0));
+
+	Vector min, max, minO, maxO;
+	min = this->calc3DRay(0, 800, minO);
+	max = this->calc3DRay(600, 0, maxO);
+
+	minO = maxO = Vector(0, 0, 10);
+
+	Vector ebene = Vector(0, 0, 1);
+	float maxS = -ebene.dot(maxO) / ebene.dot(max);
+	float minS = -ebene.dot(minO) / ebene.dot(min);
+
+	Vector maxRay = maxO + max * maxS;
+	Vector minRay = minO + min * minS;
+	cout << maxRay.toString() << " : " << minRay.toString() << endl;
+
+	this->feld = new AABB(minRay, maxRay);
 
 	createGame();
 }
@@ -63,18 +78,33 @@ void Application::update(float dtime)
 	int links = glfwGetKey(pWindow, GLFW_KEY_LEFT);
 	int rechts = glfwGetKey(pWindow, GLFW_KEY_RIGHT);
 	bool shotFired = glfwGetKey(pWindow, GLFW_KEY_SPACE);
+
 	spieler->steuern(rechts - links);
+	this->collisionFeld();
 	spieler->update(dtime);
 	if (shotFired) {
 		this->spieler->shoot();
 	}
+
 }
 
 void Application::collisionFeld()
 {
-	for (auto m : *this->collisionList) {
-		if (this->feld->Min.X < m->transform().translation().X || this->feld->Min.Y < m->transform().translation().Y) {
-
+	for (Model* m : *this->collisionList) {
+		Vector minHitbox = m->boundingBox().Min + m->transform().translation();
+		Vector maxHitbox = m->boundingBox().Max + m->transform().translation();
+		//cout << minHitbox.toString() << " : " << maxHitbox.toString() << endl;
+		if (this->feld->Min.X > minHitbox.X) {
+			m->collisionFeld(WEST);
+		}
+		else if (this->feld->Min.Y > minHitbox.Y) {
+			m->collisionFeld(SOUTH);
+		}
+		else if (this->feld->Max.X < maxHitbox.X) {
+			m->collisionFeld(EAST);
+		}
+		else if (this->feld->Max.Y < maxHitbox.X) {
+			m->collisionFeld(NORTH);
 		}
 	}
 }
@@ -82,7 +112,7 @@ void Application::collisionFeld()
 void Application::collisionBullet()
 {
 	for (auto m : *this->collisionList) {
-		
+
 	}
 }
 
@@ -122,11 +152,11 @@ void Application::createGame()
 	pModel = new TriangleBoxModel(this->feld->Max.X - this->feld->Min.X, this->feld->Max.Y - this->feld->Min.Y, 0);
 	pShader->ambientColor(Color(1, 1, 1));
 	pModel->shader(pShader, true);
-	m.translation(0,0,-20);
+	m.translation(0, 0, 0);
 	pModel->transform(m);
 	Models.push_back(pModel);
 
-	Bullet* pBullet = new Bullet(ASSET_DIRECTORY "Space_Invader.obj", Cam.position() + Vector(0, 0, 10), 0.01f, 10);
+	Bullet* pBullet = new Bullet(ASSET_DIRECTORY "Sting-Sword-lowpoly.dae", Cam.position() + Vector(0, 0, 10), 1, 10);
 	pShader = new PhongShader();
 	pBullet->shader(pShader, true);
 	this->collisionList->push_back(pBullet);
@@ -135,12 +165,11 @@ void Application::createGame()
 	spieler->shader(new PhongShader(), true);
 	Models.push_back(spieler);
 	this->collisionList->push_back(spieler);
-	
-	cout << spieler->boundingBox().size().toString() << endl;
+
 
 	int maxBullets = 10;
 	for (int i = 0; i < maxBullets; i++) {
-		pBullet = new Bullet(ASSET_DIRECTORY "Space_Invader.obj", Cam.position() + Vector(0, 0, 10), 0.001f, 2);
+		pBullet = new Bullet(ASSET_DIRECTORY "Space_Invader.obj", Cam.position() + Vector(0, 0, 10), 1, 2);
 		pShader = new PhongShader();
 		pShader->ambientColor(Color(0.5f, 0.5f, 0));
 		pBullet->shader(pShader, true);
@@ -155,4 +184,22 @@ void Application::createGame()
 	dl->color(Color(0.25, 0.25, 0.5));
 	dl->castShadows(true);
 	ShaderLightMapper::instance().addLight(dl);
+}
+
+Vector Application::calc3DRay(float x, float y, Vector& Pos)
+{
+	int width, height;
+	glfwGetWindowSize(pWindow, &width, &height);
+	x = 2 * (x / width) - 1;
+	y = -(2 * (y / height) - 1);
+
+	Vector richtung(x, y, 0);
+	Matrix projectionInverted(Cam.getProjectionMatrix());
+	projectionInverted.invert();
+	richtung = projectionInverted * richtung;
+	Matrix viewInverted = Cam.getViewMatrix();
+	viewInverted.invert();
+	richtung = viewInverted.transformVec3x3(richtung);
+	Pos = viewInverted.translation();
+	return richtung;
 }

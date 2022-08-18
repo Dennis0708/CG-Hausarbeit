@@ -3,6 +3,8 @@
 #include "TriangleSphereModel.h"
 #include "vector.h"
 #include "Model.h"
+#define _USE_MATH_DEFINES
+#include <math.h>
 
 
 class Bullet : public Model
@@ -15,5 +17,6 @@ public:
 	void collisionFeld(int nesw) override;
 	void teleport(Vector& position, Vector& richtung);
 	void stop();
+	bool isMoving();
 };
 

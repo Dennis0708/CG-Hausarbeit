@@ -8,7 +8,14 @@ Spieler::Spieler(const char* ModelFile, Vector& position, float size, int lebens
 
 void Spieler::steuern(float linksRechts)
 {
+	if (this->nesw == EAST && linksRechts < 0) {
+		return;
+	}
+	else if (this ->nesw == WEST && linksRechts > 0) {
+		return;
+	}
 	this->linksRechts = linksRechts * 1000;
+	this->nesw = -1;
 }
 
 void Spieler::update(float dtime)
@@ -19,10 +26,15 @@ void Spieler::update(float dtime)
 	transform(aktuelleTransformation * verschiebungsMatrix);
 
 	this->spielerBullet->update(dtime);
+
+	Vector minHitbox = this->boundingBox().Min + this->transform().translation();
+	Vector maxHitbox = this->boundingBox().Max + this->transform().translation();
+	//cout << minHitbox.toString() << " : " << maxHitbox.toString() << endl;
 }
 
 void Spieler::collisionFeld(int nesw)
 {
+	this->nesw = nesw;
 }
 
 void Spieler::draw(const BaseCamera& Cam) {
@@ -31,8 +43,7 @@ void Spieler::draw(const BaseCamera& Cam) {
 }
 
 void Spieler::shoot() {
-	//if (!this->shotFired) {
-		this->spielerBullet->teleport(this->transform().translation() + Vector(0, 1, 0), Vector(0,1,0));
-		this->shotFired = true;
-	//}
+	if (!this->spielerBullet->isMoving()) {
+		this->spielerBullet->teleport(this->transform().translation() + Vector(0, 1, 0), Vector(0, 4, 0));
+	}
 }
