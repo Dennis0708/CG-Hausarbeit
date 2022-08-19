@@ -7,12 +7,12 @@ Gegner::Gegner(const char* ModelFile, Vector& position, float size, int lebenspu
 
 void Gegner::update(float dtime, int anzahlGegner)
 {
+	this->geschwindigkeit = (float)*this->linksRechts * (1.f / anzahlGegner) * 2000.0f;
 	Matrix aktuelleTransformation = transform();
 	Matrix verschiebungsMatrix;
-	verschiebungsMatrix.translation(this->geschwindigkeit * dtime, 0, 0);
+	verschiebungsMatrix.translation(this->geschwindigkeit * dtime, *this->runter, 0);
 	transform(aktuelleTransformation * verschiebungsMatrix);
-	
-	this->geschwindigkeit = *this->linksRechts * 1 / anzahlGegner * 1000;
+
 
 	if (this->bullet) {
 		this->bullet->update(dtime);
@@ -27,16 +27,30 @@ void Gegner::collisionFeld(int nesw)
 	else if (nesw == WEST) {
 		*this->linksRechts = 1;
 	}
+	*this->runter = true;
+}
+
+void Gegner::collisionBullet(int schaden)
+{
 }
 
 void Gegner::setPosition(Vector& position)
 {
+	Matrix scaleMat, posMat;
+	scaleMat.scale(size);
+	posMat.translation(position);
 
+	transform(posMat * scaleMat);
 }
 
 void Gegner::setLinksRechts(int* linksRechts)
 {
 	this->linksRechts = linksRechts;
+}
+
+void Gegner::setRunter(float* runter)
+{
+	this->runter = runter;
 }
 
 void Gegner::draw(const BaseCamera& Cam) {

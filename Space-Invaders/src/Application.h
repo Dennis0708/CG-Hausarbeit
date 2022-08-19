@@ -23,6 +23,7 @@
 #include "Bullet.h"
 #include "Aabb.h"
 #include <queue>
+#include "Invasion.h"
 
 #define NORTH 0
 #define EAST 1
@@ -48,12 +49,12 @@ protected:
     GLFWwindow* pWindow;
 	BaseModel* pModel;
 	ShadowMapGenerator ShadowGenerator;
-    int gameWindowWidth = 50;
-    int gameWindowHeight = 200;
+    float gameWidth;
+    float gameHeight;
     Spieler* spieler;
     AABB* feld;
     list<Model*> *collisionList;
-    queue<Bullet*> *bulletQueue;
+    Invasion* invasion;
 };
 
 #endif /* Application_hpp */

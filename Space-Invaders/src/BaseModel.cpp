@@ -13,12 +13,12 @@ BaseModel::BaseModel() : pShader(NULL), DeleteShader(false), ShadowCaster(true),
     Transform.identity();
 }
 
-BaseModel::BaseModel(Vector& postion, float size) : BaseModel()
+BaseModel::BaseModel(Vector& position, float size) : BaseModel()
 {
     this->size = size;
     Matrix scaleMat, posMat;
     scaleMat.scale(size);
-    posMat.translation(postion);
+    posMat.translation(position);
 
     transform(posMat * scaleMat);
 }

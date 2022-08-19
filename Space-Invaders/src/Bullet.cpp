@@ -16,6 +16,11 @@ void Bullet::collisionFeld(int nesw)
 	this->setPosition(Vector(0, 0, 20), Vector(0, 0, 0));
 }
 
+void Bullet::collisionBullet(int schaden)
+{
+	this->setPosition(Vector(0, 0, 20), Vector(0, 0, 0));
+}
+
 void Bullet::setPosition(Vector& position, Vector& richtung) {
 	this->upDown = richtung;
 	Matrix translationMat, scaleMat, rotatationMat;

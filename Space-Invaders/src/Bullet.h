@@ -15,6 +15,7 @@ public:
 	Bullet(const char* ModelFile, Vector& positon, float size, int strength);
 	void update(float dtime);
 	void collisionFeld(int nesw) override;
+	void collisionBullet(int schaden) override;
 	void setPosition(Vector& position, Vector& richtung);
 	void stop();
 	bool isMoving();

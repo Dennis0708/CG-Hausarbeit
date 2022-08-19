@@ -34,6 +34,10 @@ void Spieler::collisionFeld(int nesw)
 	this->nesw = nesw;
 }
 
+void Spieler::collisionBullet(int schaden)
+{
+}
+
 void Spieler::draw(const BaseCamera& Cam) {
 	Model::draw(Cam);
 	this->spielerBullet->draw(Cam);
@@ -43,4 +47,9 @@ void Spieler::shoot() {
 	if (!this->spielerBullet->isMoving()) {
 		this->spielerBullet->setPosition(this->transform().translation() + Vector(0, 1, 0), Vector(0, 1, 0));
 	}
+}
+
+Bullet* Spieler::getBullet()
+{
+	return this->spielerBullet;
 }

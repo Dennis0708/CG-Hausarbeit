@@ -94,7 +94,9 @@
     <ClCompile Include="..\..\src\color.cpp" />
     <ClCompile Include="..\..\src\ConstantShader.cpp" />
     <ClCompile Include="..\..\src\Framebuffer.cpp" />
+    <ClCompile Include="..\..\src\Gegner.cpp" />
     <ClCompile Include="..\..\src\IndexBuffer.cpp" />
+    <ClCompile Include="..\..\src\Invasion.cpp" />
     <ClCompile Include="..\..\src\ShaderLightMapper.cpp" />
     <ClCompile Include="..\..\src\Lights.cpp" />
     <ClCompile Include="..\..\src\LineBoxModel.cpp" />
@@ -123,7 +125,9 @@
     <ClInclude Include="..\..\src\color.h" />
     <ClInclude Include="..\..\src\ConstantShader.h" />
     <ClInclude Include="..\..\src\Framebuffer.h" />
+    <ClInclude Include="..\..\src\Gegner.h" />
     <ClInclude Include="..\..\src\IndexBuffer.h" />
+    <ClInclude Include="..\..\src\Invasion.h" />
     <ClInclude Include="..\..\src\ShaderLightMapper.h" />
     <ClInclude Include="..\..\src\Lights.h" />
     <ClInclude Include="..\..\src\LineBoxModel.h" />

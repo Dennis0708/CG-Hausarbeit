@@ -22,6 +22,8 @@ public:
 	void steuern(int linksRechts);
 	void update(float dtime);
 	void collisionFeld(int nesw) override;
+	void collisionBullet(int schaden) override;
 	void draw(const BaseCamera& Cam);
 	void shoot();
+	Bullet* getBullet();
 };

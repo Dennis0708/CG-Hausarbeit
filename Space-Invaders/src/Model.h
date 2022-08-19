@@ -29,6 +29,7 @@ public:
 
     bool load(const char* ModelFile, float size = 1.0f);
     virtual void collisionFeld(int nesw) = 0;
+    virtual void collisionBullet(int schaden) = 0;
     virtual void draw(const BaseCamera& Cam);
     const AABB& boundingBox() const { return BoundingBox; }
     
@@ -86,4 +87,4 @@ protected: // protected member variables
     
 };
 
-#endif /* Model_hpp */
+#endif  /*Model_hpp*/ 
