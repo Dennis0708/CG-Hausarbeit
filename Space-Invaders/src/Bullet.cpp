@@ -5,19 +5,18 @@ Bullet::Bullet(const char* ModelFile, Vector& positon, float size, int strength)
 
 void Bullet::update(float dtime) {
 	if (this->upDown.Y != 0) {
-		cout << upDown.toString() << endl;
 		Matrix translationMat;
-		translationMat.translation(this->upDown * dtime);
+		translationMat.translation(this->upDown * 500 * dtime);
 		transform(transform() * translationMat);
 	}
 }
 
 void Bullet::collisionFeld(int nesw)
 {
-	this->teleport(Vector(0, 0, 20), Vector(0, 0, 0));
+	this->setPosition(Vector(0, 0, 20), Vector(0, 0, 0));
 }
 
-void Bullet::teleport(Vector& position, Vector& richtung) {
+void Bullet::setPosition(Vector& position, Vector& richtung) {
 	this->upDown = richtung;
 	Matrix translationMat, scaleMat, rotatationMat;
 	scaleMat.scale(this->size);

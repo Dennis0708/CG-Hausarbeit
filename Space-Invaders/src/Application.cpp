@@ -39,20 +39,21 @@ Application::Application(GLFWwindow* pWin) : bulletQueue(new queue<Bullet*>()), 
 {
 	Cam.setPosition(Vector(0, 0, 10));
 
+	int width, height;
+	glfwGetWindowSize(pWindow, &width, &height);
 
-	Vector min, max, minO, maxO;
-	min = this->calc3DRay(0, 800, minO);
-	max = this->calc3DRay(600, 0, maxO);
+	Vector minD, maxD, pos;
+	minD = this->calc3DRay(0, height, pos);
+	maxD = this->calc3DRay(width, 0, pos);
 
-	minO = maxO = Vector(0, 0, 10);
+	pos = Vector(0, 0, 10);
 
 	Vector ebene = Vector(0, 0, 1);
-	float maxS = -ebene.dot(maxO) / ebene.dot(max);
-	float minS = -ebene.dot(minO) / ebene.dot(min);
+	float maxS = -ebene.dot(pos) / ebene.dot(maxD);
+	float minS = -ebene.dot(pos) / ebene.dot(minD);
 
-	Vector maxRay = maxO + max * maxS;
-	Vector minRay = minO + min * minS;
-	cout << maxRay.toString() << " : " << minRay.toString() << endl;
+	Vector maxRay = pos + maxD * maxS;
+	Vector minRay = pos + minD * minS;
 
 	this->feld = new AABB(minRay, maxRay);
 
@@ -79,8 +80,9 @@ void Application::update(float dtime)
 	int rechts = glfwGetKey(pWindow, GLFW_KEY_RIGHT);
 	bool shotFired = glfwGetKey(pWindow, GLFW_KEY_SPACE);
 
-	spieler->steuern(rechts - links);
 	this->collisionFeld();
+
+	spieler->steuern(rechts - links);
 	spieler->update(dtime);
 	if (shotFired) {
 		this->spieler->shoot();
@@ -93,17 +95,18 @@ void Application::collisionFeld()
 	for (Model* m : *this->collisionList) {
 		Vector minHitbox = m->boundingBox().Min + m->transform().translation();
 		Vector maxHitbox = m->boundingBox().Max + m->transform().translation();
-		//cout << minHitbox.toString() << " : " << maxHitbox.toString() << endl;
 		if (this->feld->Min.X > minHitbox.X) {
 			m->collisionFeld(WEST);
+			//cout << "West" << endl;
 		}
 		else if (this->feld->Min.Y > minHitbox.Y) {
 			m->collisionFeld(SOUTH);
 		}
 		else if (this->feld->Max.X < maxHitbox.X) {
 			m->collisionFeld(EAST);
+			//cout << "East" << endl;
 		}
-		else if (this->feld->Max.Y < maxHitbox.X) {
+		else if (this->feld->Max.Y < maxHitbox.Y) {
 			m->collisionFeld(NORTH);
 		}
 	}
@@ -156,7 +159,7 @@ void Application::createGame()
 	pModel->transform(m);
 	Models.push_back(pModel);
 
-	Bullet* pBullet = new Bullet(ASSET_DIRECTORY "Sting-Sword-lowpoly.dae", Cam.position() + Vector(0, 0, 10), 1, 10);
+	Bullet* pBullet = new Bullet(ASSET_DIRECTORY "US_Dollar_Sign/US_Dollar_Sign.obj", Cam.position() + Vector(0, 0, 10), 0.01f, 10);
 	pShader = new PhongShader();
 	pBullet->shader(pShader, true);
 	this->collisionList->push_back(pBullet);
@@ -166,10 +169,23 @@ void Application::createGame()
 	Models.push_back(spieler);
 	this->collisionList->push_back(spieler);
 
+	int anzahlGegner = 1;
+	for (int i = 0; i < anzahlGegner; i++) {
+		Gegner* gegner = new Gegner(ASSET_DIRECTORY "Space_Invader.obj", Vector(0, 0, 0), 0.006f, 1);
+		gegner->shader(new PhongShader(), true);
+		Models.push_back(gegner);
+		this->collisionList->push_back(gegner);
+	}
+
+	/*pModel = new LineBoxModel(spieler->boundingBox().size().X, spieler->boundingBox().size().Y, spieler->boundingBox().size().Z);
+	pShader = new PhongShader();
+	pShader->ambientColor(Color(1, 0, 0));
+	pModel->shader(pShader, true);
+	Models.push_back(pModel);*/
 
 	int maxBullets = 10;
 	for (int i = 0; i < maxBullets; i++) {
-		pBullet = new Bullet(ASSET_DIRECTORY "Space_Invader.obj", Cam.position() + Vector(0, 0, 10), 1, 2);
+		pBullet = new Bullet(ASSET_DIRECTORY "US_Dollar_Sign/US_Dollar_Sign.obj", Cam.position() + Vector(0, 0, 10), 0.01f, 2);
 		pShader = new PhongShader();
 		pShader->ambientColor(Color(0.5f, 0.5f, 0));
 		pBullet->shader(pShader, true);
@@ -190,6 +206,7 @@ Vector Application::calc3DRay(float x, float y, Vector& Pos)
 {
 	int width, height;
 	glfwGetWindowSize(pWindow, &width, &height);
+
 	x = 2 * (x / width) - 1;
 	y = -(2 * (y / height) - 1);
 

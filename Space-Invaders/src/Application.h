@@ -19,6 +19,7 @@
 #include "basemodel.h"
 #include "ShadowMapGenerator.h"
 #include "Spieler.h"
+#include "Gegner.h"
 #include "Bullet.h"
 #include "Aabb.h"
 #include <queue>
