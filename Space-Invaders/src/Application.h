@@ -24,11 +24,7 @@
 #include "Aabb.h"
 #include <queue>
 #include "Invasion.h"
-
-#define NORTH 0
-#define EAST 1
-#define SOUTH 2
-#define WEST 3
+#include "CollisionDetector.h"
 
 class Application
 {
@@ -55,6 +51,7 @@ protected:
     AABB* feld;
     list<Model*> *collisionList;
     Invasion* invasion;
+    CollisionDetector* collisionDetector;
 };
 
 #endif /* Application_hpp */

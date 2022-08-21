@@ -14,14 +14,14 @@
 class Spieler: public Model
 {
 	int lebenspunkte;
-	int linksRechts;
+	int direction;
 	Bullet* spielerBullet;
-	int nesw;
+	Collision collision;
 public:
 	Spieler(const char* ModelFile, Vector& position, float size, int lebenspunkte, Bullet * spielerBullet);
-	void steuern(int linksRechts);
+	void steuern(int direction);
 	void update(float dtime);
-	void collisionFeld(int nesw) override;
+	void collisionBorder(Collision collision) override;
 	void collisionBullet(int schaden) override;
 	void draw(const BaseCamera& Cam);
 	void shoot();

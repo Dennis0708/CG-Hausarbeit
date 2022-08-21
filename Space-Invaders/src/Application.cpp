@@ -59,8 +59,9 @@ Application::Application(GLFWwindow* pWin) : collisionList(new list<Model*>()), 
 	this->feld = new AABB(minRay, maxRay);
 	this->gameWidth = this->feld->size().X;
 	this->gameHeight = this->feld->size().Y;
+	this->collisionDetector = new CollisionDetector(this->feld);
 
-	createGame();
+	this->createGame();
 }
 
 void Application::start()
@@ -83,9 +84,6 @@ void Application::update(float dtime)
 	int rechts = glfwGetKey(pWindow, GLFW_KEY_RIGHT);
 	bool shotFired = glfwGetKey(pWindow, GLFW_KEY_SPACE);
 
-	this->collisionFeld();
-	this->collisionBullet();
-
 	this->spieler->steuern(rechts - links);
 	this->spieler->update(dtime);
 	if (shotFired) {
@@ -93,33 +91,26 @@ void Application::update(float dtime)
 	}
 	this->invasion->update(dtime);
 
+	this->collisionFeld();
+	this->collisionBullet();
+
 }
 
 void Application::collisionFeld()
 {
-	for (Model* m : *this->collisionList) {
-		Vector minHitbox = m->boundingBox().Min + m->transform().translation();
-		Vector maxHitbox = m->boundingBox().Max + m->transform().translation();
-		if (this->feld->Min.X > minHitbox.X) {
-			m->collisionFeld(WEST);
-			//cout << "West" << endl;
-		}
-		else if (this->feld->Min.Y > minHitbox.Y) {
-			m->collisionFeld(SOUTH);
-		}
-		else if (this->feld->Max.X < maxHitbox.X) {
-			m->collisionFeld(EAST);
-			//cout << "East" << endl;
-		}
-		else if (this->feld->Max.Y < maxHitbox.Y) {
-			m->collisionFeld(NORTH);
-		}
+	Collision collision = this->collisionDetector->borderCollisionGegner(this->invasion->getGegnerListe());
+	if (collision != Collision::NONE) {
+		this->invasion->collisionBorder(collision, -this->gameHeight * 2.f);
 	}
+	collision = this->collisionDetector->borderCollision(this->spieler);
+	if (collision != Collision::NONE) this->spieler->collisionBorder(collision);
+	collision = this->collisionDetector->borderCollision(this->spieler->getBullet());
+	if (collision != Collision::NONE) this->spieler->getBullet()->collisionBorder(collision);
 }
 
 void Application::collisionBullet()
 {
-	queue<Bullet*>* gegnerBullets = this->invasion->getBulletQueue();
+	/*queue<Bullet*>* gegnerBullets = this->invasion->getBulletQueue();
 	Bullet* spielerBullet = this->spieler->getBullet();
 	Vector minBulletHitbox = spielerBullet->boundingBox().Min + spielerBullet->transform().translation();
 	Vector maxBulletHitbox = spielerBullet->boundingBox().Max + spielerBullet->transform().translation();
@@ -129,22 +120,20 @@ void Application::collisionBullet()
 			if (spielerBullet != m && !treffer && m->transform().translation().Z == 0) {
 				Vector minHitbox = m->boundingBox().Min + m->transform().translation();
 				Vector maxHitbox = m->boundingBox().Max + m->transform().translation();
-
-				if (maxBulletHitbox.Y < minHitbox.Y || minBulletHitbox.Y > maxHitbox.Y) {
-
-				}
-				else if (maxBulletHitbox.X < minHitbox.X || minBulletHitbox.X > maxHitbox.X) {
-
-				}
-				else {
-					m->collisionBullet(1);
-					spielerBullet->collisionBullet(1);
-					treffer = true;
-				}
+				if (maxBulletHitbox.Y > minHitbox.Y && minBulletHitbox.Y < maxHitbox.Y)
+					if (maxBulletHitbox.X > minHitbox.X && minBulletHitbox.X < maxHitbox.X) {
+						m->collisionBullet(1);
+						spielerBullet->collisionBullet(1);
+						treffer = true;
+					}
 			}
+
 		}
-	}
+	}*/
+	this->collisionDetector->collision(this->spieler->getBullet(), this->invasion->getGegnerListe());
 }
+
+
 
 void Application::draw()
 {

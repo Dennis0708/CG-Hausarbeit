@@ -5,23 +5,18 @@
 #include "PhongShader.h"
 #include "vector.h"
 
-#define NORTH 0
-#define EAST 1
-#define SOUTH 2
-#define WEST 3
-
 class Gegner : public Model
 {
 	int lebenspunkte;
 	float geschwindigkeit;
 	int* linksRechts;
 	float* runter;
-	int nesw;
+	Collision collision;
 	Bullet* bullet;
 public:
 	Gegner(const char* ModelFile, Vector& position, float size, int lebenspunkte);
 	void update(float dtime, int anzahlGegner);
-	void collisionFeld(int nesw) override;
+	void collisionBorder(Collision collision) override;
 	void collisionBullet(int schaden) override;
 	void setPosition(Vector& position);
 	void setLinksRechts(int* linksRechts);

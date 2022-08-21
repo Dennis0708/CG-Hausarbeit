@@ -11,7 +11,7 @@ void Bullet::update(float dtime) {
 	}
 }
 
-void Bullet::collisionFeld(int nesw)
+void Bullet::collisionBorder(Collision collision)
 {
 	this->setPosition(Vector(0, 0, 20), Vector(0, 0, 0));
 }

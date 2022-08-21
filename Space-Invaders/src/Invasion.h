@@ -7,12 +7,12 @@
 class Invasion
 {
 	list<Gegner*>* gegnerListe;
-	queue<Gegner*>* aktuelleGegnerQueue;
-	int anzahlGegner;
-	int linksRechts;
-	float runter;
-	float vorher;
-	float gameHeight;
+	//queue<Gegner*>* aktuelleGegnerQueue;
+	//int anzahlGegner;
+	int direction;
+	float down;
+	//float vorher;
+	//float gameHeight;
 	queue<Bullet*>* bulletQueue;
 public:
 	Invasion(list<Gegner*>* gegnerListe);
@@ -21,5 +21,7 @@ public:
 	void update(float dtime);
 	void setBulletQueue(queue<Bullet*>* bulletQueue);
 	queue<Bullet*>* getBulletQueue();
+	list<Gegner*>* getGegnerListe();
+	void collisionBorder(Collision collision, float down);
 };
 

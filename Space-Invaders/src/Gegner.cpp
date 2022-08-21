@@ -19,12 +19,12 @@ void Gegner::update(float dtime, int anzahlGegner)
 	}
 }
 
-void Gegner::collisionFeld(int nesw)
+void Gegner::collisionBorder(Collision collision)
 {
-	if (nesw == EAST) {
+	if (collision == Collision::RIGHT) {
 		*this->linksRechts = -1;
 	}
-	else if (nesw == WEST) {
+	else if (collision == Collision::LEFT) {
 		*this->linksRechts = 1;
 	}
 	*this->runter = true;

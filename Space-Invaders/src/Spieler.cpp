@@ -1,37 +1,38 @@
 
 #include "Spieler.h"
 
-Spieler::Spieler(const char* ModelFile, Vector& position, float size, int lebenspunkte, Bullet* spielerBullet) : Model(ModelFile, position, size), lebenspunkte(lebenspunkte), spielerBullet(spielerBullet)
+Spieler::Spieler(const char* ModelFile, Vector& position, float size, int lebenspunkte, Bullet* spielerBullet)
+	: Model(ModelFile, position, size), lebenspunkte(lebenspunkte), spielerBullet(spielerBullet),direction(0), collision(Collision::NONE)
 {
 
 }
 
-void Spieler::steuern(int linksRechts)
+void Spieler::steuern(int direction)
 {
-	if (this->nesw == EAST && linksRechts == 1) {
-		linksRechts = 0;
+	if (this->collision == Collision::RIGHT && direction == 1) {
+		direction = 0;
 	}
-	else if (this ->nesw == WEST && linksRechts == -1) {
-		linksRechts = 0;
+	else if (this->collision == Collision::LEFT && direction == -1) {
+		direction = 0;
 	}
-	this->linksRechts = linksRechts * 1000;
-	
-	this->nesw = -1;
+	this->direction = direction * 1000;
+	this->collision = Collision::NONE;
 }
 
 void Spieler::update(float dtime)
 {
 	Matrix aktuelleTransformation = transform();
 	Matrix verschiebungsMatrix;
-	verschiebungsMatrix.translation(linksRechts * dtime, 0, 0);
+	verschiebungsMatrix.translation(direction * dtime, 0, 0);
 	transform(aktuelleTransformation * verschiebungsMatrix);
 
 	this->spielerBullet->update(dtime);
 }
 
-void Spieler::collisionFeld(int nesw)
+void Spieler::collisionBorder(Collision collision)
 {
-	this->nesw = nesw;
+	this->collision = collision;
+	cout << (collision == Collision::RIGHT? "right": "left") << endl;
 }
 
 void Spieler::collisionBullet(int schaden)
