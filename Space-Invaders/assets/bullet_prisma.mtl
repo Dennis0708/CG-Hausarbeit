@@ -1,4 +1,4 @@
-# Blender MTL File: 'bullet.blend'
+# Blender MTL File: 'bullet_prisma.blend'
 # Material Count: 1
 
 newmtl Material
@@ -11,3 +11,4 @@ Ni 1.450000
 d 1.000000
 illum 2
 map_Kd green_bullet.jpg
+map_Ke green_bullet.jpg
