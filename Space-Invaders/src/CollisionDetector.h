@@ -18,4 +18,3 @@ public:
 	Model* collision(Model* bullet, list<Gegner*>* gegnerList);
 	bool collision(Model* model1, Model*  model2);
 };
-

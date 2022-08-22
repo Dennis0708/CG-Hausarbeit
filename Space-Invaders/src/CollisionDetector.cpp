@@ -42,6 +42,7 @@ Model* CollisionDetector::collision(Model* model, list<Gegner*>* gegnerList)
 			return gegner;
 		}
 	}
+	return nullptr;
 }
 
 bool  CollisionDetector::collision(Model* model1, Model* model2)
@@ -52,9 +53,11 @@ bool  CollisionDetector::collision(Model* model1, Model* model2)
 	Vector maxModel2 = model2->boundingBox().Max + model2->transform().translation();
 	if (maxModel1.Y > minModel2.Y && minModel1.Y < maxModel2.Y) {
 		if (maxModel1.X > minModel2.X && minModel1.X < maxModel2.X) {
-			model2->collisionBullet(1);
-			model1->collisionBullet(1);
-			return true;
+			if (maxModel1.Z > minModel2.Z && minModel1.Z < maxModel2.Z) {
+				/*model2->collisionBullet(1);
+				model1->collisionBullet(1);*/
+				return true;
+			}
 		}
 	}
 	return false;

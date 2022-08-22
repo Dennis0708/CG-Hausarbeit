@@ -5,12 +5,6 @@
 #include "PhongShader.h"
 #include "vector.h"
 
-
-#define NORTH 0
-#define EAST 1
-#define SOUTH 2
-#define WEST 3
-
 class Spieler: public Model
 {
 	int lebenspunkte;

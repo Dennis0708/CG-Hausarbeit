@@ -35,28 +35,13 @@
 #endif
 
 
-Application::Application(GLFWwindow* pWin) : collisionList(new list<Model*>()), pWindow(pWin), Cam(pWin), pModel(NULL), ShadowGenerator(2048, 2048)
+Application::Application(GLFWwindow* pWin) : pWindow(pWin), Cam(pWin), pModel(NULL), ShadowGenerator(2048, 2048)
 {
 	Cam.setPosition(Vector(0, 0, 10));
+	Cam.update();
 
-	int width, height;
-	glfwGetWindowSize(pWindow, &width, &height);
+	this->createFeld();
 
-
-	Vector minD, maxD, pos;
-	minD = this->calc3DRay(0, height, pos);
-	maxD = this->calc3DRay(width, 0, pos);
-
-	pos = Vector(0, 0, 10);
-
-	Vector ebene = Vector(0, 0, 1);
-	float maxS = -ebene.dot(pos) / ebene.dot(maxD);
-	float minS = -ebene.dot(pos) / ebene.dot(minD);
-
-	Vector maxRay = pos + maxD * maxS;
-	Vector minRay = pos + minD * minS;
-
-	this->feld = new AABB(minRay, maxRay);
 	this->gameWidth = this->feld->size().X;
 	this->gameHeight = this->feld->size().Y;
 	this->collisionDetector = new CollisionDetector(this->feld);
@@ -76,9 +61,13 @@ void Application::start()
 
 void Application::update(float dtime)
 {
+	//cout << 1/dtime << endl;
 	Cam.update();
 	if (glfwGetKey(pWindow, GLFW_KEY_ESCAPE)) {
 		exit(0);
+	}
+	if (glfwGetKey(pWindow, GLFW_KEY_R)) {
+		Cam.setPosition(Vector(0, 0, 10));
 	}
 	int links = glfwGetKey(pWindow, GLFW_KEY_LEFT);
 	int rechts = glfwGetKey(pWindow, GLFW_KEY_RIGHT);
@@ -106,34 +95,43 @@ void Application::collisionFeld()
 	if (collision != Collision::NONE) this->spieler->collisionBorder(collision);
 	collision = this->collisionDetector->borderCollision(this->spieler->getBullet());
 	if (collision != Collision::NONE) this->spieler->getBullet()->collisionBorder(collision);
+	list<Gegner*>* gegnerListe = this->invasion->getGegnerListe();
+	for (Gegner* gegner : *gegnerListe) {
+		if (gegner->getBullet()) {
+			collision = this->collisionDetector->borderCollision(gegner->getBullet());
+			if (collision != Collision::NONE) {
+				gegner->getBullet()->collisionBorder(collision);
+				this->invasion->addBullet(gegner->getBullet());
+			}
+		}
+	}
 }
 
 void Application::collisionBullet()
 {
-	/*queue<Bullet*>* gegnerBullets = this->invasion->getBulletQueue();
-	Bullet* spielerBullet = this->spieler->getBullet();
-	Vector minBulletHitbox = spielerBullet->boundingBox().Min + spielerBullet->transform().translation();
-	Vector maxBulletHitbox = spielerBullet->boundingBox().Max + spielerBullet->transform().translation();
-	if (spielerBullet->transform().translation().Z == 0) {
-		bool treffer = false;
-		for (Model* m : *this->collisionList) {
-			if (spielerBullet != m && !treffer && m->transform().translation().Z == 0) {
-				Vector minHitbox = m->boundingBox().Min + m->transform().translation();
-				Vector maxHitbox = m->boundingBox().Max + m->transform().translation();
-				if (maxBulletHitbox.Y > minHitbox.Y && minBulletHitbox.Y < maxHitbox.Y)
-					if (maxBulletHitbox.X > minHitbox.X && minBulletHitbox.X < maxHitbox.X) {
-						m->collisionBullet(1);
-						spielerBullet->collisionBullet(1);
-						treffer = true;
-					}
+	Gegner* gegner = (Gegner*) this->collisionDetector->collision(this->spieler->getBullet(), this->invasion->getGegnerListe());
+	if (gegner) {
+		this->spieler->getBullet()->collisionBullet(1);
+		this->invasion->removeGegner(gegner);
+	}
+	list<Gegner*>* gegnerListe = this->invasion->getGegnerListe();
+	for (Gegner* gegner : *gegnerListe) {
+		if (gegner->getBullet()) {
+			if (this->collisionDetector->collision(this->spieler, gegner->getBullet())) {
+				gegner->getBullet()->collisionBullet(1);
+				this->spieler->collisionBullet(1);
+				this->invasion->addBullet(gegner->getBullet());
 			}
-
+			else if (this->spieler->getBullet()) {
+				if (this->collisionDetector->collision(this->spieler->getBullet(), gegner->getBullet())) {
+					gegner->getBullet()->collisionBullet(1);
+					this->spieler->getBullet()->collisionBullet(1);
+					this->invasion->addBullet(gegner->getBullet());
+				}
+			}
 		}
-	}*/
-	this->collisionDetector->collision(this->spieler->getBullet(), this->invasion->getGegnerListe());
+	}
 }
-
-
 
 void Application::draw()
 {
@@ -163,27 +161,46 @@ void Application::end()
 	Models.clear();
 }
 
+void Application::createFeld() {
+	int width, height;
+	glfwGetWindowSize(pWindow, &width, &height);
+
+	Vector minD, maxD, pos;
+	minD = this->calc3DRay(0, height, pos);
+	maxD = this->calc3DRay(width, 0, pos);
+
+	Vector ebene = Vector(0, 0, 1);
+	float maxS = -ebene.dot(pos) / ebene.dot(maxD);
+	float minS = -ebene.dot(pos) / ebene.dot(minD);
+
+	cout << maxS << " : " << minS << endl;
+
+	Vector maxRay = pos + maxD * maxS;
+	Vector minRay = pos + minD * minS;
+
+	this->feld = new AABB(minRay, maxRay);
+}
+
 void Application::createGame()
 {
 	Matrix m;
 	PhongShader* pShader = new PhongShader();
 
-	pModel = new TriangleBoxModel(this->feld->Max.X - this->feld->Min.X, this->feld->Max.Y - this->feld->Min.Y, 0);
+	pModel = new TriangleBoxModel((this->feld->Max.X - this->feld->Min.X) * 2, (this->feld->Max.Y - this->feld->Min.Y) * 2, 0);
 	pShader->ambientColor(Color(1, 1, 1));
+	pShader->diffuseTexture(Texture::LoadShared(ASSET_DIRECTORY "texture/dirtyWalkwayBorder_C_00.dds"));
 	pModel->shader(pShader, true);
-	m.translation(0, 0, 0);
+	m.translation(0, 0, -1);
 	pModel->transform(m);
 	Models.push_back(pModel);
 
-	Bullet* pBullet = new Bullet(ASSET_DIRECTORY "US_Dollar_Sign/US_Dollar_Sign.obj", Cam.position() + Vector(0, 0, 10), 0.01f, 10);
+	Bullet* pBullet = new Bullet(ASSET_DIRECTORY "bullet_zylinder.obj", Cam.position() + Vector(0, 0, 10), 0.3f, 10);
 	pShader = new PhongShader();
 	pBullet->shader(pShader, true);
-	this->collisionList->push_back(pBullet);
 
 	spieler = new Spieler(ASSET_DIRECTORY "Space_Invader.obj", Vector(0, -6, 0), 0.006f, 10, pBullet);
 	spieler->shader(new PhongShader(), true);
 	Models.push_back(spieler);
-	this->collisionList->push_back(spieler);
 
 	list<Gegner*>* gegnerListe = new list<Gegner*>();
 	int anzahlGegner = 20;
@@ -191,7 +208,6 @@ void Application::createGame()
 		Gegner* gegner = new Gegner(ASSET_DIRECTORY "Space_Invader.obj", Vector(0, 0, 0), 0.006f, 1);
 		gegner->shader(new PhongShader(), true);
 		Models.push_back(gegner);
-		this->collisionList->push_back(gegner);
 		gegnerListe->push_back(gegner);
 	}
 	this->invasion = new Invasion(gegnerListe);
@@ -205,15 +221,15 @@ void Application::createGame()
 	int maxBullets = 10;
 	queue<Bullet*>* bulletQueue = new queue<Bullet*>();
 	for (int i = 0; i < maxBullets; i++) {
-		pBullet = new Bullet(ASSET_DIRECTORY "US_Dollar_Sign/US_Dollar_Sign.obj", Cam.position() + Vector(0, 0, 10), 0.01f, 2);
+		pBullet = new Bullet(ASSET_DIRECTORY "bullet_prisma.obj", Cam.position() + Vector(0, 0, 10), 0.6f, 2);
 		pShader = new PhongShader();
 		pShader->ambientColor(Color(0.5f, 0.5f, 0));
 		pBullet->shader(pShader, true);
 		bulletQueue->push(pBullet);
 		Models.push_back(pBullet);
-		this->collisionList->push_back(pBullet);
 	}
 	this->invasion->setBulletQueue(bulletQueue);
+
 	// directional lights
 	DirectionalLight* dl = new DirectionalLight();
 	dl->direction(Vector(0.2f, -1, 1));

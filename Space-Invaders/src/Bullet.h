@@ -20,4 +20,3 @@ public:
 	void stop();
 	bool isMoving();
 };
-

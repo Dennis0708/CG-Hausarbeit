@@ -1,6 +1,7 @@
 #include "Gegner.h"
 
-Gegner::Gegner(const char* ModelFile, Vector& position, float size, int lebenspunkte) : Model(ModelFile, position, size), lebenspunkte(lebenspunkte), bullet(nullptr), geschwindigkeit(0)
+Gegner::Gegner(const char* ModelFile, Vector& position, float size, int lebenspunkte)
+	: Model(ModelFile, position, size), lebenspunkte(lebenspunkte), bullet(nullptr), geschwindigkeit(0), collision(Collision::NONE), linksRechts(nullptr), runter(nullptr)
 {
 
 }
@@ -13,9 +14,13 @@ void Gegner::update(float dtime, int anzahlGegner)
 	verschiebungsMatrix.translation(this->geschwindigkeit * dtime, *this->runter, 0);
 	transform(aktuelleTransformation * verschiebungsMatrix);
 
-
 	if (this->bullet) {
-		this->bullet->update(dtime);
+		if (this->bullet->isMoving()) {
+			this->bullet->update(dtime);
+		}
+		else {
+			this->bullet = nullptr;
+		}
 	}
 }
 
@@ -32,6 +37,7 @@ void Gegner::collisionBorder(Collision collision)
 
 void Gegner::collisionBullet(int schaden)
 {
+
 }
 
 void Gegner::setPosition(Vector& position)
@@ -62,4 +68,12 @@ void Gegner::draw(const BaseCamera& Cam) {
 
 void Gegner::shoot(Bullet* bullet) {
 	this->bullet = bullet;
+	if (!this->bullet->isMoving()) {
+		this->bullet->setPosition(this->transform().translation() + Vector(0, -1, 0), Vector(0, -1, 0));
+	}
+}
+
+Bullet* Gegner::getBullet()
+{
+	return this->bullet;
 }

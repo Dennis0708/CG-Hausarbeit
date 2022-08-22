@@ -23,5 +23,5 @@ public:
 	void setRunter(float* runter);
 	void draw(const BaseCamera& Cam);
 	void shoot(Bullet* bullet);
-
+	Bullet* getBullet();
 };

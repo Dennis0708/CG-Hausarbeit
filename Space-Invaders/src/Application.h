@@ -40,6 +40,7 @@ public:
     Vector calc3DRay(float x, float y, Vector& Pos);
 protected:
 	void createGame();
+    void createFeld();
     Camera Cam;
     ModelList Models;
     GLFWwindow* pWindow;
@@ -49,9 +50,8 @@ protected:
     float gameHeight;
     Spieler* spieler;
     AABB* feld;
-    list<Model*> *collisionList;
     Invasion* invasion;
     CollisionDetector* collisionDetector;
 };
 
-#endif /* Application_hpp */
+#endif Application_hpp

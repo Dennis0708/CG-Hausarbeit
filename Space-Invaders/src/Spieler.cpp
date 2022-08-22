@@ -32,7 +32,7 @@ void Spieler::update(float dtime)
 void Spieler::collisionBorder(Collision collision)
 {
 	this->collision = collision;
-	cout << (collision == Collision::RIGHT? "right": "left") << endl;
+	//cout << (collision == Collision::RIGHT? "right": "left") << endl;
 }
 
 void Spieler::collisionBullet(int schaden)

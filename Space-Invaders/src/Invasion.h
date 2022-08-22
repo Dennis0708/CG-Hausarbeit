@@ -7,12 +7,9 @@
 class Invasion
 {
 	list<Gegner*>* gegnerListe;
-	//queue<Gegner*>* aktuelleGegnerQueue;
-	//int anzahlGegner;
+	float timeSinceShoot;
 	int direction;
 	float down;
-	//float vorher;
-	//float gameHeight;
 	queue<Bullet*>* bulletQueue;
 public:
 	Invasion(list<Gegner*>* gegnerListe);
@@ -23,5 +20,9 @@ public:
 	queue<Bullet*>* getBulletQueue();
 	list<Gegner*>* getGegnerListe();
 	void collisionBorder(Collision collision, float down);
+	void addGegner(Gegner* gegner);
+	void removeGegner(Gegner* gegner);
+	bool shoot();
+	void addBullet(Bullet* bullet);
 };
 
