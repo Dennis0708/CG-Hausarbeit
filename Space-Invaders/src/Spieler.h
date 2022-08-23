@@ -20,4 +20,5 @@ public:
 	void draw(const BaseCamera& Cam);
 	void shoot();
 	Bullet* getBullet();
+	int getLebenspunkte();
 };

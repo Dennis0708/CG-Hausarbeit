@@ -25,17 +25,14 @@
 #include "model.h"
 #include "ShaderLightmapper.h"
 
-
-
-
 #ifdef WIN32
 #define ASSET_DIRECTORY "../../assets/"
 #else
 #define ASSET_DIRECTORY "../assets/"
 #endif
 
-
-Application::Application(GLFWwindow* pWin) : pWindow(pWin), Cam(pWin), pModel(NULL), ShadowGenerator(2048, 2048)
+Application::Application(GLFWwindow* pWin)
+	: pWindow(pWin), Cam(pWin), pModel(NULL), ShadowGenerator(2048, 2048), gegnerListe(new list<Gegner*>()), bulletQueue(new queue<Bullet*>()), menu(nullptr), gameState(GameState::BEFORE_START)
 {
 	Cam.setPosition(Vector(0, 0, 10));
 	Cam.update();
@@ -64,28 +61,23 @@ void Application::update(float dtime)
 	//cout << 1/dtime << endl;
 	Cam.update();
 
-	if (glfwGetKey(pWindow, GLFW_KEY_ESCAPE)) {
+	/*if (glfwGetKey(pWindow, GLFW_KEY_ESCAPE)) {
 		exit(0);
-	}
+	}*/
 	if (glfwGetKey(pWindow, GLFW_KEY_R)) {
 		Cam.setPosition(Vector(0, 0, 10));
 	}
-	int links = glfwGetKey(pWindow, GLFW_KEY_LEFT);
-	int rechts = glfwGetKey(pWindow, GLFW_KEY_RIGHT);
-	bool shotFired = glfwGetKey(pWindow, GLFW_KEY_SPACE);
 
-	this->spieler->steuern(rechts - links);
-	this->spieler->update(dtime);
-	if (shotFired) {
-		this->spieler->shoot();
-	}
-	this->invasion->update(dtime);
-
-	this->collisionFeld();
-	this->collisionBullet();
-
-	if (this->invasion->getGegnerListe()->empty()) {
-		exit(0);
+	switch (this->gameState) {
+		case GameState::BEFORE_START:
+			this->updateStartscreen();
+			break;
+		case GameState::GAME_STARTED:
+			this->updateGame(dtime);
+			break;
+		case GameState::PAUSE:
+			this->updateMenu(dtime);
+			break;
 	}
 }
 
@@ -94,7 +86,7 @@ void Application::collisionFeld()
 	Collision collision = this->collisionDetector->borderCollisionGegner(this->invasion->getGegnerListe());
 	if (collision != Collision::NONE) {
 		if (collision == Collision::DOWN) {
-			exit(0);
+			this->reset();
 		}
 		this->invasion->collisionBorder(collision, -this->gameHeight * 2.f);
 	}
@@ -184,6 +176,64 @@ void Application::createFeld() {
 	this->feld = new AABB(minRay, maxRay);
 }
 
+void Application::updateGame(float dtime)
+{
+	if (glfwGetKey(pWindow, GLFW_KEY_ESCAPE)) {
+
+	}
+	int links = glfwGetKey(pWindow, GLFW_KEY_LEFT);
+	int rechts = glfwGetKey(pWindow, GLFW_KEY_RIGHT);
+	bool shotFired = glfwGetKey(pWindow, GLFW_KEY_SPACE);
+
+	this->spieler->steuern(rechts - links);
+	this->spieler->update(dtime);
+	if (shotFired) {
+		this->spieler->shoot();
+	}
+	this->invasion->update(dtime);
+
+	this->collisionFeld();
+	this->collisionBullet();
+
+	if (this->spieler->getLebenspunkte() == 0) {
+		this->reset();
+	}
+	if (this->invasion->getGegnerListe()->empty()) {
+		this->reset();
+	}
+}
+
+void Application::updateStartscreen()
+{
+	if (glfwGetKey(pWindow, GLFW_KEY_ENTER)) {
+		this->gameState = GameState::GAME_STARTED;
+	}
+}
+
+void Application::updateMenu(float dtime)
+{
+	
+}
+
+void Application::reset()
+{
+	this->gameState = GameState::BEFORE_START;
+	delete this->invasion;
+	list<Gegner*>* tmpGegnerList = new list<Gegner*>();
+	for (Gegner* gegner : *this->gegnerListe) {
+		tmpGegnerList->push_back(gegner);
+	}
+	this->invasion = new Invasion(tmpGegnerList);
+	this->invasion->start(this->gameHeight, 5, Vector(-4, 2, 0));
+	for (int i = 0; i < this->bulletQueue->size(); i++) {
+		Bullet* tmp = this->bulletQueue->front();
+		tmp->setPosition(Vector(0,0,20), Vector(0,0,0));
+		this->bulletQueue->pop();
+		this->bulletQueue->push(tmp);
+	}
+	this->invasion->setBulletQueue(this->bulletQueue);
+}
+
 void Application::createGame()
 {
 	Matrix m;
@@ -207,16 +257,17 @@ void Application::createGame()
 	spieler->shader(pShader, true);
 	Models.push_back(spieler);
 
-	list<Gegner*>* gegnerListe = new list<Gegner*>();
 	int anzahlGegner = 20;
+	list<Gegner*>* tmpGegnerList = new list<Gegner*>();
 	for (int i = 0; i < anzahlGegner; i++) {
 		Gegner* gegner = new Gegner(ASSET_DIRECTORY "Space_Invader/Space_Invader_Small.obj", Vector(0, 0, 0), 0.006f, 1);
 		pShader = new PhongShader();
 		gegner->shader(pShader, true);
 		Models.push_back(gegner);
-		gegnerListe->push_back(gegner);
+		tmpGegnerList->push_back(gegner);
+		this->gegnerListe->push_back(gegner);
 	}
-	this->invasion = new Invasion(gegnerListe);
+	this->invasion = new Invasion(tmpGegnerList);
 	this->invasion->start(this->gameHeight, 5, Vector(-4, 2, 0));
 
 	/*pModel = new LineBoxModel(spieler->boundingBox().size().X, spieler->boundingBox().size().Y, spieler->boundingBox().size().Z);
@@ -226,7 +277,6 @@ void Application::createGame()
 	Models.push_back(pModel);*/
 
 	int maxBullets = 10;
-	queue<Bullet*>* bulletQueue = new queue<Bullet*>();
 	for (int i = 0; i < maxBullets; i++) {
 		pBullet = new Bullet(ASSET_DIRECTORY "bullet_prisma.obj", Cam.position() + Vector(0, 0, 10), 0.6f, 2);
 		pShader = new PhongShader();
@@ -235,6 +285,14 @@ void Application::createGame()
 		Models.push_back(pBullet);
 	}
 	this->invasion->setBulletQueue(bulletQueue);
+
+	this->menu = new Menu(this->feld->size().X * 0.3f, this->feld->size().Y * 0.3f, 0);
+	pShader = new PhongShader();
+	pShader->ambientColor(Color(0, 0, 0.5f));
+	this->menu->shader(pShader, true);
+	m.translation(Vector(0, 0, 2));
+	this->menu->transform(m);
+	Models.push_back(this->menu);
 
 	// directional lights
 	DirectionalLight* dl = new DirectionalLight();

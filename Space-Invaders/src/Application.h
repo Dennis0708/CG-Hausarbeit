@@ -25,6 +25,8 @@
 #include <queue>
 #include "Invasion.h"
 #include "CollisionDetector.h"
+#include "Menu.h"
+#include "GameState.h"
 
 class Application
 {
@@ -41,8 +43,14 @@ public:
 protected:
 	void createGame();
     void createFeld();
+    void updateGame(float dtime);
+    void updateStartscreen();
+    void updateMenu(float dtime);
+    void reset();
     Camera Cam;
     ModelList Models;
+    list<Gegner*>* gegnerListe;
+    queue<Bullet*>* bulletQueue;
     GLFWwindow* pWindow;
 	BaseModel* pModel;
 	ShadowMapGenerator ShadowGenerator;
@@ -52,6 +60,8 @@ protected:
     AABB* feld;
     Invasion* invasion;
     CollisionDetector* collisionDetector;
+    Menu* menu;
+    GameState gameState;
 };
 
 #endif Application_hpp

@@ -5,6 +5,14 @@ Invasion::Invasion(list<Gegner*>* gegnerListe)
 {
 }
 
+Invasion::~Invasion()
+{
+	for (Bullet* bullet : *this->bulletsInGame) {
+		this->addBullet(bullet);
+	}
+	delete this->bulletsInGame;
+}
+
 void Invasion::start(float height, int anzahlProReihe, Vector& obenLinks)
 {
 	this->direction = 1;

@@ -7,14 +7,14 @@
 class Invasion
 {
 	list<Gegner*>* gegnerListe;
+	queue<Bullet*>* bulletQueue;
+	list<Bullet*>* bulletsInGame;
 	float timeSinceShoot;
 	int direction;
 	float down;
-	queue<Bullet*>* bulletQueue;
-	list<Bullet*> *bulletsInGame;
 public:
 	Invasion(list<Gegner*>* gegnerListe);
-	void init();
+	~Invasion();
 	void start(float heigt, int anzahlProReihe, Vector& obenLinks);
 	void update(float dtime);
 	void setBulletQueue(queue<Bullet*>* bulletQueue);

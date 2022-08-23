@@ -1,12 +1,2 @@
-﻿  Application.cpp
-C:\Medieninformatik\CG-Hausarbeit\Space-Invaders\src\Application.cpp(174,28): warning C4244: "Argument": Konvertierung von "int" in "float", möglicher Datenverlust
-C:\Medieninformatik\CG-Hausarbeit\Space-Invaders\src\Application.cpp(175,25): warning C4244: "Argument": Konvertierung von "int" in "float", möglicher Datenverlust
-  Bullet.cpp
-  CollisionDetector.cpp
-  Gegner.cpp
-  Invasion.cpp
-C:\Medieninformatik\CG-Hausarbeit\Space-Invaders\src\Invasion.cpp(98,30): warning C4101: "e": Unreferenzierte lokale Variable
-  Spieler.cpp
-  main.cpp
-  Code wird generiert...
-  CGVStudio.vcxproj -> C:\Medieninformatik\CG-Hausarbeit\Space-Invaders\CGVStudio\Debug\CGVStudio.exe
+﻿  Menu.cpp
+  CGVStudio.vcxproj -> C:\Users\Dennis\Desktop\CG-Hausarbeit\Space-Invaders\CGVStudio\Debug\CGVStudio.exe
