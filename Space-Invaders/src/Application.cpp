@@ -173,8 +173,6 @@ void Application::createFeld() {
 	float maxS = -ebene.dot(pos) / ebene.dot(maxD);
 	float minS = -ebene.dot(pos) / ebene.dot(minD);
 
-	cout << maxS << " : " << minS << endl;
-
 	Vector maxRay = pos + maxD * maxS;
 	Vector minRay = pos + minD * minS;
 
@@ -184,9 +182,10 @@ void Application::createFeld() {
 void Application::createGame()
 {
 	Matrix m;
-	PhongShader* pShader = new PhongShader();
+	PhongShader* pShader;
 
 	pModel = new TriangleBoxModel((this->feld->Max.X - this->feld->Min.X) * 2, (this->feld->Max.Y - this->feld->Min.Y) * 2, 0);
+	pShader = new PhongShader();
 	pShader->ambientColor(Color(1, 1, 1));
 	pShader->diffuseTexture(Texture::LoadShared(ASSET_DIRECTORY "texture/dirtyWalkwayBorder_C_00.dds"));
 	pModel->shader(pShader, true);
@@ -198,15 +197,17 @@ void Application::createGame()
 	pShader = new PhongShader();
 	pBullet->shader(pShader, true);
 
-	spieler = new Spieler(ASSET_DIRECTORY "Space_Invader.obj", Vector(0, -6, 0), 0.006f, 10, pBullet);
-	spieler->shader(new PhongShader(), true);
+	spieler = new Spieler(ASSET_DIRECTORY "Space_Invader/Space_Invader_Small.obj", Vector(0, -6, 0), 0.006f, 10, pBullet);
+	pShader = new PhongShader();
+	spieler->shader(pShader, true);
 	Models.push_back(spieler);
 
 	list<Gegner*>* gegnerListe = new list<Gegner*>();
 	int anzahlGegner = 20;
 	for (int i = 0; i < anzahlGegner; i++) {
-		Gegner* gegner = new Gegner(ASSET_DIRECTORY "Space_Invader.obj", Vector(0, 0, 0), 0.006f, 1);
-		gegner->shader(new PhongShader(), true);
+		Gegner* gegner = new Gegner(ASSET_DIRECTORY "Space_Invader/Space_Invader_Small.obj", Vector(0, 0, 0), 0.006f, 1);
+		pShader = new PhongShader();
+		gegner->shader(pShader, true);
 		Models.push_back(gegner);
 		gegnerListe->push_back(gegner);
 	}
@@ -218,12 +219,12 @@ void Application::createGame()
 	pShader->ambientColor(Color(1, 0, 0));
 	pModel->shader(pShader, true);
 	Models.push_back(pModel);*/
+
 	int maxBullets = 10;
 	queue<Bullet*>* bulletQueue = new queue<Bullet*>();
 	for (int i = 0; i < maxBullets; i++) {
 		pBullet = new Bullet(ASSET_DIRECTORY "bullet_prisma.obj", Cam.position() + Vector(0, 0, 10), 0.6f, 2);
 		pShader = new PhongShader();
-		pShader->ambientColor(Color(0.5f, 0.5f, 0));
 		pBullet->shader(pShader, true);
 		bulletQueue->push(pBullet);
 		Models.push_back(pBullet);

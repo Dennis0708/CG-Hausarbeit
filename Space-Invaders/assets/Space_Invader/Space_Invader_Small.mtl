@@ -12,3 +12,4 @@ newmtl 02___Default
 	Kd 1.0000 1.0000 1.0000
 	Ks 0.6930 0.6930 0.6930
 	Ke 0.0000 0.0000 0.0000
+map_Kd ../texture/damagedAsphalt_C_00.dds

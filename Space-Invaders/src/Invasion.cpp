@@ -107,5 +107,4 @@ bool Invasion::shoot()
 void Invasion::addBullet(Bullet* bullet)
 {
 	this->bulletQueue->push(bullet);
-	cout << bullet->transform().translation().toString() << endl;
 }

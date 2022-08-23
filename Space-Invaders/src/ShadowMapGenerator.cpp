@@ -5,14 +5,14 @@
 #include "PhongShader.h"
 
 #ifdef WIN32
-#define ASSET_DIRECTORY "../../assets/"
+#define ASSET_GLSL_DIRECTORY "../../assets/GLSL/"
 #else
-#define ASSET_DIRECTORY "../assets/"
+#define ASSET_GLSL_DIRECTORY "../assets/GLSL/"
 #endif
 
 ShadowMapShader::ShadowMapShader()
 {
-	bool loaded = load(ASSET_DIRECTORY"vsdepth.glsl", ASSET_DIRECTORY"fsdepth.glsl");
+	bool loaded = load(ASSET_GLSL_DIRECTORY"vsdepth.glsl", ASSET_GLSL_DIRECTORY"fsdepth.glsl");
 	if (!loaded)
 		throw std::exception();
 

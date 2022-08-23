@@ -10,9 +10,9 @@
 #include <string>
 
 #ifdef WIN32
-#define ASSET_DIRECTORY "../../assets/"
+#define ASSET_GLSL_DIRECTORY "../../assets/GLSL/"
 #else
-#define ASSET_DIRECTORY "../assets/"
+#define ASSET_GLSL_DIRECTORY "../assets/GLSL/"
 #endif
 
 const char *VertexShaderCode =
@@ -79,7 +79,7 @@ PhongShader::PhongShader(bool LoadStaticShaderCode) :
     if(!LoadStaticShaderCode)
         return;
     //ShaderProgram = createShaderProgram(VertexShaderCode, FragmentShaderCode);
-	bool loaded = load(ASSET_DIRECTORY"vsphong.glsl", ASSET_DIRECTORY"fsphong.glsl");
+	bool loaded = load(ASSET_GLSL_DIRECTORY"vsphong.glsl", ASSET_GLSL_DIRECTORY"fsphong.glsl");
 	if (!loaded)
 		throw std::exception();
     assignLocations();
