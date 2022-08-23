@@ -109,6 +109,12 @@
     <ClCompile Include="..\..\src\Invasion.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
+    <ClCompile Include="eeee.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\CollisionDetector.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\Camera.h">
@@ -187,5 +193,7 @@
     <ClInclude Include="..\..\src\Bullet.h" />
     <ClInclude Include="..\..\src\Gegner.h" />
     <ClInclude Include="..\..\src\Invasion.h" />
+    <ClInclude Include="..\..\src\Collision.h" />
+    <ClInclude Include="..\..\src\CollisionDetector.h" />
   </ItemGroup>
 </Project>

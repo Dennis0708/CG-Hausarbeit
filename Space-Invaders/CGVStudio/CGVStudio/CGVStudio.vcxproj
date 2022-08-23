@@ -91,6 +91,7 @@
     <ClCompile Include="..\..\src\BaseShader.cpp" />
     <ClCompile Include="..\..\src\Bullet.cpp" />
     <ClCompile Include="..\..\src\Camera.cpp" />
+    <ClCompile Include="..\..\src\CollisionDetector.cpp" />
     <ClCompile Include="..\..\src\color.cpp" />
     <ClCompile Include="..\..\src\ConstantShader.cpp" />
     <ClCompile Include="..\..\src\Framebuffer.cpp" />
@@ -114,6 +115,7 @@
     <ClCompile Include="..\..\src\TriangleSphereModel.cpp" />
     <ClCompile Include="..\..\src\vector.cpp" />
     <ClCompile Include="..\..\src\VertexBuffer.cpp" />
+    <ClCompile Include="eeee.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\Aabb.h" />
@@ -122,6 +124,8 @@
     <ClInclude Include="..\..\src\BaseShader.h" />
     <ClInclude Include="..\..\src\Bullet.h" />
     <ClInclude Include="..\..\src\Camera.h" />
+    <ClInclude Include="..\..\src\Collision.h" />
+    <ClInclude Include="..\..\src\CollisionDetector.h" />
     <ClInclude Include="..\..\src\color.h" />
     <ClInclude Include="..\..\src\ConstantShader.h" />
     <ClInclude Include="..\..\src\Framebuffer.h" />
