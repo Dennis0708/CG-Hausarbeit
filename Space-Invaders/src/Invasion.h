@@ -11,6 +11,7 @@ class Invasion
 	int direction;
 	float down;
 	queue<Bullet*>* bulletQueue;
+	list<Bullet*> *bulletsInGame;
 public:
 	Invasion(list<Gegner*>* gegnerListe);
 	void init();
@@ -24,5 +25,6 @@ public:
 	void removeGegner(Gegner* gegner);
 	bool shoot();
 	void addBullet(Bullet* bullet);
+	list<Bullet*> *getBulletsInGame();
 };
 

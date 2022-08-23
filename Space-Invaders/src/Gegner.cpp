@@ -15,10 +15,7 @@ void Gegner::update(float dtime, int anzahlGegner)
 	transform(aktuelleTransformation * verschiebungsMatrix);
 
 	if (this->bullet) {
-		if (this->bullet->isMoving()) {
-			this->bullet->update(dtime);
-		}
-		else {
+		if (!this->bullet->isMoving()) {
 			this->bullet = nullptr;
 		}
 	}

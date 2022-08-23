@@ -63,6 +63,7 @@ void Application::update(float dtime)
 {
 	//cout << 1/dtime << endl;
 	Cam.update();
+
 	if (glfwGetKey(pWindow, GLFW_KEY_ESCAPE)) {
 		exit(0);
 	}
@@ -83,12 +84,18 @@ void Application::update(float dtime)
 	this->collisionFeld();
 	this->collisionBullet();
 
+	if (this->invasion->getGegnerListe()->empty()) {
+		exit(0);
+	}
 }
 
 void Application::collisionFeld()
 {
 	Collision collision = this->collisionDetector->borderCollisionGegner(this->invasion->getGegnerListe());
 	if (collision != Collision::NONE) {
+		if (collision == Collision::DOWN) {
+			exit(0);
+		}
 		this->invasion->collisionBorder(collision, -this->gameHeight * 2.f);
 	}
 	collision = this->collisionDetector->borderCollision(this->spieler);
@@ -109,25 +116,23 @@ void Application::collisionFeld()
 
 void Application::collisionBullet()
 {
-	Gegner* gegner = (Gegner*) this->collisionDetector->collision(this->spieler->getBullet(), this->invasion->getGegnerListe());
+	Gegner* gegner = (Gegner*)this->collisionDetector->collision(this->spieler->getBullet(), this->invasion->getGegnerListe());
 	if (gegner) {
 		this->spieler->getBullet()->collisionBullet(1);
 		this->invasion->removeGegner(gegner);
 	}
-	list<Gegner*>* gegnerListe = this->invasion->getGegnerListe();
-	for (Gegner* gegner : *gegnerListe) {
-		if (gegner->getBullet()) {
-			if (this->collisionDetector->collision(this->spieler, gegner->getBullet())) {
-				gegner->getBullet()->collisionBullet(1);
-				this->spieler->collisionBullet(1);
-				this->invasion->addBullet(gegner->getBullet());
-			}
-			else if (this->spieler->getBullet()) {
-				if (this->collisionDetector->collision(this->spieler->getBullet(), gegner->getBullet())) {
-					gegner->getBullet()->collisionBullet(1);
-					this->spieler->getBullet()->collisionBullet(1);
-					this->invasion->addBullet(gegner->getBullet());
-				}
+	list<Bullet*>* bullets = this->invasion->getBulletsInGame();
+	for (Bullet* bullet : *bullets) {
+		if (this->collisionDetector->collision(this->spieler, bullet)) {
+			bullet->collisionBullet(1);
+			this->spieler->collisionBullet(bullet->getStrength());
+			this->invasion->addBullet(bullet);
+		}
+		else if (this->spieler->getBullet()->isMoving()) {
+			if (this->collisionDetector->collision(this->spieler->getBullet(), bullet)) {
+				bullet->collisionBullet(this->spieler->getBullet()->getStrength());
+				this->spieler->getBullet()->collisionBullet(bullet->getStrength());
+				this->invasion->addBullet(bullet);
 			}
 		}
 	}

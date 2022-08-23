@@ -32,11 +32,14 @@ void Spieler::update(float dtime)
 void Spieler::collisionBorder(Collision collision)
 {
 	this->collision = collision;
-	//cout << (collision == Collision::RIGHT? "right": "left") << endl;
 }
 
 void Spieler::collisionBullet(int schaden)
 {
+	this->lebenspunkte -= schaden;
+	if (lebenspunkte == 0) {
+		exit(0);
+	}
 }
 
 void Spieler::draw(const BaseCamera& Cam) {

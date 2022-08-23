@@ -19,4 +19,5 @@ public:
 	void setPosition(Vector& position, Vector& richtung);
 	void stop();
 	bool isMoving();
+	int getStrength();
 };

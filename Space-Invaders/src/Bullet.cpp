@@ -6,8 +6,8 @@ Bullet::Bullet(const char* ModelFile, Vector& positon, float size, int strength)
 void Bullet::update(float dtime) {
 	if (this->upDown.Y != 0) {
 		Matrix translationMat;
-		float geschwindigkeit = 10;
-		translationMat.translation(this->upDown * (1/this->size) * geschwindigkeit * dtime);
+		float geschwindigkeit = 2;
+		translationMat.translation(this->upDown  * geschwindigkeit * dtime);
 		transform(transform() * translationMat);
 	}
 }
@@ -37,4 +37,9 @@ void Bullet::stop() {
 
 bool Bullet::isMoving() {
 	return this->upDown.Y != 0;
+}
+
+int Bullet::getStrength()
+{
+	return this->strength;
 }

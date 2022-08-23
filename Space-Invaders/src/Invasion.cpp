@@ -1,6 +1,7 @@
 #include "Invasion.h"
 
-Invasion::Invasion(list<Gegner*>* gegnerListe) : gegnerListe(gegnerListe), direction(0), down(0), bulletQueue(nullptr), timeSinceShoot(0)
+Invasion::Invasion(list<Gegner*>* gegnerListe)
+	: gegnerListe(gegnerListe), direction(0), down(0), bulletQueue(nullptr), bulletsInGame(new list<Bullet*>), timeSinceShoot(0)
 {
 }
 
@@ -27,11 +28,23 @@ void Invasion::update(float dtime)
 	this->timeSinceShoot += dtime;
 	for (Gegner* gegner : *gegnerListe) {
 		gegner->update(dtime, this->gegnerListe->size());
+
 	}
 	if (this->timeSinceShoot >= 2) {
 		if (this->shoot()) {
 			this->timeSinceShoot = 0;
 		}
+	}
+	list<Bullet*> toRemove;
+	for (Bullet* bullet : *this->bulletsInGame) {
+		bullet->update(dtime);
+		if (!bullet->isMoving()) {
+			this->bulletQueue->push(bullet);
+			toRemove.push_back(bullet);
+		}
+	}
+	for (Bullet* bullet : toRemove) {
+		this->bulletsInGame->remove(bullet);
 	}
 	//cout << "BulleQueueSize: " << this->bulletQueue->size() << endl;
 	this->down = 0;
@@ -65,7 +78,7 @@ void Invasion::addGegner(Gegner* gegner)
 
 void Invasion::removeGegner(Gegner* gegner)
 {
-	gegner->setPosition(Vector(0,0,20));
+	gegner->setPosition(Vector(0, 0, 20));
 	this->gegnerListe->remove(gegner);
 }
 
@@ -98,6 +111,7 @@ bool Invasion::shoot()
 	}
 	if (!gegner->getBullet()) {
 		gegner->shoot(this->bulletQueue->front());
+		this->bulletsInGame->push_back(gegner->getBullet());
 		this->bulletQueue->pop();
 		return true;
 	}
@@ -107,4 +121,9 @@ bool Invasion::shoot()
 void Invasion::addBullet(Bullet* bullet)
 {
 	this->bulletQueue->push(bullet);
+}
+
+list<Bullet*>* Invasion::getBulletsInGame()
+{
+	return this->bulletsInGame;
 }
