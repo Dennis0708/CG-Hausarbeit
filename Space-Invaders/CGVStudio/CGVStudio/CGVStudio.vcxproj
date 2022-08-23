@@ -115,7 +115,6 @@
     <ClCompile Include="..\..\src\TriangleSphereModel.cpp" />
     <ClCompile Include="..\..\src\vector.cpp" />
     <ClCompile Include="..\..\src\VertexBuffer.cpp" />
-    <ClCompile Include="eeee.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\Aabb.h" />

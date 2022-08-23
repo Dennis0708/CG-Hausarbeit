@@ -109,9 +109,6 @@
     <ClCompile Include="..\..\src\Invasion.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
-    <ClCompile Include="eeee.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\CollisionDetector.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
