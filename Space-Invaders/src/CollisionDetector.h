@@ -7,6 +7,7 @@
 #include "Collision.h"
 #include "Model.h"
 #include "Gegner.h"
+#include "TriangleBoxModel.h"
 
 class CollisionDetector
 {
@@ -15,7 +16,8 @@ public:
 	CollisionDetector(AABB* border);
 	Collision borderCollisionGegner(list<Gegner*> *modelList);
 	Collision borderCollision(Model *model);
-	Model* collision(Model* bullet, list<Gegner*>* gegnerList);
-	bool collision(Model* model1, Model*  model2);
+	BaseModel* collision(BaseModel* bullet, list<Gegner*>* gegnerList);
+	BaseModel* collision(BaseModel* bullet, list<TriangleBoxModel*>* barriere);
+	bool collision(BaseModel* model1, BaseModel*  model2);
 };
 

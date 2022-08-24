@@ -1,2 +1,5 @@
-﻿  Barriere.cpp
-  CGVStudio.vcxproj -> C:\Users\Dennis\Desktop\CG-Hausarbeit\Space-Invaders\CGVStudio\Debug\CGVStudio.exe
+﻿  Application.cpp
+C:\Medieninformatik\CG-Hausarbeit\Space-Invaders\src\Application.cpp(186,28): warning C4244: "Argument": Konvertierung von "int" in "float", möglicher Datenverlust
+C:\Medieninformatik\CG-Hausarbeit\Space-Invaders\src\Application.cpp(187,25): warning C4244: "Argument": Konvertierung von "int" in "float", möglicher Datenverlust
+C:\Medieninformatik\CG-Hausarbeit\Space-Invaders\src\Application.cpp(276,20): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+  CGVStudio.vcxproj -> C:\Medieninformatik\CG-Hausarbeit\Space-Invaders\CGVStudio\Debug\CGVStudio.exe

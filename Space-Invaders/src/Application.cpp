@@ -63,20 +63,20 @@ void Application::update(float dtime)
 	}
 
 	switch (this->gameState) {
-		case GameState::BEFORE_START:
-			this->updateStartscreen();
-			break;
-		case GameState::GAME_IS_ACTIVE:
-			this->updateGame(dtime);
-			break;
-		case GameState::PAUSE:
-			this->updateMenu(dtime);
-			break;
-		case GameState::RESET:
-			this->reset();
-			break;
-		case GameState::EXIT:
-			exit(0);
+	case GameState::BEFORE_START:
+		this->updateStartscreen();
+		break;
+	case GameState::GAME_IS_ACTIVE:
+		this->updateGame(dtime);
+		break;
+	case GameState::PAUSE:
+		this->updateMenu(dtime);
+		break;
+	case GameState::RESET:
+		this->reset();
+		break;
+	case GameState::EXIT:
+		exit(0);
 	}
 }
 
@@ -125,6 +125,23 @@ void Application::collisionBullet()
 				this->spieler->getBullet()->collisionBullet(bullet->getStrength());
 				this->invasion->addBullet(bullet);
 			}
+		}
+	}
+	for (Bullet* bullet : *bullets) {
+		for (Barriere* barriere : *this->barrieren) {
+			TriangleBoxModel* partikel = (TriangleBoxModel*)this->collisionDetector->collision(bullet, barriere->getPartikel());
+			if (partikel) {
+				barriere->collisionBullet(partikel);
+				bullet->collisionBullet(1);
+				this->invasion->addBullet(bullet);
+			}
+		}
+	}
+	for (Barriere* barriere : *this->barrieren) {
+		TriangleBoxModel* partikel = (TriangleBoxModel*)this->collisionDetector->collision(this->spieler->getBullet(), barriere->getPartikel());
+		if (partikel) {
+			barriere->collisionBullet(partikel);
+			this->spieler->getBullet()->collisionBullet(1);
 		}
 	}
 }
@@ -279,7 +296,7 @@ void Application::createGame()
 	pShader = new PhongShader();
 	pBullet->shader(pShader, true);
 
-	spieler = new Spieler(ASSET_DIRECTORY "Space_Invader/Space_Invader_Small.obj", Vector(0, -6, 0), 0.006f, 10, pBullet);
+	spieler = new Spieler(ASSET_DIRECTORY "Space_Invader/Space_Invader_Small.obj", Vector(0, -6, 0), 0.006f, 3, pBullet);
 	pShader = new PhongShader();
 	spieler->shader(pShader, true);
 	Models.push_back(spieler);
@@ -314,23 +331,25 @@ void Application::createGame()
 	this->invasion->setBulletQueue(bulletQueue);
 
 	int maxBarrieren = 3;
-	int maxPartikel = 30;
+	int maxPartikel = 50;
 	list<TriangleBoxModel*>* partikelListe;
 	TriangleBoxModel* partikel;
 	Barriere* barriere;
+	float abstand = this->gameWidth * 0.25f;
 	for (int i = 0; i < maxBarrieren; i++) {
 		partikelListe = new list<TriangleBoxModel*>();
 		for (int j = 0; j < maxPartikel; j++) {
-			partikel = new TriangleBoxModel(0.05f, 0.05f, 0.05f);
+			partikel = new TriangleBoxModel(0.2f, 0.2f, 0.2f);
 			pShader = new PhongShader();
-			pShader->diffuseColor(Color(0, 0.49f,1));
+			pShader->diffuseColor(Color(0, 0.49f, 1));
 			partikel->shader(pShader, true);
 			partikelListe->push_back(partikel);
 			this->partikelList->push_back(partikel);
 			Models.push_back(partikel);
 		}
 		barriere = new Barriere(partikelListe);
-		barriere->init(10, Vector(0,-2,0));
+		barriere->init(10, Vector((-abstand + i * abstand), -3, 0));
+		cout << -abstand + i * abstand << endl;
 		this->barrieren->push_back(barriere);
 	}
 

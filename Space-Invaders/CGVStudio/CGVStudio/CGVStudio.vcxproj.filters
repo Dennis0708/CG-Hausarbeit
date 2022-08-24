@@ -121,6 +121,9 @@
     <ClCompile Include="..\..\src\Barriere.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\GameBar.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\Camera.h">
@@ -204,5 +207,6 @@
     <ClInclude Include="..\..\src\Menu.h" />
     <ClInclude Include="..\..\src\GameState.h" />
     <ClInclude Include="..\..\src\Barriere.h" />
+    <ClInclude Include="..\..\src\GameBar.h" />
   </ItemGroup>
 </Project>

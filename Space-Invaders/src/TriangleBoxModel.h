@@ -18,10 +18,13 @@
 
 class TriangleBoxModel : public BaseModel
 {
+    AABB BoundingBox;
 public:
     TriangleBoxModel(float Width=1, float Height=1, float Depth=1 );
     virtual ~TriangleBoxModel() {}
     virtual void draw(const BaseCamera& Cam);
+    const AABB& boundingBox() const { return BoundingBox; }
+
 protected:
     VertexBuffer VB;
     IndexBuffer IB;

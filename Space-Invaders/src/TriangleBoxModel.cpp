@@ -8,7 +8,7 @@
 
 #include "TriangleBoxModel.h"
 
-TriangleBoxModel::TriangleBoxModel(float Width, float Height, float Depth)
+TriangleBoxModel::TriangleBoxModel(float Width, float Height, float Depth): BoundingBox(Vector(0,0,0),Vector(Width,Height,Depth))
 {
 	float startx = Width * 0.5f;
 	float starty = Height * 0.5f;
@@ -130,6 +130,7 @@ TriangleBoxModel::TriangleBoxModel(float Width, float Height, float Depth)
 	IB.end();
 }
 
+
 void TriangleBoxModel::draw(const BaseCamera& Cam)
 {
 	BaseModel::draw(Cam);
@@ -140,3 +141,5 @@ void TriangleBoxModel::draw(const BaseCamera& Cam)
 	IB.deactivate();
 	VB.deactivate();
 }
+
+

@@ -96,6 +96,7 @@
     <ClCompile Include="..\..\src\color.cpp" />
     <ClCompile Include="..\..\src\ConstantShader.cpp" />
     <ClCompile Include="..\..\src\Framebuffer.cpp" />
+    <ClCompile Include="..\..\src\GameBar.cpp" />
     <ClCompile Include="..\..\src\GameState.cpp" />
     <ClCompile Include="..\..\src\Gegner.cpp" />
     <ClCompile Include="..\..\src\IndexBuffer.cpp" />
@@ -132,6 +133,7 @@
     <ClInclude Include="..\..\src\color.h" />
     <ClInclude Include="..\..\src\ConstantShader.h" />
     <ClInclude Include="..\..\src\Framebuffer.h" />
+    <ClInclude Include="..\..\src\GameBar.h" />
     <ClInclude Include="..\..\src\GameState.h" />
     <ClInclude Include="..\..\src\Gegner.h" />
     <ClInclude Include="..\..\src\IndexBuffer.h" />

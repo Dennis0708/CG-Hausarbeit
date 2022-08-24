@@ -35,7 +35,7 @@ Collision CollisionDetector::borderCollision(Model* model)
 	return Collision::NONE;
 }
 
-Model* CollisionDetector::collision(Model* model, list<Gegner*>* gegnerList)
+BaseModel* CollisionDetector::collision(BaseModel* model, list<Gegner*>* gegnerList)
 {
 	for (Gegner* gegner : *gegnerList) {
 		if (this->collision(model, gegner)) {
@@ -45,7 +45,16 @@ Model* CollisionDetector::collision(Model* model, list<Gegner*>* gegnerList)
 	return nullptr;
 }
 
-bool  CollisionDetector::collision(Model* model1, Model* model2)
+BaseModel* CollisionDetector::collision(BaseModel* bullet, list<TriangleBoxModel*>* barriere) {
+	for (TriangleBoxModel* partikel: *barriere) {
+		if (this->collision(bullet, partikel)) {
+			return partikel;
+		}
+	}
+	return nullptr;
+}
+
+bool  CollisionDetector::collision(BaseModel* model1, BaseModel* model2)
 {
 	Vector minModel1 = model1->boundingBox().Min + model1->transform().translation();
 	Vector maxModel1 = model1->boundingBox().Max + model1->transform().translation();
