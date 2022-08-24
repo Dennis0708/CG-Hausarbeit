@@ -32,16 +32,13 @@
 #endif
 
 Application::Application(GLFWwindow* pWin)
-	: pWindow(pWin), Cam(pWin), pModel(NULL), ShadowGenerator(2048, 2048), gegnerListe(new list<Gegner*>()), bulletQueue(new queue<Bullet*>()), menu(nullptr), gameState(GameState::BEFORE_START)
+	: pWindow(pWin), Cam(pWin), pModel(NULL), ShadowGenerator(2048, 2048), gegnerListe(new list<Gegner*>()),
+	bulletQueue(new queue<Bullet*>()), menu(nullptr), gameState(GameState::BEFORE_START), barrieren(new list<Barriere*>()), partikelList(new list<TriangleBoxModel*>())
 {
 	Cam.setPosition(Vector(0, 0, 10));
 	Cam.update();
 
 	this->createFeld();
-
-	this->gameWidth = this->feld->size().X;
-	this->gameHeight = this->feld->size().Y;
-	this->collisionDetector = new CollisionDetector(this->feld);
 
 	this->createGame();
 }
@@ -61,9 +58,6 @@ void Application::update(float dtime)
 	//cout << 1/dtime << endl;
 	Cam.update();
 
-	/*if (glfwGetKey(pWindow, GLFW_KEY_ESCAPE)) {
-		exit(0);
-	}*/
 	if (glfwGetKey(pWindow, GLFW_KEY_R)) {
 		Cam.setPosition(Vector(0, 0, 10));
 	}
@@ -72,12 +66,17 @@ void Application::update(float dtime)
 		case GameState::BEFORE_START:
 			this->updateStartscreen();
 			break;
-		case GameState::GAME_STARTED:
+		case GameState::GAME_IS_ACTIVE:
 			this->updateGame(dtime);
 			break;
 		case GameState::PAUSE:
 			this->updateMenu(dtime);
 			break;
+		case GameState::RESET:
+			this->reset();
+			break;
+		case GameState::EXIT:
+			exit(0);
 	}
 }
 
@@ -174,60 +173,88 @@ void Application::createFeld() {
 	Vector minRay = pos + minD * minS;
 
 	this->feld = new AABB(minRay, maxRay);
+
+	this->gameWidth = this->feld->size().X;
+	this->gameHeight = this->feld->size().Y;
+	this->collisionDetector = new CollisionDetector(this->feld);
 }
 
 void Application::updateGame(float dtime)
 {
 	if (glfwGetKey(pWindow, GLFW_KEY_ESCAPE)) {
-
+		this->gameState = GameState::PAUSE;
+		this->menu->show();
+		this->menu->update();
+		this->lastMenuInput = 0;
 	}
-	int links = glfwGetKey(pWindow, GLFW_KEY_LEFT);
-	int rechts = glfwGetKey(pWindow, GLFW_KEY_RIGHT);
-	bool shotFired = glfwGetKey(pWindow, GLFW_KEY_SPACE);
+	else {
+		int links = glfwGetKey(pWindow, GLFW_KEY_LEFT);
+		int rechts = glfwGetKey(pWindow, GLFW_KEY_RIGHT);
+		bool shotFired = glfwGetKey(pWindow, GLFW_KEY_SPACE);
 
-	this->spieler->steuern(rechts - links);
-	this->spieler->update(dtime);
-	if (shotFired) {
-		this->spieler->shoot();
-	}
-	this->invasion->update(dtime);
+		this->spieler->steuern(rechts - links);
+		this->spieler->update(dtime);
+		if (shotFired) {
+			this->spieler->shoot();
+		}
+		this->invasion->update(dtime);
 
-	this->collisionFeld();
-	this->collisionBullet();
+		this->collisionFeld();
+		this->collisionBullet();
 
-	if (this->spieler->getLebenspunkte() == 0) {
-		this->reset();
-	}
-	if (this->invasion->getGegnerListe()->empty()) {
-		this->reset();
+		if (this->spieler->getLebenspunkte() == 0) {
+			this->reset();
+		}
+		if (this->invasion->getGegnerListe()->empty()) {
+			this->reset();
+		}
 	}
 }
 
 void Application::updateStartscreen()
 {
 	if (glfwGetKey(pWindow, GLFW_KEY_ENTER)) {
-		this->gameState = GameState::GAME_STARTED;
+		this->gameState = GameState::GAME_IS_ACTIVE;
 	}
 }
 
 void Application::updateMenu(float dtime)
 {
-	
+	this->lastMenuInput += dtime;
+	bool up = glfwGetKey(pWindow, GLFW_KEY_UP);
+	bool down = glfwGetKey(pWindow, GLFW_KEY_DOWN);
+	bool enter = glfwGetKey(pWindow, GLFW_KEY_ENTER);
+	if (this->lastMenuInput >= 0.1f) {
+		if (up) {
+			this->menu->up();
+			this->menu->update();
+		}
+		if (down) {
+			this->menu->down();
+			this->menu->update();
+		}
+		this->lastMenuInput = 0;
+	}
+	if (enter) {
+		this->gameState = this->menu->enter();
+		this->menu->hide();
+	}
 }
 
 void Application::reset()
 {
 	this->gameState = GameState::BEFORE_START;
 	delete this->invasion;
+	this->spieler->reset();
 	list<Gegner*>* tmpGegnerList = new list<Gegner*>();
 	for (Gegner* gegner : *this->gegnerListe) {
 		tmpGegnerList->push_back(gegner);
 	}
 	this->invasion = new Invasion(tmpGegnerList);
-	this->invasion->start(this->gameHeight, 5, Vector(-4, 2, 0));
+	this->invasion->start(5, Vector(-4, 2, 0));
 	for (int i = 0; i < this->bulletQueue->size(); i++) {
 		Bullet* tmp = this->bulletQueue->front();
-		tmp->setPosition(Vector(0,0,20), Vector(0,0,0));
+		tmp->reset();
 		this->bulletQueue->pop();
 		this->bulletQueue->push(tmp);
 	}
@@ -268,7 +295,7 @@ void Application::createGame()
 		this->gegnerListe->push_back(gegner);
 	}
 	this->invasion = new Invasion(tmpGegnerList);
-	this->invasion->start(this->gameHeight, 5, Vector(-4, 2, 0));
+	this->invasion->start(5, Vector(-4, 2, 0));
 
 	/*pModel = new LineBoxModel(spieler->boundingBox().size().X, spieler->boundingBox().size().Y, spieler->boundingBox().size().Z);
 	pShader = new PhongShader();
@@ -286,17 +313,38 @@ void Application::createGame()
 	}
 	this->invasion->setBulletQueue(bulletQueue);
 
-	this->menu = new Menu(this->feld->size().X * 0.3f, this->feld->size().Y * 0.3f, 0);
+	int maxBarrieren = 3;
+	int maxPartikel = 30;
+	list<TriangleBoxModel*>* partikelListe;
+	TriangleBoxModel* partikel;
+	Barriere* barriere;
+	for (int i = 0; i < maxBarrieren; i++) {
+		partikelListe = new list<TriangleBoxModel*>();
+		for (int j = 0; j < maxPartikel; j++) {
+			partikel = new TriangleBoxModel(0.05f, 0.05f, 0.05f);
+			pShader = new PhongShader();
+			pShader->diffuseColor(Color(0, 0.49f,1));
+			partikel->shader(pShader, true);
+			partikelListe->push_back(partikel);
+			this->partikelList->push_back(partikel);
+			Models.push_back(partikel);
+		}
+		barriere = new Barriere(partikelListe);
+		barriere->init(10, Vector(0,-2,0));
+		this->barrieren->push_back(barriere);
+	}
+
+	this->menu = new Menu(this->feld->size().X * 0.3f, this->feld->size().Y * 0.5f, 0);
 	pShader = new PhongShader();
 	pShader->ambientColor(Color(0, 0, 0.5f));
 	this->menu->shader(pShader, true);
-	m.translation(Vector(0, 0, 2));
+	m.translation(Vector(0, 0, 20));
 	this->menu->transform(m);
 	Models.push_back(this->menu);
 
 	// directional lights
 	DirectionalLight* dl = new DirectionalLight();
-	dl->direction(Vector(0.2f, -1, 1));
+	dl->direction(Vector(0.2f, -1, -1));
 	dl->color(Color(0.25, 0.25, 0.5));
 	dl->castShadows(true);
 	ShaderLightMapper::instance().addLight(dl);

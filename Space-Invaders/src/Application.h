@@ -27,6 +27,7 @@
 #include "CollisionDetector.h"
 #include "Menu.h"
 #include "GameState.h"
+#include "Barriere.h"
 
 class Application
 {
@@ -51,6 +52,8 @@ protected:
     ModelList Models;
     list<Gegner*>* gegnerListe;
     queue<Bullet*>* bulletQueue;
+    list<Barriere*>* barrieren;
+    list<TriangleBoxModel*>* partikelList;
     GLFWwindow* pWindow;
 	BaseModel* pModel;
 	ShadowMapGenerator ShadowGenerator;
@@ -61,6 +64,7 @@ protected:
     Invasion* invasion;
     CollisionDetector* collisionDetector;
     Menu* menu;
+    float lastMenuInput;
     GameState gameState;
 };
 

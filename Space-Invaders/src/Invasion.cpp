@@ -13,7 +13,7 @@ Invasion::~Invasion()
 	delete this->bulletsInGame;
 }
 
-void Invasion::start(float height, int anzahlProReihe, Vector& obenLinks)
+void Invasion::start(int anzahlProReihe, Vector& obenLinks)
 {
 	this->direction = 1;
 	float gegnerWidth = this->gegnerListe->front()->boundingBox().size().X;

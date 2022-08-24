@@ -15,7 +15,7 @@ class Invasion
 public:
 	Invasion(list<Gegner*>* gegnerListe);
 	~Invasion();
-	void start(float heigt, int anzahlProReihe, Vector& obenLinks);
+	void start(int anzahlProReihe, Vector& obenLinks);
 	void update(float dtime);
 	void setBulletQueue(queue<Bullet*>* bulletQueue);
 	queue<Bullet*>* getBulletQueue();

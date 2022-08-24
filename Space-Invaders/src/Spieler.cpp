@@ -50,6 +50,17 @@ void Spieler::shoot() {
 	}
 }
 
+void Spieler::reset()
+{
+	Matrix posMat, scaleMat;
+	posMat.translation(Vector(0, -6, 0));
+	scaleMat.scale(this->size);
+
+	this->transform(posMat * scaleMat);
+
+	this->spielerBullet->reset();
+}
+
 Bullet* Spieler::getBullet()
 {
 	return this->spielerBullet;

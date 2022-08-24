@@ -19,6 +19,7 @@ public:
 	void collisionBullet(int schaden) override;
 	void draw(const BaseCamera& Cam);
 	void shoot();
+	void reset();
 	Bullet* getBullet();
 	int getLebenspunkte();
 };

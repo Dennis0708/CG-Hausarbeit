@@ -18,6 +18,7 @@ public:
 	void collisionBullet(int schaden) override;
 	void setPosition(Vector& position, Vector& richtung);
 	void stop();
+	void reset();
 	bool isMoving();
 	int getStrength();
 };

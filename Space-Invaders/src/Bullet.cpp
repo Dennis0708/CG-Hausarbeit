@@ -35,6 +35,11 @@ void Bullet::stop() {
 	this->upDown = Vector(0, 0, 0);
 }
 
+void Bullet::reset()
+{
+	this->setPosition(Vector(0,0,20), Vector(0,0,0));
+}
+
 bool Bullet::isMoving() {
 	return this->upDown.Y != 0;
 }

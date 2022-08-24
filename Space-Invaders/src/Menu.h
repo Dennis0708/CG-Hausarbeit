@@ -22,6 +22,9 @@ public:
     void up();
     void down();
     GameState enter();
+    void update();
+    void show();
+    void hide();
     void transform(const Matrix& m) override;
     void draw(const BaseCamera& Cam) override;
 };
