@@ -12,10 +12,13 @@ class Invasion
 	float timeSinceShoot;
 	int direction;
 	float down;
+	int anzahlProReihe;
+	Vector obenLinks;
 public:
 	Invasion(list<Gegner*>* gegnerListe);
 	~Invasion();
-	void start(int anzahlProReihe, Vector& obenLinks);
+	void start(int anzahlProReihe, const Vector& obenLinks);
+	void reset(list<Gegner*>* gegnerListe);
 	void update(float dtime);
 	void setBulletQueue(queue<Bullet*>* bulletQueue);
 	queue<Bullet*>* getBulletQueue();

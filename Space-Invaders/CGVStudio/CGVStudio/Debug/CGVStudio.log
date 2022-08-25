@@ -1,5 +1,5 @@
 ﻿  Application.cpp
-C:\Users\Dennis\Desktop\CG-Hausarbeit\Space-Invaders\src\Application.cpp(183,28): warning C4244: "Argument": Konvertierung von "int" in "float", möglicher Datenverlust
-C:\Users\Dennis\Desktop\CG-Hausarbeit\Space-Invaders\src\Application.cpp(184,25): warning C4244: "Argument": Konvertierung von "int" in "float", möglicher Datenverlust
-C:\Users\Dennis\Desktop\CG-Hausarbeit\Space-Invaders\src\Application.cpp(290,20): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
-  CGVStudio.vcxproj -> C:\Users\Dennis\Desktop\CG-Hausarbeit\Space-Invaders\CGVStudio\Debug\CGVStudio.exe
+C:\Medieninformatik\CG-Hausarbeit\Space-Invaders\src\Application.cpp(184,28): warning C4244: "Argument": Konvertierung von "int" in "float", möglicher Datenverlust
+C:\Medieninformatik\CG-Hausarbeit\Space-Invaders\src\Application.cpp(185,25): warning C4244: "Argument": Konvertierung von "int" in "float", möglicher Datenverlust
+C:\Medieninformatik\CG-Hausarbeit\Space-Invaders\src\Application.cpp(290,20): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+  CGVStudio.vcxproj -> C:\Medieninformatik\CG-Hausarbeit\Space-Invaders\CGVStudio\Debug\CGVStudio.exe

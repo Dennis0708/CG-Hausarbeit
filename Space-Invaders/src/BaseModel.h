@@ -41,4 +41,4 @@ protected:
 };
 
 
-#endif /* BaseModel_hpp */
+#endif  BaseModel_hpp 

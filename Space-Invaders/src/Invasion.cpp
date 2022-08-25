@@ -13,22 +13,32 @@ Invasion::~Invasion()
 	delete this->bulletsInGame;
 }
 
-void Invasion::start(int anzahlProReihe, Vector& obenLinks)
+void Invasion::start(int anzahlProReihe,const  Vector& obenLinks)
 {
+	this->anzahlProReihe = anzahlProReihe;
+	this->obenLinks = obenLinks;
 	this->direction = 1;
 	float gegnerWidth = this->gegnerListe->front()->boundingBox().size().X;
+	float gegnerHeight = this->gegnerListe->front()->boundingBox().size().Y;
 	int i = 0;
 	float abstand = gegnerWidth * 1.5f;
 	for (Gegner* gegner : *gegnerListe) {
 		Vector position;
 		position.X = obenLinks.X + (i % anzahlProReihe) * abstand;
-		position.Y = obenLinks.Y + (i / anzahlProReihe) * abstand;
+		position.Y = obenLinks.Y - (i / anzahlProReihe) * abstand - gegnerHeight;
 		position.Z = obenLinks.Z;
 		gegner->setLinksRechts(&this->direction);
 		gegner->setPosition(position);
 		gegner->setRunter(&this->down);
 		i++;
 	}
+}
+
+void Invasion::reset(list<Gegner*>* gegnerListe)
+{
+	delete this->gegnerListe;
+	this->gegnerListe = gegnerListe;
+	this->start(this->anzahlProReihe, this->obenLinks);
 }
 
 void Invasion::update(float dtime)
