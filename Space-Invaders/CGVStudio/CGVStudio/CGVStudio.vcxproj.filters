@@ -20,6 +20,15 @@
     <Filter Include="Quelldateien\utils\Lights">
       <UniqueIdentifier>{0e2a75e8-af03-4a54-82b6-2dd27e130b0f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Quelldateien\gameElements">
+      <UniqueIdentifier>{0edb5c26-7fdb-4340-9910-1b487bdce29f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quelldateien\gameElements\enums">
+      <UniqueIdentifier>{f40cc3aa-7212-43ff-b9c3-9c020a221e7a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quelldateien\gameElements\hud">
+      <UniqueIdentifier>{af6579b0-c30f-4213-bc2a-581d04c57ba6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\main.cpp">
@@ -98,31 +107,28 @@
       <Filter>Quelldateien\utils\Lights</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\Spieler.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\Bullet.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\Gegner.cpp">
-      <Filter>Quelldateien</Filter>
+      <Filter>Quelldateien\gameElements</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\Invasion.cpp">
-      <Filter>Quelldateien</Filter>
+      <Filter>Quelldateien\gameElements</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Gegner.cpp">
+      <Filter>Quelldateien\gameElements</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\CollisionDetector.cpp">
-      <Filter>Quelldateien</Filter>
+      <Filter>Quelldateien\gameElements</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\Menu.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\GameState.cpp">
-      <Filter>Quelldateien</Filter>
+    <ClCompile Include="..\..\src\Bullet.cpp">
+      <Filter>Quelldateien\gameElements</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\Barriere.cpp">
-      <Filter>Quelldateien</Filter>
+      <Filter>Quelldateien\gameElements</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\GameBar.cpp">
-      <Filter>Quelldateien</Filter>
+      <Filter>Quelldateien\gameElements\hud</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Menu.cpp">
+      <Filter>Quelldateien\gameElements\hud</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -198,15 +204,35 @@
     <ClInclude Include="..\..\src\ShadowMapGenerator.h">
       <Filter>Quelldateien\utils\Lights</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\Spieler.h" />
-    <ClInclude Include="..\..\src\Bullet.h" />
-    <ClInclude Include="..\..\src\Gegner.h" />
-    <ClInclude Include="..\..\src\Invasion.h" />
-    <ClInclude Include="..\..\src\Collision.h" />
-    <ClInclude Include="..\..\src\CollisionDetector.h" />
-    <ClInclude Include="..\..\src\Menu.h" />
-    <ClInclude Include="..\..\src\GameState.h" />
-    <ClInclude Include="..\..\src\Barriere.h" />
-    <ClInclude Include="..\..\src\GameBar.h" />
+    <ClInclude Include="..\..\src\Spieler.h">
+      <Filter>Quelldateien\gameElements</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Invasion.h">
+      <Filter>Quelldateien\gameElements</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Gegner.h">
+      <Filter>Quelldateien\gameElements</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\CollisionDetector.h">
+      <Filter>Quelldateien\gameElements</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Bullet.h">
+      <Filter>Quelldateien\gameElements</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Barriere.h">
+      <Filter>Quelldateien\gameElements</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Collision.h">
+      <Filter>Quelldateien\gameElements\enums</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GameState.h">
+      <Filter>Quelldateien\gameElements\enums</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GameBar.h">
+      <Filter>Quelldateien\gameElements\hud</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Menu.h">
+      <Filter>Quelldateien\gameElements\hud</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

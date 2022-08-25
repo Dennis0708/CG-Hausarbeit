@@ -46,7 +46,7 @@ BaseModel* CollisionDetector::collision(BaseModel* model, list<Gegner*>* gegnerL
 }
 
 BaseModel* CollisionDetector::collision(BaseModel* bullet, list<TriangleBoxModel*>* barriere) {
-	for (TriangleBoxModel* partikel: *barriere) {
+	for (TriangleBoxModel* partikel : *barriere) {
 		if (this->collision(bullet, partikel)) {
 			return partikel;
 		}

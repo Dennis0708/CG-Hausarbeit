@@ -1,7 +1,8 @@
 #include "Invasion.h"
 
 Invasion::Invasion(list<Gegner*>* gegnerListe)
-	: gegnerListe(gegnerListe), direction(0), down(0), bulletQueue(nullptr), bulletsInGame(new list<Bullet*>), timeSinceShoot(0)
+	: gegnerListe(gegnerListe), direction(0), down(0), bulletQueue(NULL),
+	bulletsInGame(new list<Bullet*>), timeSinceShoot(0), anzahlProReihe(0)
 {
 }
 
@@ -28,7 +29,7 @@ void Invasion::start(int anzahlProReihe,const  Vector& obenLinks)
 		position.Y = obenLinks.Y - (i / anzahlProReihe) * abstand - gegnerHeight;
 		position.Z = obenLinks.Z;
 		gegner->setLinksRechts(&this->direction);
-		gegner->setPosition(position);
+		gegner->show(position);
 		gegner->setRunter(&this->down);
 		i++;
 	}
@@ -64,22 +65,8 @@ void Invasion::update(float dtime)
 	for (Bullet* bullet : toRemove) {
 		this->bulletsInGame->remove(bullet);
 	}
-	//cout << "BulleQueueSize: " << this->bulletQueue->size() << endl;
+
 	this->down = 0;
-}
-
-void Invasion::setBulletQueue(queue<Bullet*>* bulletQueue)
-{
-	this->bulletQueue = bulletQueue;
-}
-
-queue<Bullet*>* Invasion::getBulletQueue() {
-	return this->bulletQueue;
-}
-
-list<Gegner*>* Invasion::getGegnerListe()
-{
-	return this->gegnerListe;
 }
 
 void Invasion::collisionBorder(Collision collision, float down)
@@ -87,17 +74,6 @@ void Invasion::collisionBorder(Collision collision, float down)
 	if (collision == Collision::RIGHT) this->direction = -1;
 	else if (collision == Collision::LEFT) this->direction = 1;
 	this->down = down;
-}
-
-void Invasion::addGegner(Gegner* gegner)
-{
-	this->gegnerListe->push_back(gegner);
-}
-
-void Invasion::removeGegner(Gegner* gegner)
-{
-	gegner->setPosition(Vector(0, 0, 20));
-	this->gegnerListe->remove(gegner);
 }
 
 bool Invasion::shoot()
@@ -136,12 +112,18 @@ bool Invasion::shoot()
 	return false;
 }
 
+void Invasion::addGegner(Gegner* gegner)
+{
+	this->gegnerListe->push_back(gegner);
+}
+
+void Invasion::removeGegner(Gegner* gegner)
+{
+	gegner->hide();
+	this->gegnerListe->remove(gegner);
+}
+
 void Invasion::addBullet(Bullet* bullet)
 {
 	this->bulletQueue->push(bullet);
-}
-
-list<Bullet*>* Invasion::getBulletsInGame()
-{
-	return this->bulletsInGame;
 }

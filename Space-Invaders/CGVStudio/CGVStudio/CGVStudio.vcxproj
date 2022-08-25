@@ -97,7 +97,6 @@
     <ClCompile Include="..\..\src\ConstantShader.cpp" />
     <ClCompile Include="..\..\src\Framebuffer.cpp" />
     <ClCompile Include="..\..\src\GameBar.cpp" />
-    <ClCompile Include="..\..\src\GameState.cpp" />
     <ClCompile Include="..\..\src\Gegner.cpp" />
     <ClCompile Include="..\..\src\IndexBuffer.cpp" />
     <ClCompile Include="..\..\src\Invasion.cpp" />

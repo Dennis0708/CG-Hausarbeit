@@ -9,16 +9,15 @@
 
 class Bullet : public Model
 {
-	int strength;
 	Vector upDown;
 public:
-	Bullet(const char* ModelFile, Vector& positon, float size, int strength);
+	Bullet(const char* ModelFile, Vector& positon, float size);
 	void update(float dtime);
 	void collisionBorder(Collision collision);
-	void collisionBullet(int schaden);
-	void setPosition(Vector& position, Vector& richtung);
-	void stop();
+	void collisionBullet();
+	void up() { this->upDown = Vector(0, 1, 0); };
+	void stop() { this->upDown = Vector(0, 0, 0); };
+	void down() { this->upDown = Vector(0, -1, 0); };
 	void reset();
-	bool isMoving();
-	int getStrength();
+	bool isMoving() { return this->upDown.Y != 0; };
 };

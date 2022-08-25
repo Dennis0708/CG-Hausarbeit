@@ -1,5 +1,11 @@
 ﻿  Application.cpp
-C:\Medieninformatik\CG-Hausarbeit\Space-Invaders\src\Application.cpp(184,28): warning C4244: "Argument": Konvertierung von "int" in "float", möglicher Datenverlust
-C:\Medieninformatik\CG-Hausarbeit\Space-Invaders\src\Application.cpp(185,25): warning C4244: "Argument": Konvertierung von "int" in "float", möglicher Datenverlust
-C:\Medieninformatik\CG-Hausarbeit\Space-Invaders\src\Application.cpp(290,20): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
-  CGVStudio.vcxproj -> C:\Medieninformatik\CG-Hausarbeit\Space-Invaders\CGVStudio\Debug\CGVStudio.exe
+C:\Users\Dennis\Desktop\CG-Hausarbeit\Space-Invaders\src\Application.cpp(106,28): warning C4244: "Argument": Konvertierung von "int" in "float", möglicher Datenverlust
+C:\Users\Dennis\Desktop\CG-Hausarbeit\Space-Invaders\src\Application.cpp(107,25): warning C4244: "Argument": Konvertierung von "int" in "float", möglicher Datenverlust
+C:\Users\Dennis\Desktop\CG-Hausarbeit\Space-Invaders\src\Application.cpp(351,20): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+  CollisionDetector.cpp
+  Invasion.cpp
+C:\Users\Dennis\Desktop\CG-Hausarbeit\Space-Invaders\src\Invasion.cpp(92,30): warning C4101: "e": Unreferenzierte lokale Variable
+  main.cpp
+  Code wird generiert...
+LINK : warning LNK4098: Standardbibliothek "MSVCRT" steht in Konflikt mit anderen Bibliotheken; /NODEFAULTLIB:Bibliothek verwenden.
+  CGVStudio.vcxproj -> C:\Users\Dennis\Desktop\CG-Hausarbeit\Space-Invaders\CGVStudio\Debug\CGVStudio.exe

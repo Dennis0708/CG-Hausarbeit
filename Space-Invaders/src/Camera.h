@@ -88,9 +88,6 @@ protected:
     int WindowWidth;
     int WindowHeight;
     GLFWwindow* pWindow;
-    
-private:
- 
 };
 
 

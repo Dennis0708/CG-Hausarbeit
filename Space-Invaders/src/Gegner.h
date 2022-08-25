@@ -7,21 +7,20 @@
 
 class Gegner : public Model
 {
-	int lebenspunkte;
 	float geschwindigkeit;
 	int* linksRechts;
 	float* runter;
 	Collision collision;
 	Bullet* bullet;
 public:
-	Gegner(const char* ModelFile, Vector& position, float size, int lebenspunkte);
+	Gegner(const char* ModelFile, Vector& position, float size);
 	void update(float dtime, int anzahlGegner);
 	void collisionBorder(Collision collision);
-	void collisionBullet(int schaden);
-	void setPosition(Vector& position);
-	void setLinksRechts(int* linksRechts);
-	void setRunter(float* runter);
+	void collisionBullet();
 	void draw(const BaseCamera& Cam);
 	void shoot(Bullet* bullet);
-	Bullet* getBullet();
+	void reset();
+	void setLinksRechts(int* linksRechts) { this->linksRechts = linksRechts; };
+	void setRunter(float* runter) { this->runter = runter; };
+	Bullet* getBullet() { return this->bullet; };
 };

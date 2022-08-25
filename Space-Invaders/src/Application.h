@@ -29,48 +29,76 @@
 #include "GameState.h"
 #include "Barriere.h"
 #include "GameBar.h"
+#include "lineplanemodel.h"
+#include "triangleplanemodel.h"
+#include "trianglespheremodel.h"
+#include "lineboxmodel.h"
+#include "triangleboxmodel.h"
+#include "model.h"
+#include "ShaderLightmapper.h"
+
+#ifdef WIN32
+#include <GL/glew.h>
+#include <glfw/glfw3.h>
+#define _USE_MATH_DEFINES
+#include <math.h>
+#else
+#define GLFW_INCLUDE_GLCOREARB
+#define GLFW_INCLUDE_GLEXT
+#include <glfw/glfw3.h>
+#endif
+
+#ifdef WIN32
+#define ASSET_DIRECTORY "../../assets/"
+#else
+#define ASSET_DIRECTORY "../assets/"
+#endif
 
 #define LEBENSPUNKTE_SPIELER 3
 
 class Application
 {
-public:
-    typedef std::list<BaseModel*> ModelList;
-    Application(GLFWwindow* pWin);
-    void start();
-    void update(float dtime);
-    void collisionFeld();
-    void collisionBullet();
-    void draw();
-    void end();
-    Vector calc3DRay(float x, float y, Vector& Pos);
-protected:
-	void createGame();
-    void createFeld();
-    void updateGame(float dtime);
-    void updateStartscreen();
-    void updateMenu(float dtime);
-    void reset();
-    Camera Cam;
-    ModelList Models;
+    list<BaseModel*> Models;
     list<Gegner*>* gegnerListe;
     queue<Bullet*>* bulletQueue;
     list<Barriere*>* barrieren;
     list<TriangleBoxModel*>* partikelList;
     list<Model*>* lebensPunkte;
+    
     GLFWwindow* pWindow;
-	BaseModel* pModel;
-	ShadowMapGenerator ShadowGenerator;
-    float gameWidth;
-    float gameHeight;
+    BaseModel* pModel;
+    PhongShader* pShader;
+    ConstantShader* cShader;
+    Camera Cam;
+    ShadowMapGenerator ShadowGenerator;
     Spieler* spieler;
     AABB* feld;
     Invasion* invasion;
     CollisionDetector* collisionDetector;
     Menu* menu;
     GameBar* gameBar;
-    float lastMenuInput;
     GameState gameState;
+    float lastMenuInput;
+    float gameWidth;
+    float gameHeight;
+    bool close;
+public:
+    Application(GLFWwindow* pWin);
+    void start();
+    void update(float dtime);
+    void draw();
+    bool isClose() { return this->close; };
+    void end();
+private:
+	void createGame();
+    void createFeld();
+    void updateGame(float dtime);
+    void updateStartscreen();
+    void updateMenu(float dtime);
+    void collisionFeld();
+    void collisionBullet();
+    void reset();
+    Vector calc3DRay(float x, float y, Vector& Pos);
 };
 
 #endif Application_hpp

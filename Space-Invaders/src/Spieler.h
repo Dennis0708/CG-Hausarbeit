@@ -16,10 +16,10 @@ public:
 	void steuern(int direction);
 	void update(float dtime);
 	void collisionBorder(Collision collision);
-	void collisionBullet(int schaden);
+	void collisionBullet();
 	void draw(const BaseCamera& Cam);
-	void shoot();
+	void shoot(bool shotFired);
 	void reset();
-	Bullet* getBullet();
-	int getLebenspunkte();
+	Bullet* getBullet() { return this->spielerBullet; };
+	int getLebenspunkte() { return this->lebenspunkte; };
 };

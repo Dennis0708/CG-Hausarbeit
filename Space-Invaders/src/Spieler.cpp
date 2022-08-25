@@ -4,7 +4,6 @@
 Spieler::Spieler(const char* ModelFile, Vector& position, float size, int lebenspunkte, Bullet* spielerBullet)
 	: Model(ModelFile, position, size), lebenspunkte(lebenspunkte), spielerBullet(spielerBullet),direction(0), collision(Collision::NONE)
 {
-
 }
 
 void Spieler::steuern(int direction)
@@ -34,9 +33,9 @@ void Spieler::collisionBorder(Collision collision)
 	this->collision = collision;
 }
 
-void Spieler::collisionBullet(int schaden)
+void Spieler::collisionBullet()
 {
-	this->lebenspunkte -= schaden;
+	this->lebenspunkte -= 1;
 }
 
 void Spieler::draw(const BaseCamera& Cam) {
@@ -44,29 +43,15 @@ void Spieler::draw(const BaseCamera& Cam) {
 	this->spielerBullet->draw(Cam);
 }
 
-void Spieler::shoot() {
-	if (!this->spielerBullet->isMoving()) {
-		this->spielerBullet->setPosition(this->transform().translation() + Vector(0, 1, 0), Vector(0, 1, 0));
+void Spieler::shoot(bool shotFired) {
+	if (shotFired && !this->spielerBullet->isMoving()) {
+		this->spielerBullet->show(this->transform().translation() + Vector(0, 1, 0));
+		this->spielerBullet->up();
 	}
 }
 
 void Spieler::reset()
 {
-	Matrix posMat, scaleMat;
-	posMat.translation(Vector(0, -6, 0));
-	scaleMat.scale(this->size);
-
-	this->transform(posMat * scaleMat);
-
+	this->show(Vector(0, -6, 0));
 	this->spielerBullet->reset();
-}
-
-Bullet* Spieler::getBullet()
-{
-	return this->spielerBullet;
-}
-
-int Spieler::getLebenspunkte()
-{
-	return this->lebenspunkte;
 }
