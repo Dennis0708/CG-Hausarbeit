@@ -14,8 +14,8 @@ class Bullet : public Model
 public:
 	Bullet(const char* ModelFile, Vector& positon, float size, int strength);
 	void update(float dtime);
-	void collisionBorder(Collision collision) override;
-	void collisionBullet(int schaden) override;
+	void collisionBorder(Collision collision);
+	void collisionBullet(int schaden);
 	void setPosition(Vector& position, Vector& richtung);
 	void stop();
 	void reset();

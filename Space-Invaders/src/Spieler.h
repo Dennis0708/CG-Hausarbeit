@@ -15,8 +15,8 @@ public:
 	Spieler(const char* ModelFile, Vector& position, float size, int lebenspunkte, Bullet * spielerBullet);
 	void steuern(int direction);
 	void update(float dtime);
-	void collisionBorder(Collision collision) override;
-	void collisionBullet(int schaden) override;
+	void collisionBorder(Collision collision);
+	void collisionBullet(int schaden);
 	void draw(const BaseCamera& Cam);
 	void shoot();
 	void reset();

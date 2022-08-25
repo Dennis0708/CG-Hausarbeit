@@ -28,6 +28,9 @@
 #include "Menu.h"
 #include "GameState.h"
 #include "Barriere.h"
+#include "GameBar.h"
+
+#define LEBENSPUNKTE_SPIELER 3
 
 class Application
 {
@@ -54,6 +57,7 @@ protected:
     queue<Bullet*>* bulletQueue;
     list<Barriere*>* barrieren;
     list<TriangleBoxModel*>* partikelList;
+    list<Model*>* lebensPunkte;
     GLFWwindow* pWindow;
 	BaseModel* pModel;
 	ShadowMapGenerator ShadowGenerator;
@@ -64,6 +68,7 @@ protected:
     Invasion* invasion;
     CollisionDetector* collisionDetector;
     Menu* menu;
+    GameBar* gameBar;
     float lastMenuInput;
     GameState gameState;
 };

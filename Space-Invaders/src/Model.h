@@ -29,8 +29,6 @@ public:
     virtual ~Model();
 
     bool load(const char* ModelFile, float size = 1.0f);
-    virtual void collisionBorder(Collision collision) = 0;
-    virtual void collisionBullet(int schaden) = 0;
     virtual void draw(const BaseCamera& Cam);
     const AABB& boundingBox() const { return BoundingBox; }
     

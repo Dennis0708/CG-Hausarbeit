@@ -27,6 +27,8 @@ public:
     virtual void shader( BaseShader* shader, bool deleteOnDestruction=false );
     virtual BaseShader* shader() const { return pShader; }
     virtual const AABB& boundingBox() const { return AABB::unitBox(); }
+    virtual void hide();
+    virtual void show(const Vector& pos);
 	bool shadowCaster() const { return ShadowCaster; }
 	void shadowCaster(bool sc) { ShadowCaster = sc; }
 protected:

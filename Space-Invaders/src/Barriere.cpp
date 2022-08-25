@@ -1,6 +1,6 @@
 #include "Barriere.h"
 
-Barriere::Barriere(list<TriangleBoxModel*>* barrierePartikel) : barrierePartikel(barrierePartikel)
+Barriere::Barriere(list<TriangleBoxModel*>* barrierePartikel) : barrierePartikel(barrierePartikel), anzahlProReihe(0)
 {
 }
 
@@ -11,6 +11,8 @@ Barriere::~Barriere()
 
 void Barriere::init(int anzahlProReihe, Vector& ursprung)
 {
+	this->anzahlProReihe = anzahlProReihe;
+	this->ursprung = ursprung;
 	float partikelWidth = this->barrierePartikel->front()->boundingBox().size().X;
 	float partikelHeight = this->barrierePartikel->front()->boundingBox().size().Y;
 	float partikelDepth = this->barrierePartikel->front()->boundingBox().size().Z;
@@ -29,10 +31,16 @@ void Barriere::init(int anzahlProReihe, Vector& ursprung)
 	}
 }
 
+void Barriere::reset(list<TriangleBoxModel*>* barrierePartikel)
+{
+	delete this->barrierePartikel;
+	this->barrierePartikel = barrierePartikel;
+	this->init(this->anzahlProReihe, this->ursprung);
+}
+
 void Barriere::collisionBullet(TriangleBoxModel * partikel)
 {
-	this->barrierePartikel->remove(partikel);
-	this->hide(partikel);
+	this->remove(partikel);
 }
 
 void Barriere::draw(const BaseCamera& Cam)
@@ -47,11 +55,13 @@ list<TriangleBoxModel*>* Barriere::getPartikel()
 	return this->barrierePartikel;
 }
 
-void Barriere::hide(TriangleBoxModel* partikel)
+void Barriere::remove(TriangleBoxModel* partikel)
 {
 	Matrix posMat;
 	posMat.translation(0, 0, 20);
 
 	partikel->transform(posMat);
+
+	this->barrierePartikel->remove(partikel);
 }
 

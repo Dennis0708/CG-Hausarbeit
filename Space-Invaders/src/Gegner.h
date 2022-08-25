@@ -16,8 +16,8 @@ class Gegner : public Model
 public:
 	Gegner(const char* ModelFile, Vector& position, float size, int lebenspunkte);
 	void update(float dtime, int anzahlGegner);
-	void collisionBorder(Collision collision) override;
-	void collisionBullet(int schaden) override;
+	void collisionBorder(Collision collision);
+	void collisionBullet(int schaden);
 	void setPosition(Vector& position);
 	void setLinksRechts(int* linksRechts);
 	void setRunter(float* runter);

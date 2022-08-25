@@ -33,7 +33,8 @@
 
 Application::Application(GLFWwindow* pWin)
 	: pWindow(pWin), Cam(pWin), pModel(NULL), ShadowGenerator(2048, 2048), gegnerListe(new list<Gegner*>()),
-	bulletQueue(new queue<Bullet*>()), menu(nullptr), gameState(GameState::BEFORE_START), barrieren(new list<Barriere*>()), partikelList(new list<TriangleBoxModel*>())
+	bulletQueue(new queue<Bullet*>()), menu(nullptr), gameState(GameState::BEFORE_START), barrieren(new list<Barriere*>()),
+	partikelList(new list<TriangleBoxModel*>()), gameBar(nullptr), lebensPunkte(new list<Model*>())
 {
 	Cam.setPosition(Vector(0, 0, 10));
 	Cam.update();
@@ -194,6 +195,23 @@ void Application::createFeld() {
 	this->gameWidth = this->feld->size().X;
 	this->gameHeight = this->feld->size().Y;
 	this->collisionDetector = new CollisionDetector(this->feld);
+
+	list<Model*>* lebensPunkte = new list<Model*>();
+	for (int i = 0; i < LEBENSPUNKTE_SPIELER; i++) {
+		Model* lebensPunkt = new Model(ASSET_DIRECTORY "Space_Invader/Space_Invader_Small.obj", Vector(0, 0, 0), 0.006f);
+		PhongShader* pShader = new PhongShader();
+		lebensPunkt->shader(pShader, true);
+		Models.push_back(lebensPunkt);
+		lebensPunkte->push_back(lebensPunkt);
+		this->lebensPunkte->push_back(lebensPunkt);
+	}
+
+	float gameBarHeight = this->lebensPunkte->front()->boundingBox().size().Y * 2;
+	this->gameBar = new GameBar(lebensPunkte, Vector(0, this->feld->Max.Y - gameBarHeight * 0.5f, 0), this->gameWidth, gameBarHeight, 0);
+	ConstantShader* cShader = new ConstantShader();
+	cShader->color(Color(1, 0, 0));
+	this->gameBar->shader(cShader, true);
+	Models.push_back(this->gameBar);
 }
 
 void Application::updateGame(float dtime)
@@ -276,6 +294,21 @@ void Application::reset()
 		this->bulletQueue->push(tmp);
 	}
 	this->invasion->setBulletQueue(this->bulletQueue);
+
+	int partikelProBarriere = this->partikelList->size() / this->barrieren->size();
+	list<Barriere*>::iterator barIter = this->barrieren->begin();
+	list<TriangleBoxModel*>* tmpPartikelList = new list<TriangleBoxModel*>();
+	int i = 0;
+	for (TriangleBoxModel* partikel : *this->partikelList) {
+		tmpPartikelList->push_back(partikel);
+		i++;
+		if (i == partikelProBarriere) {
+			i = 0;
+			(*barIter)->reset(tmpPartikelList);
+			tmpPartikelList = new list<TriangleBoxModel*>();
+			barIter++;
+		}
+	}
 }
 
 void Application::createGame()
@@ -283,7 +316,7 @@ void Application::createGame()
 	Matrix m;
 	PhongShader* pShader;
 
-	pModel = new TriangleBoxModel((this->feld->Max.X - this->feld->Min.X) * 2, (this->feld->Max.Y - this->feld->Min.Y) * 2, 0);
+	pModel = new TriangleBoxModel((this->feld->Max.X - this->feld->Min.X) * 1.2f, (this->feld->Max.Y - this->feld->Min.Y) * 1.2f, 0);
 	pShader = new PhongShader();
 	pShader->ambientColor(Color(1, 1, 1));
 	pShader->diffuseTexture(Texture::LoadShared(ASSET_DIRECTORY "texture/dirtyWalkwayBorder_C_00.dds"));
@@ -296,7 +329,7 @@ void Application::createGame()
 	pShader = new PhongShader();
 	pBullet->shader(pShader, true);
 
-	spieler = new Spieler(ASSET_DIRECTORY "Space_Invader/Space_Invader_Small.obj", Vector(0, -6, 0), 0.006f, 3, pBullet);
+	spieler = new Spieler(ASSET_DIRECTORY "Space_Invader/Space_Invader_Small.obj", Vector(0, -6, 0), 0.006f, LEBENSPUNKTE_SPIELER, pBullet);
 	pShader = new PhongShader();
 	spieler->shader(pShader, true);
 	Models.push_back(spieler);
@@ -349,7 +382,6 @@ void Application::createGame()
 		}
 		barriere = new Barriere(partikelListe);
 		barriere->init(10, Vector((-abstand + i * abstand), -3, 0));
-		cout << -abstand + i * abstand << endl;
 		this->barrieren->push_back(barriere);
 	}
 

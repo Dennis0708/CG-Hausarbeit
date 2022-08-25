@@ -37,6 +37,20 @@ void BaseModel::shader( BaseShader* shader, bool deleteOnDestruction )
     DeleteShader = deleteOnDestruction;
 }
 
+void BaseModel::hide()
+{
+    this->show(Vector(0,0,20));
+}
+
+void BaseModel::show(const Vector& pos)
+{
+    Matrix scaleMat, posMat;
+    scaleMat.scale(size);
+    posMat.translation(pos);
+
+    transform(posMat * scaleMat);
+}
+
 void BaseModel::draw(const BaseCamera& Cam)
 {
     if(!pShader) {

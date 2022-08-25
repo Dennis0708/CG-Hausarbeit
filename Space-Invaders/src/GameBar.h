@@ -1,16 +1,20 @@
 #pragma once
 
 #include "TriangleBoxModel.h"
+#include "LineBoxModel.h"
 #include <vector>
 #include <list>
 #include "Model.h"
 
 
-class GameBar : public TriangleBoxModel
+class GameBar : public LineBoxModel
 {
-	vector<Model*> *lebensPunkte;
+	list<Model*>* lebensPunkte;
+	Vector ursprung;
 public:
-	GameBar(list<Model*>* lebensPunkte);
+	GameBar(list<Model*>* lebensPunkte, const Vector ursprung, float Width = 1, float Height = 1, float Depth = 1);
+	void init();
 	void removeLife();
+	void reset(list<Model*>* lebensPunkte);
 };
 
