@@ -72,8 +72,7 @@ void Application::createGame()
 		for (int j = 0; j < maxPartikel; j++) {
 			partikel = new TriangleBoxModel(0.2f, 0.2f, 0.2f);
 			pShader = new PhongShader();
-			pShader->ambientColor(Color(0,0,0));
-			pShader->diffuseColor(Color(0, 0, 0));
+			pShader->ambientColor(Color(0,1,0));
 			partikel->shader(pShader, true);
 			partikelListe->push_back(partikel);
 			this->partikelList->push_back(partikel);
@@ -95,8 +94,8 @@ void Application::createGame()
 	// directional lights
 	DirectionalLight* dl = new DirectionalLight();
 	dl->direction(Vector(0.2f, -1, -1));
-	dl->color(Color(0.25f, 0.25f, 0.5f));
-	dl->castShadows(false);
+	dl->color(Color(1, 1, 1));
+	dl->castShadows(true);
 	ShaderLightMapper::instance().addLight(dl);
 
 

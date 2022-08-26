@@ -225,7 +225,6 @@ void ShadowMapGenerator::generate(std::list<BaseModel*>& Models)
 		FrameBuffer.detachColorTarget();
 		++i;
 	}
-	
 	glClearColor(0, 0, 0, 1);
 	glCullFace(GL_BACK);
 	glViewport(PrevViewport[0], PrevViewport[1], PrevViewport[2], PrevViewport[3]);
