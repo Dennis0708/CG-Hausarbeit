@@ -39,6 +39,9 @@ void Invasion::reset(list<Gegner*>* gegnerListe)
 {
 	delete this->gegnerListe;
 	this->gegnerListe = gegnerListe;
+	for (Gegner* gegner : *this->gegnerListe) {
+		gegner->reset();
+	}
 	this->start(this->anzahlProReihe, this->obenLinks);
 }
 
@@ -85,8 +88,10 @@ bool Invasion::shoot()
 	for (Gegner* gegner : *gegnerListe) {
 		try {
 			Gegner* tmp = untereReihe.at(gegner->transform().translation().X);
-			if (gegner->transform().translation().Y < tmp->transform().translation().Y) {
-				untereReihe.insert({ gegner->transform().translation().X, gegner });
+			if (tmp != gegner) {
+				if (gegner->transform().translation().Y < tmp->transform().translation().Y) {
+					untereReihe.at(gegner->transform().translation().X) = gegner;
+				}
 			}
 		}
 		catch (const out_of_range& e) {
@@ -95,17 +100,17 @@ bool Invasion::shoot()
 	}
 	map<float, Gegner*>::iterator iter;
 	int random = rand() % untereReihe.size();
-	Gegner* gegner;
+	Gegner* gegnerToShoot;
 	int i = 0;
 	for (iter = untereReihe.begin(); iter != untereReihe.end(); iter++) {
 		if (i == random) {
-			gegner = iter->second;
+			gegnerToShoot = iter->second;
 		}
 		i++;
 	}
-	if (!gegner->getBullet()) {
-		gegner->shoot(this->bulletQueue->front());
-		this->bulletsInGame->push_back(gegner->getBullet());
+	if (!gegnerToShoot->getBullet()) {
+		gegnerToShoot->shoot(this->bulletQueue->front());
+		this->bulletsInGame->push_back(gegnerToShoot->getBullet());
 		this->bulletQueue->pop();
 		return true;
 	}

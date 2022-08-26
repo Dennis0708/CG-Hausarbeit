@@ -17,4 +17,3 @@ void main()
     Texcoord = VertexTexcoord;
     gl_Position = ModelViewProjMat * VertexPos;
 }
-

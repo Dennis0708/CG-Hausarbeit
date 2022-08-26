@@ -10,7 +10,7 @@
 
 Application::Application(GLFWwindow* pWin)
 	: pWindow(pWin), Cam(pWin), pModel(NULL), ShadowGenerator(2048, 2048), gegnerListe(new list<Gegner*>()),
-	bulletQueue(new queue<Bullet*>()), menu(NULL), gameState(GameState::BEFORE_START),
+	bulletList(new list<Bullet*>()), menu(NULL), gameState(GameState::BEFORE_START),
 	barrieren(new list<Barriere*>()), partikelList(new list<TriangleBoxModel*>()), gameBar(NULL),
 	lebensPunkte(new list<Model*>()), close(false)
 {
@@ -50,10 +50,12 @@ void Application::createGame()
 	this->invasion->start(10, Vector(this->feld->Min.X + gegnerWidth, this->feld->Max.Y - this->gameBar->boundingBox().size().Y - gegnerHeight, 0));
 
 	int maxBullets = 10;
+	queue<Bullet*>* bulletQueue = new queue<Bullet*>();
 	for (int i = 0; i < maxBullets; i++) {
 		pBullet = new Bullet(ASSET_DIRECTORY "bullet_prisma.obj", Cam.position() + Vector(0, 0, 10), 0.6f);
 		pShader = new PhongShader();
 		pBullet->shader(pShader, true);
+		this->bulletList->push_back(pBullet);
 		bulletQueue->push(pBullet);
 		Models.push_back(pBullet);
 	}
@@ -70,7 +72,8 @@ void Application::createGame()
 		for (int j = 0; j < maxPartikel; j++) {
 			partikel = new TriangleBoxModel(0.2f, 0.2f, 0.2f);
 			pShader = new PhongShader();
-			pShader->diffuseColor(Color(0, 0.49f, 1));
+			pShader->ambientColor(Color(0,0,0));
+			pShader->diffuseColor(Color(0, 0, 0));
 			partikel->shader(pShader, true);
 			partikelListe->push_back(partikel);
 			this->partikelList->push_back(partikel);
@@ -92,9 +95,11 @@ void Application::createGame()
 	// directional lights
 	DirectionalLight* dl = new DirectionalLight();
 	dl->direction(Vector(0.2f, -1, -1));
-	dl->color(Color(0.25, 0.25, 0.5));
-	dl->castShadows(true);
+	dl->color(Color(0.25f, 0.25f, 0.5f));
+	dl->castShadows(false);
 	ShaderLightMapper::instance().addLight(dl);
+
+
 
 }
 
@@ -123,7 +128,7 @@ void Application::createFeld() {
 
 	pModel = new TriangleBoxModel((this->feld->Max.X - this->feld->Min.X) * 1.2f, (this->feld->Max.Y - this->feld->Min.Y) * 1.2f, 0);
 	pShader = new PhongShader();
-	pShader->ambientColor(Color(1, 1, 1));
+	//pShader->ambientColor(Color(0, 0.5f, 0.1f));
 	pShader->diffuseTexture(Texture::LoadShared(ASSET_DIRECTORY "texture/dirtyWalkwayBorder_C_00.dds"));
 	pModel->shader(pShader, true);
 	m.translation(0, 0, -1);
@@ -348,13 +353,12 @@ void Application::reset()
 		tmpGegnerList->push_back(gegner);
 	}
 	this->invasion->reset(tmpGegnerList);
-	for (int i = 0; i < this->bulletQueue->size(); i++) {
-		Bullet* tmp = this->bulletQueue->front();
-		tmp->reset();
-		this->bulletQueue->pop();
-		this->bulletQueue->push(tmp);
+	queue<Bullet*>* bulletQueue = new queue<Bullet*>();
+	for (Bullet* b : *this->bulletList) {
+		b->reset();
+		bulletQueue->push(b);
 	}
-	this->invasion->setBulletQueue(this->bulletQueue);
+	this->invasion->setBulletQueue(bulletQueue);
 
 	int partikelProBarriere = this->partikelList->size() / this->barrieren->size();
 	list<Barriere*>::iterator barIter = this->barrieren->begin();

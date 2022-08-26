@@ -54,5 +54,5 @@ void Gegner::shoot(Bullet* bullet) {
 
 void Gegner::reset()
 {
-
+	this->bullet = nullptr;
 }

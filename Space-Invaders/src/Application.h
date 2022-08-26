@@ -60,7 +60,7 @@ class Application
 {
     list<BaseModel*> Models;
     list<Gegner*>* gegnerListe;
-    queue<Bullet*>* bulletQueue;
+    list<Bullet*>* bulletList;
     list<Barriere*>* barrieren;
     list<TriangleBoxModel*>* partikelList;
     list<Model*>* lebensPunkte;
