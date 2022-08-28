@@ -21,7 +21,7 @@ struct Light
 	int ShadowIndex;
 };
 
-uniform Lights 
+uniform Lights
 {
 	int LightCount;
 	Light lights[MAX_LIGHTS];
@@ -33,6 +33,9 @@ uniform vec3 SpecularColor;
 uniform vec3 AmbientColor;
 uniform float SpecularExp;
 uniform sampler2D DiffuseTexture;
+
+uniform sampler2D ShadowMapTexture[MAX_LIGHTS];
+uniform mat4 ShadowMapMat[MAX_LIGHTS];
 
 float sat( in float a)
 {
@@ -56,7 +59,7 @@ void main()
 		float Intensity = 1.0/( lights[i].Attenuation.x + (lights[i].Attenuation.y*Dist) + (lights[i].Attenuation.z*Dist*Dist));
 
         vec3 lightColor = vec3(0,0,0);
-        
+
         if(lights[i].Type == 0){ //Point Light
             L = normalize(lights[i].Position - Position);
             lightColor = Intensity * lights[i].Color;
@@ -80,8 +83,19 @@ void main()
         vec3 H = normalize(E+L);
         vec3 SpecularComponent = lightColor * SpecularColor * pow( sat(dot(N,H)), SpecularExp);
 
+				if(lights[i].ShadowIndex != -1){
+            vec4 PosSM = ShadowMapMat[i] * vec4(Position.xyz, 1);
+            PosSM.xyz /= PosSM.w; // perspektivische Teilung vollziehen
+            PosSM.xy = PosSM.xy*0.5 + 0.5; // Koordinaten von norm. Bildraum [-1,1] in Texturkoordinaten [0,1]
+            vec4 DepthSM = texture(ShadowMapTexture[i], PosSM.xy);
+
+				    if(length(DepthSM) < PosSM.z){
+					    shadow += vec3(0.1,0.1,0.1);
+				    }
+        }
+
         Color += DiffuseComponent + SpecularComponent;
     }
 
-    FragColor = vec4(DiffTex.rgb * (Color + AmbientColor),DiffTex.a);
+    FragColor = vec4(DiffTex.rgb * (Color + AmbientColor - shadow),DiffTex.a);
 }

@@ -93,12 +93,10 @@ void Application::createGame()
 
 	// directional lights
 	DirectionalLight* dl = new DirectionalLight();
-	dl->direction(Vector(0.2f, -1, -1));
+	dl->direction(Vector(0, 0, -1));
 	dl->color(Color(1, 1, 1));
 	dl->castShadows(true);
 	ShaderLightMapper::instance().addLight(dl);
-
-
 
 }
 

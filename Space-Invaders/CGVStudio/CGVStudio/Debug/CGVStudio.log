@@ -1,2 +1,4 @@
-﻿  ShadowMapGenerator.cpp
-  CGVStudio.vcxproj -> C:\Medieninformatik\CG-Hausarbeit\Space-Invaders\CGVStudio\Debug\CGVStudio.exe
+﻿  Application.cpp
+C:\Users\Dennis\Desktop\CG-Hausarbeit\Space-Invaders\src\Application.cpp(108,28): warning C4244: "Argument": Konvertierung von "int" in "float", möglicher Datenverlust
+C:\Users\Dennis\Desktop\CG-Hausarbeit\Space-Invaders\src\Application.cpp(109,25): warning C4244: "Argument": Konvertierung von "int" in "float", möglicher Datenverlust
+  CGVStudio.vcxproj -> C:\Users\Dennis\Desktop\CG-Hausarbeit\Space-Invaders\CGVStudio\Debug\CGVStudio.exe
