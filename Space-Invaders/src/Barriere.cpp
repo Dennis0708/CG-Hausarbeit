@@ -28,6 +28,7 @@ void Barriere::init(int anzahlProReihe, Vector& ursprung)
 		Matrix posMat;
 		posMat.translation(position);
 		partikel->transform(posMat);
+		partikel->shadowCaster(true);
 	}
 }
 
@@ -40,6 +41,7 @@ void Barriere::reset(list<TriangleBoxModel*>* barrierePartikel)
 
 void Barriere::collisionBullet(TriangleBoxModel * partikel)
 {
+	partikel->shadowCaster(false);
 	this->remove(partikel);
 }
 
@@ -57,11 +59,7 @@ list<TriangleBoxModel*>* Barriere::getPartikel()
 
 void Barriere::remove(TriangleBoxModel* partikel)
 {
-	Matrix posMat;
-	posMat.translation(0, 0, 20);
-
-	partikel->transform(posMat);
-
+	
+	partikel->hide();
 	this->barrierePartikel->remove(partikel);
 }
-

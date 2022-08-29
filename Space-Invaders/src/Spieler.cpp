@@ -40,13 +40,16 @@ void Spieler::collisionBullet()
 
 void Spieler::draw(const BaseCamera& Cam) {
 	Model::draw(Cam);
-	this->spielerBullet->draw(Cam);
+	if (this->spielerBullet->isMoving()) {
+		this->spielerBullet->draw(Cam);
+	}
 }
 
 void Spieler::shoot(bool shotFired) {
 	if (shotFired && !this->spielerBullet->isMoving()) {
 		this->spielerBullet->show(this->transform().translation() + Vector(0, 1, 0));
 		this->spielerBullet->up();
+		this->spielerBullet->shadowCaster(true);
 	}
 }
 

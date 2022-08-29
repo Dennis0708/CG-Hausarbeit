@@ -21,7 +21,6 @@ public:
 	void start(int anzahlProReihe, const Vector& obenLinks);
 	void reset(list<Gegner*>* gegnerListe);
 	void update(float dtime);
-	void draw(const BaseCamera& Cam) override;
 	void collisionBorder(Collision collision, float down);
 	bool shoot();
 	void addGegner(Gegner* gegner);
@@ -31,5 +30,6 @@ public:
 	list<Gegner*>* getGegnerListe() { return this->gegnerListe; };
 	void setBulletQueue(queue<Bullet*>* bulletQueue) { this->bulletQueue = bulletQueue; };
 	list<Bullet*> *getBulletsInGame() { return this->bulletsInGame; };
+	void draw(const BaseCamera& Cam) override;
 };
 

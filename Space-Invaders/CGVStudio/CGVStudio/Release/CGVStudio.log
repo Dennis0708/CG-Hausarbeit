@@ -1,11 +1,11 @@
 ﻿  Application.cpp
-C:\Users\Dennis\Desktop\CG-Hausarbeit\Space-Invaders\src\Application.cpp(182,28): warning C4244: "Argument": Konvertierung von "int" in "float", möglicher Datenverlust
-C:\Users\Dennis\Desktop\CG-Hausarbeit\Space-Invaders\src\Application.cpp(183,25): warning C4244: "Argument": Konvertierung von "int" in "float", möglicher Datenverlust
-C:\Users\Dennis\Desktop\CG-Hausarbeit\Space-Invaders\src\Application.cpp(272,20): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
-  Barriere.cpp
+C:\Medieninformatik\CG-Hausarbeit\Space-Invaders\src\Application.cpp(115,35): warning C4305: "Argument": Verkürzung von "double" in "float"
+C:\Medieninformatik\CG-Hausarbeit\Space-Invaders\src\Application.cpp(128,28): warning C4244: "Argument": Konvertierung von "int" in "float", möglicher Datenverlust
+C:\Medieninformatik\CG-Hausarbeit\Space-Invaders\src\Application.cpp(129,25): warning C4244: "Argument": Konvertierung von "int" in "float", möglicher Datenverlust
+  Spieler.cpp
   Code wird generiert.
-  98 of 1345 functions ( 7.3%) were compiled, the rest were copied from previous compilation.
-    3 functions were new in current compilation
-    30 functions had inline decision re-evaluated but remain unchanged
+  5 of 1462 functions ( 0.3%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    11 functions had inline decision re-evaluated but remain unchanged
   Codegenerierung ist abgeschlossen.
-  CGVStudio.vcxproj -> C:\Users\Dennis\Desktop\CG-Hausarbeit\Space-Invaders\CGVStudio\Release\CGVStudio.exe
+  CGVStudio.vcxproj -> C:\Medieninformatik\CG-Hausarbeit\Space-Invaders\CGVStudio\Release\CGVStudio.exe

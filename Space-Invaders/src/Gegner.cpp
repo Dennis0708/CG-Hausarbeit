@@ -21,27 +21,9 @@ void Gegner::update(float dtime, int anzahlGegner)
 	}
 }
 
-void Gegner::collisionBorder(Collision collision)
-{
-	if (collision == Collision::RIGHT) {
-		*this->linksRechts = -1;
-	}
-	else if (collision == Collision::LEFT) {
-		*this->linksRechts = 1;
-	}
-	//*this->runter = true;
-}
-
-void Gegner::collisionBullet()
-{
-
-}
 
 void Gegner::draw(const BaseCamera& Cam) {
 	Model::draw(Cam);
-	if (this->bullet) {
-		this->bullet->draw(Cam);
-	}
 }
 
 void Gegner::shoot(Bullet* bullet) {

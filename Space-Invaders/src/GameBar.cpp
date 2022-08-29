@@ -1,7 +1,7 @@
 #include "GameBar.h"
 
 GameBar::GameBar(list<Model*>* lebensPunkte, const Vector ursprung, float Width, float Height, float Depth)
-	: LineBoxModel(Width, Height, Depth), ursprung(ursprung), lebensPunkte(lebensPunkte), BoundingBox(Vector(0,0,0),Vector(Width,Height,Depth))
+	: TriangleBoxModel(Width, Height, Depth), ursprung(ursprung), lebensPunkte(lebensPunkte), BoundingBox(Vector(0,0,0),Vector(Width,Height,Depth))
 {
 	this->show(ursprung);
 }
@@ -39,4 +39,8 @@ void GameBar::reset(list<Model*>* lebensPunkte)
 
 void GameBar::draw(const BaseCamera& Cam)
 {
+	TriangleBoxModel::draw(Cam);
+	for (Model* pModel : *this->lebensPunkte) {
+		pModel->draw(Cam);
+	}
 }

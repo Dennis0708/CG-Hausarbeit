@@ -37,6 +37,7 @@
 #include "model.h"
 #include "ShaderLightmapper.h"
 #include "Drawable.h"
+#include "Background.h"
 
 #ifdef WIN32
 #include <GL/glew.h>
@@ -59,6 +60,7 @@
 
 class Application
 {
+    list<BaseModel*> models;
     list<Drawable*> drawables;
     list<Gegner*>* gegnerListe;
     list<Bullet*>* bulletList;

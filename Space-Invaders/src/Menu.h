@@ -4,8 +4,9 @@
 #include "GameState.h"
 #include "BaseShader.h"
 #include "PhongShader.h"
+#include "Drawable.h"
 
-class Menu : public TriangleBoxModel
+class Menu : public TriangleBoxModel, public Drawable
 {
     enum class MenuState
     {

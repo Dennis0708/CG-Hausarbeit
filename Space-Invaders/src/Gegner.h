@@ -15,8 +15,6 @@ class Gegner : public Model
 public:
 	Gegner(const char* ModelFile, Vector& position, float size);
 	void update(float dtime, int anzahlGegner);
-	void collisionBorder(Collision collision);
-	void collisionBullet();
 	void draw(const BaseCamera& Cam);
 	void shoot(Bullet* bullet);
 	void reset();

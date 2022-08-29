@@ -7,7 +7,7 @@
 #include "Model.h"
 #include "Drawable.h"
 
-class GameBar : public LineBoxModel, public Drawable
+class GameBar : public TriangleBoxModel, public Drawable
 {
 	list<Model*>* lebensPunkte;
 	Vector ursprung;

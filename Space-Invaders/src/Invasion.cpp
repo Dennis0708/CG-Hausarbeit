@@ -40,6 +40,7 @@ void Invasion::reset(list<Gegner*>* gegnerListe)
 	delete this->gegnerListe;
 	this->gegnerListe = gegnerListe;
 	for (Gegner* gegner : *this->gegnerListe) {
+		gegner->shadowCaster(true);
 		gegner->reset();
 	}
 	this->start(this->anzahlProReihe, this->obenLinks);
@@ -72,9 +73,6 @@ void Invasion::update(float dtime)
 	this->down = 0;
 }
 
-void Invasion::draw(const BaseCamera& Cam)
-{
-}
 
 void Invasion::collisionBorder(Collision collision, float down)
 {
@@ -113,6 +111,7 @@ bool Invasion::shoot()
 		i++;
 	}
 	if (!gegnerToShoot->getBullet()) {
+		this->bulletQueue->front()->shadowCaster(true);
 		gegnerToShoot->shoot(this->bulletQueue->front());
 		this->bulletsInGame->push_back(gegnerToShoot->getBullet());
 		this->bulletQueue->pop();
@@ -123,16 +122,28 @@ bool Invasion::shoot()
 
 void Invasion::addGegner(Gegner* gegner)
 {
+	gegner->shadowCaster(true);
 	this->gegnerListe->push_back(gegner);
 }
 
 void Invasion::removeGegner(Gegner* gegner)
 {
+	gegner->shadowCaster(false);
 	gegner->hide();
 	this->gegnerListe->remove(gegner);
 }
 
 void Invasion::addBullet(Bullet* bullet)
 {
+	bullet->shadowCaster(false);
 	this->bulletQueue->push(bullet);
+}
+
+void Invasion::draw(const BaseCamera& Cam) {
+	for (Gegner* gegner : *this->gegnerListe) {
+		gegner->draw(Cam);
+	}
+	for (Bullet *bullet : *this->bulletsInGame) {
+		bullet->draw(Cam);
+	}
 }
