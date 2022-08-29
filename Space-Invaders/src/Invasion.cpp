@@ -72,6 +72,10 @@ void Invasion::update(float dtime)
 	this->down = 0;
 }
 
+void Invasion::draw(const BaseCamera& Cam)
+{
+}
+
 void Invasion::collisionBorder(Collision collision, float down)
 {
 	if (collision == Collision::RIGHT) this->direction = -1;

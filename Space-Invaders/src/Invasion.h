@@ -1,10 +1,11 @@
 #pragma once
 
 #include "Gegner.h"
+#include "Drawable.h"
 #include <list>
 #include <queue>
 
-class Invasion
+class Invasion: public Drawable
 {
 	list<Gegner*>* gegnerListe;
 	queue<Bullet*>* bulletQueue;
@@ -20,6 +21,7 @@ public:
 	void start(int anzahlProReihe, const Vector& obenLinks);
 	void reset(list<Gegner*>* gegnerListe);
 	void update(float dtime);
+	void draw(const BaseCamera& Cam) override;
 	void collisionBorder(Collision collision, float down);
 	bool shoot();
 	void addGegner(Gegner* gegner);

@@ -36,6 +36,7 @@
 #include "triangleboxmodel.h"
 #include "model.h"
 #include "ShaderLightmapper.h"
+#include "Drawable.h"
 
 #ifdef WIN32
 #include <GL/glew.h>
@@ -58,7 +59,7 @@
 
 class Application
 {
-    list<BaseModel*> Models;
+    list<Drawable*> drawables;
     list<Gegner*>* gegnerListe;
     list<Bullet*>* bulletList;
     list<Barriere*>* barrieren;

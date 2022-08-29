@@ -9,6 +9,7 @@ out vec4 FragColor;
 uniform vec3 LightPos;
 uniform vec3 LightColor;
 
+const float EPSILON=1e-6;
 const int MAX_LIGHTS=14;
 struct Light
 {
@@ -83,16 +84,16 @@ void main()
         vec3 H = normalize(E+L);
         vec3 SpecularComponent = lightColor * SpecularColor * pow( sat(dot(N,H)), SpecularExp);
 
-				if(lights[i].ShadowIndex != -1){
-            vec4 PosSM = ShadowMapMat[lights[i].ShadowIndex] * vec4(Position.xyz, 1);
-            PosSM.xyz /= PosSM.w; // perspektivische Teilung vollziehen
+		if(lights[i].ShadowIndex != -1){
+            vec4 PosSM = ShadowMapMat[lights[i].ShadowIndex] * vec4(Position.xyz, 1); // hiernach im Kameraraum
+            PosSM.xyz /= PosSM.w; // perspektivische Teilung vollziehen // hiernach im norm. Bildraum
             PosSM.xy = PosSM.xy*0.5 + 0.5; // Koordinaten von norm. Bildraum [-1,1] in Texturkoordinaten [0,1]
             float DepthSM = texture(ShadowMapTexture[lights[i].ShadowIndex], PosSM.xy).r;
 
-				    if(DepthSM < PosSM.z){
+			if(DepthSM < PosSM.z-EPSILON){
                 DiffuseComponent = vec3(0,0,0);
                 SpecularComponent = vec3(0,0,0);
-				    }
+		    }
         }
 
         Color += DiffuseComponent + SpecularComponent;

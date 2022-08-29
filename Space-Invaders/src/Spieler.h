@@ -4,8 +4,9 @@
 #include "Bullet.h"
 #include "PhongShader.h"
 #include "vector.h"
+#include "Drawable.h"
 
-class Spieler: public Model
+class Spieler: public Model, public Drawable
 {
 	int lebenspunkte;
 	int direction;
@@ -17,7 +18,7 @@ public:
 	void update(float dtime);
 	void collisionBorder(Collision collision);
 	void collisionBullet();
-	void draw(const BaseCamera& Cam);
+	void draw(const BaseCamera& Cam) override;
 	void shoot(bool shotFired);
 	void reset();
 	Bullet* getBullet() { return this->spielerBullet; };

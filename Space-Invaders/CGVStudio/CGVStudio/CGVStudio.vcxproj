@@ -131,6 +131,7 @@
     <ClInclude Include="..\..\src\CollisionDetector.h" />
     <ClInclude Include="..\..\src\color.h" />
     <ClInclude Include="..\..\src\ConstantShader.h" />
+    <ClInclude Include="..\..\src\Drawable.h" />
     <ClInclude Include="..\..\src\Framebuffer.h" />
     <ClInclude Include="..\..\src\GameBar.h" />
     <ClInclude Include="..\..\src\GameState.h" />

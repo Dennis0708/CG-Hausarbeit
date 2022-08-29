@@ -237,5 +237,8 @@
     <ClInclude Include="..\..\src\Spieler.h">
       <Filter>Quelldateien\gameElements\model</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\Drawable.h">
+      <Filter>Quelldateien\gameElements</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -32,7 +32,7 @@ void Application::createGame()
 	spieler = new Spieler(ASSET_DIRECTORY "Space_Invader/Space_Invader_Small.obj", Vector(0, -6, 0), 0.006f, LEBENSPUNKTE_SPIELER, pBullet);
 	pShader = new PhongShader();
 	spieler->shader(pShader, true);
-	Models.push_back(spieler);
+	drawables.push_back(spieler);
 
 	int anzahlGegner = 50;
 	list<Gegner*>* tmpGegnerList = new list<Gegner*>();
@@ -40,7 +40,6 @@ void Application::createGame()
 		Gegner* gegner = new Gegner(ASSET_DIRECTORY "Space_Invader/Space_Invader_Small.obj", Vector(0, 0, 0), 0.006f);
 		pShader = new PhongShader();
 		gegner->shader(pShader, true);
-		Models.push_back(gegner);
 		tmpGegnerList->push_back(gegner);
 		this->gegnerListe->push_back(gegner);
 	}
@@ -48,6 +47,7 @@ void Application::createGame()
 	float gegnerWidth = this->gegnerListe->front()->boundingBox().size().X;
 	float gegnerHeight = this->gegnerListe->front()->boundingBox().size().Y;
 	this->invasion->start(10, Vector(this->feld->Min.X + gegnerWidth, this->feld->Max.Y - this->gameBar->boundingBox().size().Y - gegnerHeight, 0));
+	this->drawables.push_back(this->invasion);
 
 	int maxBullets = 10;
 	queue<Bullet*>* bulletQueue = new queue<Bullet*>();
@@ -57,7 +57,6 @@ void Application::createGame()
 		pBullet->shader(pShader, true);
 		this->bulletList->push_back(pBullet);
 		bulletQueue->push(pBullet);
-		Models.push_back(pBullet);
 	}
 	this->invasion->setBulletQueue(bulletQueue);
 
@@ -76,27 +75,40 @@ void Application::createGame()
 			partikel->shader(pShader, true);
 			partikelListe->push_back(partikel);
 			this->partikelList->push_back(partikel);
-			Models.push_back(partikel);
 		}
 		barriere = new Barriere(partikelListe);
 		barriere->init(10, Vector((-abstand + i * abstand), -3, 0));
 		this->barrieren->push_back(barriere);
+		this->drawables.push_back(barriere);
 	}
 
 	this->menu = new Menu(this->feld->size().X * 0.3f, this->feld->size().Y * 0.5f, 0);
+	this->menu->shadowCaster(false);
 	ConstantShader* cShader = new ConstantShader();
 	cShader->color(Color(0, 0, 0.5f));
 	this->menu->shader(cShader, true);
 	m.translation(Vector(0, 0, 20));
 	this->menu->transform(m);
-	Models.push_back(this->menu);
 
 	// directional lights
-	DirectionalLight* dl = new DirectionalLight();
-	dl->direction(Vector(0, 0, -1));
+	/*DirectionalLight* dl = new DirectionalLight();
+	dl->direction(Vector(-0.1, -0.1, -1));
 	dl->color(Color(1, 1, 1));
 	dl->castShadows(true);
-	ShaderLightMapper::instance().addLight(dl);
+	ShaderLightMapper::instance().addLight(dl);*/
+
+	float innerradius = 5;
+	float outerradius = 10;
+	Color c = Color(0.5f, 0.5f, 0.5f);
+
+	SpotLight* sl = new SpotLight();
+	sl->position(Vector(0, 0, 30));
+	sl->color(c);
+	sl->direction(Vector(-0.01, 0, -1));
+	sl->innerRadius(innerradius);
+	sl->outerRadius(outerradius);
+	sl->castShadows(true);
+	ShaderLightMapper::instance().addLight(sl);
 
 }
 
@@ -123,32 +135,33 @@ void Application::createFeld() {
 
 	Matrix m;
 
-	pModel = new TriangleBoxModel((this->feld->Max.X - this->feld->Min.X) * 1.2f, (this->feld->Max.Y - this->feld->Min.Y) * 1.2f, 0);
+	pModel = new TriangleBoxModel((this->feld->Max.X - this->feld->Min.X) * 1.5f, (this->feld->Max.Y - this->feld->Min.Y) * 1.5f, 0);
 	pShader = new PhongShader();
 	//pShader->ambientColor(Color(0, 0.5f, 0.1f));
 	pShader->diffuseTexture(Texture::LoadShared(ASSET_DIRECTORY "texture/dirtyWalkwayBorder_C_00.dds"));
 	pModel->shader(pShader, true);
 	m.translation(0, 0, -1);
 	pModel->transform(m);
-	Models.push_back(pModel);
+	drawables.push_back(pModel);
 
 	list<Model*>* lebensPunkte = new list<Model*>();
 	for (int i = 0; i < LEBENSPUNKTE_SPIELER; i++) {
 		Model* lebensPunkt = new Model(ASSET_DIRECTORY "Space_Invader/Space_Invader_Small.obj", Vector(0, 0, 0), 0.006f);
+		lebensPunkt->shadowCaster(false);
 		pShader = new PhongShader();
 		lebensPunkt->shader(pShader, true);
-		Models.push_back(lebensPunkt);
 		lebensPunkte->push_back(lebensPunkt);
 		this->lebensPunkte->push_back(lebensPunkt);
 	}
 
 	float gameBarHeight = this->lebensPunkte->front()->boundingBox().size().Y * 2;
 	this->gameBar = new GameBar(lebensPunkte, Vector(0, this->feld->Max.Y - gameBarHeight * 0.5f, 0), this->gameWidth, gameBarHeight, 0);
+	this->gameBar->shadowCaster(false);
 	cShader = new ConstantShader();
 	cShader->color(Color(1, 0, 0));
 	this->gameBar->shader(cShader, true);
 	this->gameBar->init();
-	Models.push_back(this->gameBar);
+	drawables.push_back(this->gameBar);
 }
 
 void Application::start()
@@ -315,14 +328,18 @@ void Application::collisionBullet()
 
 void Application::draw()
 {
-	ShadowGenerator.generate(Models);
+	list<BaseModel*> models;
+	for (Drawable* d : this->drawables) {
+		models.push_back((BaseModel*) d);
+	}
+	ShadowGenerator.generate(models);
 
 	// 1. clear screen
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	ShaderLightMapper::instance().activate();
 	// 2. setup shaders and draw models
-	for (list<BaseModel*>::iterator it = Models.begin(); it != Models.end(); ++it)
+	for (list<Drawable*>::iterator it = drawables.begin(); it != drawables.end(); ++it)
 	{
 		(*it)->draw(Cam);
 	}
@@ -335,10 +352,10 @@ void Application::draw()
 
 void Application::end()
 {
-	for (list<BaseModel*>::iterator it = Models.begin(); it != Models.end(); ++it)
+	for (list<Drawable*>::iterator it = drawables.begin(); it != drawables.end(); ++it)
 		delete* it;
 
-	Models.clear();
+	drawables.clear();
 }
 
 void Application::reset()

@@ -36,3 +36,7 @@ void GameBar::reset(list<Model*>* lebensPunkte)
 	this->lebensPunkte = lebensPunkte;
 	this->init();
 }
+
+void GameBar::draw(const BaseCamera& Cam)
+{
+}

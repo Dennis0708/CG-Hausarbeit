@@ -5,9 +5,9 @@
 #include <vector>
 #include <list>
 #include "Model.h"
+#include "Drawable.h"
 
-
-class GameBar : public LineBoxModel
+class GameBar : public LineBoxModel, public Drawable
 {
 	list<Model*>* lebensPunkte;
 	Vector ursprung;
@@ -17,6 +17,7 @@ public:
 	void init();
 	void removeLife();
 	void reset(list<Model*>* lebensPunkte);
+	void draw(const BaseCamera& Cam) override;
 	const AABB& boundingBox() const { return BoundingBox; }
 };
 

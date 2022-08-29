@@ -1,9 +1,10 @@
 #pragma once
 
 #include "TriangleBoxModel.h"
+#include "Drawable.h"
 #include <list>
 
-class Barriere
+class Barriere: public Drawable
 {
 	list<TriangleBoxModel*>* barrierePartikel;
 	AABB BoundingBox;
@@ -15,7 +16,7 @@ public:
 	void init(int anzahlProReihe, Vector& obenLinks);
 	void reset(list<TriangleBoxModel*>* barrierePartikel);
 	void collisionBullet(TriangleBoxModel * partikel);
-	void draw(const BaseCamera& Cam);
+	void draw(const BaseCamera& Cam) override;
 	list<TriangleBoxModel*>* getPartikel();
 	void remove(TriangleBoxModel* partikel);
 };
