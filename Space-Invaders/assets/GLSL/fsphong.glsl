@@ -84,18 +84,19 @@ void main()
         vec3 SpecularComponent = lightColor * SpecularColor * pow( sat(dot(N,H)), SpecularExp);
 
 				if(lights[i].ShadowIndex != -1){
-            vec4 PosSM = ShadowMapMat[i] * vec4(Position.xyz, 1);
+            vec4 PosSM = ShadowMapMat[lights[i].ShadowIndex] * vec4(Position.xyz, 1);
             PosSM.xyz /= PosSM.w; // perspektivische Teilung vollziehen
             PosSM.xy = PosSM.xy*0.5 + 0.5; // Koordinaten von norm. Bildraum [-1,1] in Texturkoordinaten [0,1]
-            vec4 DepthSM = texture(ShadowMapTexture[i], PosSM.xy);
+            float DepthSM = texture(ShadowMapTexture[lights[i].ShadowIndex], PosSM.xy).r;
 
-				    if(length(DepthSM) < PosSM.z){
-					    shadow += vec3(0.1,0.1,0.1);
+				    if(DepthSM < PosSM.z){
+                DiffuseComponent = vec3(0,0,0);
+                SpecularComponent = vec3(0,0,0);
 				    }
         }
 
         Color += DiffuseComponent + SpecularComponent;
     }
 
-    FragColor = vec4(DiffTex.rgb * (Color + AmbientColor - shadow),DiffTex.a);
+    FragColor = vec4(DiffTex.rgb * (Color + AmbientColor),DiffTex.a);
 }
