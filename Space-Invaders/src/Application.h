@@ -81,6 +81,9 @@ class Application
     Menu* menu;
     GameBar* gameBar;
     GameState gameState;
+    SpotLight* spielerLight;
+    SpotLight* searchLightL;
+    SpotLight* searchLightR;
     float lastMenuInput;
     float gameWidth;
     float gameHeight;
@@ -95,9 +98,11 @@ public:
 private:
 	void createGame();
     void createFeld();
+    void createLights();
     void updateGame(float dtime);
     void updateStartscreen();
     void updateMenu(float dtime);
+    void updateLights(float dtime);
     void collisionFeld();
     void collisionBullet();
     void reset();

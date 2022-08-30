@@ -6,6 +6,14 @@ GameBar::GameBar(list<Model*>* lebensPunkte, const Vector ursprung, float Width,
 	this->show(ursprung);
 }
 
+GameBar::~GameBar()
+{
+	for (Model* m : *this->lebensPunkte) {
+		delete m;
+	}
+	this->lebensPunkte->clear();
+}
+
 void GameBar::init()
 {
 	float abstandX = this->lebensPunkte->front()->boundingBox().size().X * 2;

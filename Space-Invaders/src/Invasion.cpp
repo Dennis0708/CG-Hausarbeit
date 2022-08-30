@@ -14,7 +14,7 @@ Invasion::~Invasion()
 	delete this->bulletsInGame;
 }
 
-void Invasion::start(int anzahlProReihe,const  Vector& obenLinks)
+void Invasion::start(int anzahlProReihe, const  Vector& obenLinks)
 {
 	this->anzahlProReihe = anzahlProReihe;
 	this->obenLinks = obenLinks;
@@ -33,6 +33,7 @@ void Invasion::start(int anzahlProReihe,const  Vector& obenLinks)
 		gegner->setRunter(&this->down);
 		i++;
 	}
+	//this->calcBoundingBox();
 }
 
 void Invasion::reset(list<Gegner*>* gegnerListe)
@@ -70,9 +71,10 @@ void Invasion::update(float dtime)
 		this->bulletsInGame->remove(bullet);
 	}
 
+	//this->calcBoundingBox();
+
 	this->down = 0;
 }
-
 
 void Invasion::collisionBorder(Collision collision, float down)
 {
@@ -120,6 +122,18 @@ bool Invasion::shoot()
 	return false;
 }
 
+void Invasion::calcBoundingBox()
+{
+	BaseModel* FirstModel = *this->gegnerListe->begin();
+	this->bBox = FirstModel->boundingBox().transform(FirstModel->transform());
+
+	for (BaseModel* pModel : *this->gegnerListe)
+	{
+		AABB Box = pModel->boundingBox().transform(pModel->transform());
+		this->bBox.merge(Box);
+	}
+}
+
 void Invasion::addGegner(Gegner* gegner)
 {
 	gegner->shadowCaster(true);
@@ -143,7 +157,7 @@ void Invasion::draw(const BaseCamera& Cam) {
 	for (Gegner* gegner : *this->gegnerListe) {
 		gegner->draw(Cam);
 	}
-	for (Bullet *bullet : *this->bulletsInGame) {
+	for (Bullet* bullet : *this->bulletsInGame) {
 		bullet->draw(Cam);
 	}
 }

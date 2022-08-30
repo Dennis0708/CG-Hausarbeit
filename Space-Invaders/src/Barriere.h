@@ -12,7 +12,7 @@ class Barriere: public Drawable
 	Vector ursprung;
 public:
 	Barriere(list<TriangleBoxModel*>* barrierePartikel);
-	~Barriere();
+	virtual ~Barriere();
 	void init(int anzahlProReihe, Vector& obenLinks);
 	void reset(list<TriangleBoxModel*>* barrierePartikel);
 	void collisionBullet(TriangleBoxModel * partikel);

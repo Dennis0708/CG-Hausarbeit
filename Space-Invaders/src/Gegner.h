@@ -14,6 +14,7 @@ class Gegner : public Model
 	Bullet* bullet;
 public:
 	Gegner(const char* ModelFile, Vector& position, float size);
+	virtual ~Gegner() = default;
 	void update(float dtime, int anzahlGegner);
 	void draw(const BaseCamera& Cam);
 	void shoot(Bullet* bullet);

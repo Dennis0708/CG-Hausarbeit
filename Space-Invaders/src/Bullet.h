@@ -14,6 +14,7 @@ class Bullet : public Model
 	PointLight* light;
 public:
 	Bullet(const char* ModelFile, Vector& positon, float size, PointLight* light = nullptr);
+	virtual ~Bullet() = default;
 	void update(float dtime);
 	void collisionBorder(Collision collision);
 	void collisionBullet();

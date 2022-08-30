@@ -54,7 +54,7 @@ void main()
     vec3 H = normalize(E+L);
 
     vec3 Color = vec3(0,0,0);
-
+    /*
 	for(int i=0; i<LightCount;i++){
         float Dist = length(lights[i].Position - Position);
 		float Intensity = 1.0/( lights[i].Attenuation.x + (lights[i].Attenuation.y*Dist) + (lights[i].Attenuation.z*Dist*Dist));
@@ -98,6 +98,7 @@ void main()
 
         Color += DiffuseComponent + SpecularComponent;
     }
+    */
 
     FragColor = vec4(DiffTex.rgb * (Color + AmbientColor),DiffTex.a);
 }

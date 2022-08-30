@@ -6,6 +6,11 @@ Spieler::Spieler(const char* ModelFile, Vector& position, float size, int lebens
 {
 }
 
+Spieler::~Spieler()
+{
+	delete this->spielerBullet;
+}
+
 void Spieler::steuern(int direction)
 {
 	if (this->collision == Collision::RIGHT && direction == 1) {

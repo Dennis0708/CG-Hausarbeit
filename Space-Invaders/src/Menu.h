@@ -20,6 +20,7 @@ class Menu : public TriangleBoxModel, public Drawable
     float height;
 public:
     Menu(float Width = 1, float Height = 1, float Depth = 1);
+    virtual ~Menu();
     void up();
     void down();
     GameState enter();

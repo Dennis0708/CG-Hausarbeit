@@ -14,6 +14,7 @@ class Spieler: public Model, public Drawable
 	Collision collision;
 public:
 	Spieler(const char* ModelFile, Vector& position, float size, int lebenspunkte, Bullet * spielerBullet);
+	virtual ~Spieler();
 	void steuern(int direction);
 	void update(float dtime);
 	void collisionBorder(Collision collision);

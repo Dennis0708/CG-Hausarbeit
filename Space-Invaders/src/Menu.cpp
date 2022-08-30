@@ -37,6 +37,14 @@ Menu::Menu(float Width, float Height, float Depth)
 	this->current->shader(pShader, true);
 }
 
+Menu::~Menu()
+{
+	delete this->resume;
+	delete this->reset;
+	delete this->exit;
+	delete this->current;
+}
+
 void Menu::up()
 {
 	switch(this->state) {

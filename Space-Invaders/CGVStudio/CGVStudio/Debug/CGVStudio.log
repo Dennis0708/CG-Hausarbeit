@@ -1,15 +1,7 @@
 ﻿  Application.cpp
-C:\Medieninformatik\CG-Hausarbeit\Space-Invaders\src\Application.cpp(94,37): warning C4305: "Argument": Verkürzung von "double" in "float"
-C:\Medieninformatik\CG-Hausarbeit\Space-Invaders\src\Application.cpp(95,37): warning C4305: "Argument": Verkürzung von "double" in "float"
-C:\Medieninformatik\CG-Hausarbeit\Space-Invaders\src\Application.cpp(130,35): warning C4305: "Argument": Verkürzung von "double" in "float"
-C:\Medieninformatik\CG-Hausarbeit\Space-Invaders\src\Application.cpp(143,28): warning C4244: "Argument": Konvertierung von "int" in "float", möglicher Datenverlust
-C:\Medieninformatik\CG-Hausarbeit\Space-Invaders\src\Application.cpp(144,25): warning C4244: "Argument": Konvertierung von "int" in "float", möglicher Datenverlust
-  Bullet.cpp
-  CollisionDetector.cpp
-  Gegner.cpp
-  Invasion.cpp
-C:\Medieninformatik\CG-Hausarbeit\Space-Invaders\src\Invasion.cpp(99,30): warning C4101: "e": Unreferenzierte lokale Variable
-  Spieler.cpp
-  main.cpp
-  Code wird generiert...
-  CGVStudio.vcxproj -> C:\Medieninformatik\CG-Hausarbeit\Space-Invaders\CGVStudio\Debug\CGVStudio.exe
+C:\Users\Dennis\Desktop\CG-Hausarbeit\Space-Invaders\src\Application.cpp(94,37): warning C4305: "Argument": Verkürzung von "double" in "float"
+C:\Users\Dennis\Desktop\CG-Hausarbeit\Space-Invaders\src\Application.cpp(95,37): warning C4305: "Argument": Verkürzung von "double" in "float"
+C:\Users\Dennis\Desktop\CG-Hausarbeit\Space-Invaders\src\Application.cpp(122,28): warning C4244: "Argument": Konvertierung von "int" in "float", möglicher Datenverlust
+C:\Users\Dennis\Desktop\CG-Hausarbeit\Space-Invaders\src\Application.cpp(123,25): warning C4244: "Argument": Konvertierung von "int" in "float", möglicher Datenverlust
+C:\Users\Dennis\Desktop\CG-Hausarbeit\Space-Invaders\src\Application.cpp(175,37): warning C4305: "Argument": Verkürzung von "double" in "float"
+  CGVStudio.vcxproj -> C:\Users\Dennis\Desktop\CG-Hausarbeit\Space-Invaders\CGVStudio\Debug\CGVStudio.exe

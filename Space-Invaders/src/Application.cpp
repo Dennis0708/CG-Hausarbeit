@@ -19,12 +19,12 @@ Application::Application(GLFWwindow* pWin)
 
 	this->createFeld();
 	this->createGame();
+	this->createLights();
 }
 
 void Application::createGame()
 {
 	Matrix m;
-
 
 	PointLight* light = new PointLight();
 	light->position(Vector(0, 0, 30));
@@ -81,7 +81,7 @@ void Application::createGame()
 	this->invasion->setBulletQueue(bulletQueue);
 
 	int maxBarrieren = 3;
-	int maxPartikel = 50;
+	int maxPartikel = 1;
 	list<TriangleBoxModel*>* partikelListe;
 	TriangleBoxModel* partikel;
 	Barriere* barriere;
@@ -99,7 +99,7 @@ void Application::createGame()
 			this->models.push_back(partikel);
 		}
 		barriere = new Barriere(partikelListe);
-		barriere->init(10, Vector((-abstand + i * abstand), -3, 0));
+		barriere->init(1, Vector((-abstand + i * abstand), -3, 0));
 		this->barrieren->push_back(barriere);
 		this->drawables.push_back(barriere);
 	}
@@ -112,27 +112,6 @@ void Application::createGame()
 	m.translation(Vector(0, 0, 20));
 	this->menu->transform(m);
 	this->drawables.push_back(menu);
-
-	// directional lights
-	/*DirectionalLight* dl = new DirectionalLight();
-	dl->direction(Vector(-0.1, -0.1, -1));
-	dl->color(Color(1, 1, 1));
-	dl->castShadows(true);
-	ShaderLightMapper::instance().addLight(dl);*/
-
-	float innerradius = 5;
-	float outerradius = 10;
-	Color c = Color(0.5f, 0.5f, 0.5f);
-
-	SpotLight* sl = new SpotLight();
-	sl->position(Vector(0, 0, 30));
-	sl->color(c);
-	sl->direction(Vector(-0.01, 0, -1));
-	sl->innerRadius(innerradius);
-	sl->outerRadius(outerradius);
-	sl->castShadows(true);
-	ShaderLightMapper::instance().addLight(sl);
-
 }
 
 void Application::createFeld() {
@@ -157,7 +136,7 @@ void Application::createFeld() {
 	this->collisionDetector = new CollisionDetector(this->feld);
 
 	Matrix m;
-
+	
 	Background* background = new Background((this->feld->Max.X - this->feld->Min.X) * 1.5f, (this->feld->Max.Y - this->feld->Min.Y) * 1.5f, 0);
 	pShader = new PhongShader();
 	//pShader->ambientColor(Color(0, 0.5f, 0.1f));
@@ -189,6 +168,49 @@ void Application::createFeld() {
 	drawables.push_back(this->gameBar);
 }
 
+void Application::createLights()
+{
+	// directional lights
+	DirectionalLight* dl = new DirectionalLight();
+	dl->direction(Vector(-0.1, -0.1, -1));
+	dl->color(Color(1, 1, 1));
+	dl->castShadows(true);
+	ShaderLightMapper::instance().addLight(dl);
+
+	float innerradius = 5;
+	float outerradius = 10;
+	Color c = Color(0.5f, 0.5f, 0.5f);
+
+	/*
+
+	this->spielerLight = new SpotLight();
+	this->spielerLight->position(this->spieler->transform().translation() + Vector(0, -1, 10));
+	this->spielerLight->color(c);
+	this->spielerLight->direction((this->spieler->transform().translation() - this->spielerLight->position()).normalize());
+	this->spielerLight->innerRadius(innerradius);
+	this->spielerLight->outerRadius(outerradius);
+	this->spielerLight->castShadows(true);
+	ShaderLightMapper::instance().addLight(this->spielerLight);
+
+	this->searchLightL = new SpotLight();
+	this->searchLightL->position(this->feld->Min + Vector(0,-1,10));
+	this->searchLightL->color(c);
+	this->searchLightL->direction((this->invasion->boundingBox().center() - this->searchLightL->position()).normalize());
+	this->searchLightL->innerRadius(innerradius);
+	this->searchLightL->outerRadius(outerradius);
+	this->searchLightL->castShadows(true);
+	ShaderLightMapper::instance().addLight(this->searchLightL);
+
+	this->searchLightR = new SpotLight();
+	this->searchLightR->position(Vector(this->feld->Max.Y, this->feld->Min.Y - 1, 10));
+	this->searchLightR->color(c);
+	this->searchLightR->direction((this->invasion->boundingBox().center() - this->searchLightR->position()).normalize());
+	this->searchLightR->innerRadius(innerradius);
+	this->searchLightR->outerRadius(outerradius);
+	this->searchLightR->castShadows(true);
+	ShaderLightMapper::instance().addLight(this->searchLightR);*/
+}
+
 void Application::start()
 {
 	glEnable(GL_DEPTH_TEST); // enable depth-testing
@@ -201,8 +223,11 @@ void Application::start()
 
 void Application::update(float dtime)
 {
-	//cout << 1/dtime << endl;
 	Cam.update();
+
+	static float gesamtDtime = 0;
+	static float c = 0;
+	float avgDtime;
 
 	if (glfwGetKey(pWindow, GLFW_KEY_R)) {
 		Cam.setPosition(Vector(0, 0, 10));
@@ -213,9 +238,15 @@ void Application::update(float dtime)
 		this->updateStartscreen();
 		break;
 	case GameState::GAME_IS_ACTIVE:
+		
+		c++;
+		gesamtDtime = (gesamtDtime + dtime);
+
 		this->updateGame(dtime);
 		break;
 	case GameState::PAUSE:
+		avgDtime = gesamtDtime / c;
+		cout << 1/avgDtime << endl;
 		this->updateMenu(dtime);
 		break;
 	case GameState::RESET:
@@ -235,6 +266,7 @@ void Application::updateGame(float dtime)
 		this->lastMenuInput = 0;
 		this->models.push_back(this->menu);
 	}
+	/*
 	else {
 		int links = glfwGetKey(pWindow, GLFW_KEY_LEFT);
 		int rechts = glfwGetKey(pWindow, GLFW_KEY_RIGHT);
@@ -243,6 +275,7 @@ void Application::updateGame(float dtime)
 		this->spieler->steuern(rechts - links);
 		this->spieler->update(dtime);
 		this->spieler->shoot(shotFired);
+		//this->spielerLight->direction((this->spieler->transform().translation() - this->spielerLight->position()).normalize());
 
 		this->invasion->update(dtime);
 
@@ -256,6 +289,7 @@ void Application::updateGame(float dtime)
 			this->reset();
 		}
 	}
+	*/
 }
 
 void Application::updateStartscreen()
@@ -284,6 +318,10 @@ void Application::updateMenu(float dtime)
 		this->menu->hide();
 		this->models.remove(this->menu);
 	}
+}
+
+void Application::updateLights(float dtime)
+{
 }
 
 void Application::collisionFeld()
@@ -353,23 +391,20 @@ void Application::collisionBullet()
 	}
 }
 
-
-
-
 void Application::draw()
 {
-	ShadowGenerator.generate(this->models);
+	//ShadowGenerator.generate(this->models);
 
 	// 1. clear screen
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	ShaderLightMapper::instance().activate();
+	//ShaderLightMapper::instance().activate();
 	// 2. setup shaders and draw models
 	for (list<Drawable*>::iterator it = drawables.begin(); it != drawables.end(); ++it)
 	{
 		(*it)->draw(Cam);
 	}
-	ShaderLightMapper::instance().deactivate();
+	//ShaderLightMapper::instance().deactivate();
 
 	// 3. check once per frame for opengl errors
 	GLenum Error = glGetError();
@@ -379,7 +414,7 @@ void Application::draw()
 void Application::end()
 {
 	for (list<Drawable*>::iterator it = drawables.begin(); it != drawables.end(); ++it)
-		delete* it;
+		delete *it;
 
 	drawables.clear();
 }
