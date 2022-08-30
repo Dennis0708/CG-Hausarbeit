@@ -38,6 +38,7 @@
 #include "ShaderLightmapper.h"
 #include "Drawable.h"
 #include "Background.h"
+#include "Searchlight.h"
 
 #ifdef WIN32
 #include <GL/glew.h>
@@ -80,11 +81,10 @@ class Application
     CollisionDetector* collisionDetector;
     Menu* menu;
     GameBar* gameBar;
+    Background* background;
     GameState gameState;
     SpotLight* spielerLight;
-    SpotLight* searchLightL;
-    SpotLight* searchLightR;
-    float lastMenuInput;
+    Searchlight* searchLight;
     float gameWidth;
     float gameHeight;
     bool close;

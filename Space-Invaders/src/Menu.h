@@ -18,13 +18,14 @@ class Menu : public TriangleBoxModel, public Drawable
     TriangleBoxModel* exit;
     TriangleBoxModel* current;
     float height;
+    float lastInput;
 public:
     Menu(float Width = 1, float Height = 1, float Depth = 1);
     virtual ~Menu();
     void up();
     void down();
     GameState enter();
-    void update();
+    void update(float dtime);
     void show();
     void hide();
     void transform(const Matrix& m) override;

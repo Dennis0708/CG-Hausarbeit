@@ -6,11 +6,11 @@
 #define ASSET_TEXTURE_DIRECTORY "../assets/texture/"
 #endif
 
-Menu::Menu(float Width, float Height, float Depth) 
-	: TriangleBoxModel(Width, Height, Depth), state(MenuState::RESUME), height(Height)
+Menu::Menu(float Width, float Height, float Depth)
+	: TriangleBoxModel(Width, Height, Depth), state(MenuState::RESUME), height(Height), lastInput(0)
 {
 	PhongShader* pShader;
-	
+
 	float boxHeight = 0.2f, boxWidth = 0.8f;
 
 	this->resume = new TriangleBoxModel(Width * boxWidth, Height * boxHeight, 0.1f);
@@ -18,20 +18,20 @@ Menu::Menu(float Width, float Height, float Depth)
 	//pShader->ambientColor(Color(0, 0.5f, 0));
 	pShader->diffuseTexture(Texture::LoadShared(ASSET_TEXTURE_DIRECTORY "RESUME.png"));
 	this->resume->shader(pShader, true);
-	
+
 	this->reset = new TriangleBoxModel(Width * boxWidth, Height * boxHeight, 0);
 	pShader = new PhongShader();
 	//pShader->ambientColor(Color(0, 0.5f, 0));
 	pShader->diffuseTexture(Texture::LoadShared(ASSET_TEXTURE_DIRECTORY "RESET.png"));
 	this->reset->shader(pShader, true);
-	
+
 	this->exit = new TriangleBoxModel(Width * boxWidth, Height * boxHeight, 0);
 	pShader = new PhongShader();
 	//pShader->ambientColor(Color(0, 0.5f, 0));
 	pShader->diffuseTexture(Texture::LoadShared(ASSET_TEXTURE_DIRECTORY "EXIT.png"));
 	this->exit->shader(pShader, true);
 
-	this->current = new TriangleBoxModel(Width * (boxWidth + 0.05f) , Height * (boxHeight + 0.05f), 0);
+	this->current = new TriangleBoxModel(Width * (boxWidth + 0.05f), Height * (boxHeight + 0.05f), 0);
 	pShader = new PhongShader();
 	pShader->ambientColor(Color(0.5f, 0, 0));
 	this->current->shader(pShader, true);
@@ -47,7 +47,8 @@ Menu::~Menu()
 
 void Menu::up()
 {
-	switch(this->state) {
+	if (this->lastInput > 0.1f) {
+		switch (this->state) {
 		case MenuState::RESUME:
 			this->state = MenuState::EXIT;
 			break;
@@ -57,21 +58,26 @@ void Menu::up()
 		case MenuState::EXIT:
 			this->state = MenuState::RESET;
 			break;
+		}
+		this->lastInput = 0;
 	}
 }
 
 void Menu::down()
 {
-	switch (this->state) {
-	case MenuState::RESUME:
-		this->state = MenuState::RESET;
-		break;
-	case MenuState::RESET:
-		this->state = MenuState::EXIT;
-		break;
-	case MenuState::EXIT:
-		this->state = MenuState::RESUME;
-		break;
+	if (this->lastInput > 0.1f) {
+		switch (this->state) {
+		case MenuState::RESUME:
+			this->state = MenuState::RESET;
+			break;
+		case MenuState::RESET:
+			this->state = MenuState::EXIT;
+			break;
+		case MenuState::EXIT:
+			this->state = MenuState::RESUME;
+			break;
+		}
+		this->lastInput = 0;
 	}
 }
 
@@ -87,8 +93,9 @@ GameState Menu::enter()
 	}
 }
 
-void Menu::update()
+void Menu::update(float dtime)
 {
+	this->lastInput += dtime;
 	Matrix posMat;
 	switch (this->state) {
 	case MenuState::RESUME:

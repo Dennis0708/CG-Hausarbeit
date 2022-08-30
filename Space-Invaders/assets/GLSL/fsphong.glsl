@@ -54,51 +54,52 @@ void main()
     vec3 H = normalize(E+L);
 
     vec3 Color = vec3(0,0,0);
-    /*
+    
 	for(int i=0; i<LightCount;i++){
-        float Dist = length(lights[i].Position - Position);
+		float Dist = length(lights[i].Position - Position);
 		float Intensity = 1.0/( lights[i].Attenuation.x + (lights[i].Attenuation.y*Dist) + (lights[i].Attenuation.z*Dist*Dist));
 
-        vec3 lightColor = vec3(0,0,0);
+		vec3 lightColor = vec3(0,0,0);
 
-        if(lights[i].Type == 0){ //Point Light
-            L = normalize(lights[i].Position - Position);
-            lightColor = Intensity * lights[i].Color;
-        }else if(lights[i].Type == 1){ //Directional Light
-            L = -normalize(lights[i].Direction);
-            lightColor = lights[i].Color;
-        }else if(lights[i].Type == 2){ //Spot Light
-            L = normalize(lights[i].Position - Position);
+		if(lights[i].Type == 0){ //Point Light
+			L = normalize(lights[i].Position - Position);
+			lightColor = Intensity * lights[i].Color;
+		}else if(lights[i].Type == 1){ //Directional Light
+			L = -normalize(lights[i].Direction);
+			lightColor = lights[i].Color;
+		}else if(lights[i].Type == 2){ //Spot Light
+			L = normalize(lights[i].Position - Position);
 
-            float delta = acos(dot(normalize(L), normalize(-lights[i].Direction)));
-            lightColor = Intensity * lights[i].Color * (1 - sat((delta - lights[i].SpotRadius.x) / (lights[i].SpotRadius.y - lights[i].SpotRadius.x)));
-        }
+			float delta = acos(dot(normalize(L), normalize(-lights[i].Direction)));
+			lightColor = Intensity * lights[i].Color * (1 - sat((delta - lights[i].SpotRadius.x) / (lights[i].SpotRadius.y - lights[i].SpotRadius.x)));
+		}
 
-        vec3 DiffuseComponent = lightColor * DiffuseColor * sat(dot(N,L));
+		vec3 DiffuseComponent = lightColor * DiffuseColor * sat(dot(N,L));
 
-        // Reflexion nach Phong
-        //vec3 R = reflect(-L,N);
-        //vec3 SpecularComponent = lightColor * SpecularColor * pow( sat(dot(R,E)), SpecularExp);
+		// Reflexion nach Phong
+		//vec3 R = reflect(-L,N);
+		//vec3 SpecularComponent = lightColor * SpecularColor * pow( sat(dot(R,E)), SpecularExp);
 
-        // Reflexion nach Blinn
-        vec3 H = normalize(E+L);
-        vec3 SpecularComponent = lightColor * SpecularColor * pow( sat(dot(N,H)), SpecularExp);
+		// Reflexion nach Blinn
+		vec3 H = normalize(E+L);
+		vec3 SpecularComponent = lightColor * SpecularColor * pow( sat(dot(N,H)), SpecularExp);
 
 		if(lights[i].ShadowIndex != -1){
-            vec4 PosSM = ShadowMapMat[lights[i].ShadowIndex] * vec4(Position.xyz, 1); // hiernach im Kameraraum
-            PosSM.xyz /= PosSM.w; // perspektivische Teilung vollziehen // hiernach im norm. Bildraum
-            PosSM.xy = PosSM.xy*0.5 + 0.5; // Koordinaten von norm. Bildraum [-1,1] in Texturkoordinaten [0,1]
-            float DepthSM = texture(ShadowMapTexture[lights[i].ShadowIndex], PosSM.xy).r;
+			vec4 PosSM = ShadowMapMat[lights[i].ShadowIndex] * vec4(Position.xyz, 1); // hiernach im Kameraraum
+			PosSM.xyz /= PosSM.w; // perspektivische Teilung vollziehen // hiernach im norm. Bildraum
+			PosSM.xy = PosSM.xy*0.5 + 0.5; // Koordinaten von norm. Bildraum [-1,1] in Texturkoordinaten [0,1]
+			float DepthSM = texture(ShadowMapTexture[lights[i].ShadowIndex], PosSM.xy).r;
 
 			if(DepthSM < PosSM.z-EPSILON){
-                DiffuseComponent = vec3(0,0,0);
-                SpecularComponent = vec3(0,0,0);
-		    }
-        }
+				DiffuseComponent = vec3(0,0,0);
+				SpecularComponent = vec3(0,0,0);
+			}
+		}
 
-        Color += DiffuseComponent + SpecularComponent;
+		Color += DiffuseComponent + SpecularComponent;
+
     }
-    */
+    
 
     FragColor = vec4(DiffTex.rgb * (Color + AmbientColor),DiffTex.a);
 }

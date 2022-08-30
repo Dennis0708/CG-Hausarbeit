@@ -25,6 +25,7 @@ public:
 	void update(float dtime);
 	void collisionBorder(Collision collision, float down);
 	bool shoot();
+	Vector calcCenter();
 	void calcBoundingBox();
 	void addGegner(Gegner* gegner);
 	void removeGegner(Gegner* gegner);
@@ -35,5 +36,6 @@ public:
 	void setBulletQueue(queue<Bullet*>* bulletQueue) { this->bulletQueue = bulletQueue; }
 	list<Bullet*> *getBulletsInGame() { return this->bulletsInGame; }
 	void draw(const BaseCamera& Cam) override;
+	const Gegner *getRandomGegner() const;
 };
 

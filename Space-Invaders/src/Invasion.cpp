@@ -122,6 +122,14 @@ bool Invasion::shoot()
 	return false;
 }
 
+Vector Invasion::calcCenter() {
+	Vector center = { 0,0,0 };
+	for (Gegner* gegner : *this->gegnerListe) {
+		center = center + gegner->transform().translation();
+	}
+	return center * (1.0f / (float)this->gegnerListe->size());
+}
+
 void Invasion::calcBoundingBox()
 {
 	BaseModel* FirstModel = *this->gegnerListe->begin();
@@ -160,4 +168,17 @@ void Invasion::draw(const BaseCamera& Cam) {
 	for (Bullet* bullet : *this->bulletsInGame) {
 		bullet->draw(Cam);
 	}
+}
+
+const Gegner* Invasion::getRandomGegner() const
+{
+	int random = rand() % this->gegnerListe->size();
+	int i = 0;
+	for (Gegner* gegner : *this->gegnerListe) {
+		if (i == random) {
+			return gegner;
+		}
+		i++;
+	}
+	return this->gegnerListe->front();
 }

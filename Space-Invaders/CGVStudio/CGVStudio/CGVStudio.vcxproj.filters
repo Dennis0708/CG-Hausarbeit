@@ -136,6 +136,9 @@
     <ClCompile Include="..\..\src\Background.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\Searchlight.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\Camera.h">
@@ -244,5 +247,6 @@
       <Filter>Quelldateien\gameElements</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\Background.h" />
+    <ClInclude Include="..\..\src\Searchlight.h" />
   </ItemGroup>
 </Project>
