@@ -98,6 +98,7 @@ void Application::createGame()
 			//pShader->ambientColor({ 0,0,0 });
 			pShader->ambientColor({ 0,0.2,0 });
 			pShader->diffuseColor({ 0,0.4,0 });
+			pShader->diffuseTexture(Texture::LoadShared(ASSET_DIRECTORY "texture/green_bullet.jpg"));
 			partikel->shader(pShader, true);
 			partikelListe->push_back(partikel);
 			this->partikelList->push_back(partikel);
@@ -183,8 +184,8 @@ void Application::createLights()
 	dl->castShadows(false);
 	ShaderLightMapper::instance().addLight(dl);
 
-	float innerradius = 5;
-	float outerradius = 10;
+	float innerradius = 6;
+	float outerradius = 8;
 	//Color c = Color(0.75f, 0.75f, 0.75f);
 	Color c = { 1,1,1 };
 
@@ -197,6 +198,7 @@ void Application::createLights()
 	this->spielerLight->innerRadius(innerradius);
 	this->spielerLight->outerRadius(outerradius);
 	this->spielerLight->castShadows(true);
+	this->spielerLight->attenuation({ 0.5f,0,0 });
 	ShaderLightMapper::instance().addLight(this->spielerLight);
 
 	innerradius = 7;
@@ -209,7 +211,7 @@ void Application::createLights()
 	this->searchLight->innerRadius(innerradius);
 	this->searchLight->outerRadius(outerradius);
 	this->searchLight->castShadows(true);
-	//this->searchLight->attenuation({ 01,0,0 });
+	this->searchLight->attenuation({ 0.5f,0,0 });
 	ShaderLightMapper::instance().addLight(this->searchLight);
 }
 
