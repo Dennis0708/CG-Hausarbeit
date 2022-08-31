@@ -5,15 +5,21 @@ Bullet::Bullet(const char* ModelFile, Vector& positon, float size, PointLight* l
 {
 }
 
+
 void Bullet::update(float dtime) {
 	if (this->upDown.Y != 0) {
+		if (dtime == this ->lastDtime) {
+			int a = 0;
+		}
 		Matrix translationMat;
-		float geschwindigkeit = 10;
+		float geschwindigkeit = 5;
 		translationMat.translation(this->upDown * (1 / this->size) * geschwindigkeit * dtime);
+		cout << translationMat.translation().toString() << endl;
 		transform(transform() * translationMat);
 		if (this->light) {
 			this->light->position(this->transform().translation());
 		}
+		this->lastDtime = dtime;
 	}
 }
 

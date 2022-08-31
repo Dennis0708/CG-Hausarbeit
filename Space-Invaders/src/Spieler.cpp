@@ -2,7 +2,7 @@
 #include "Spieler.h"
 
 Spieler::Spieler(const char* ModelFile, Vector& position, float size, int lebenspunkte, Bullet* spielerBullet)
-	: Model(ModelFile, position, size), lebenspunkte(lebenspunkte), spielerBullet(spielerBullet),direction(0), collision(Collision::NONE)
+	: Model(ModelFile, position, size), pos(position), lebenspunkte(lebenspunkte), spielerBullet(spielerBullet),direction(0), collision(Collision::NONE)
 {
 }
 
@@ -60,6 +60,7 @@ void Spieler::shoot(bool shotFired) {
 
 void Spieler::reset()
 {
-	this->show(Vector(0, -6, 0));
+	this->lebenspunkte = 3;
+	this->show(this->pos);
 	this->spielerBullet->reset();
 }

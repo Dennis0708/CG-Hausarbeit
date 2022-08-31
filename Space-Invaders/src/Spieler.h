@@ -12,6 +12,7 @@ class Spieler: public Model, public Drawable
 	int direction;
 	Bullet* spielerBullet;
 	Collision collision;
+	Vector pos;
 public:
 	Spieler(const char* ModelFile, Vector& position, float size, int lebenspunkte, Bullet * spielerBullet);
 	virtual ~Spieler();

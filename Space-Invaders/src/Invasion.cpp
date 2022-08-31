@@ -54,7 +54,7 @@ void Invasion::update(float dtime)
 		gegner->update(dtime, this->gegnerListe->size());
 
 	}
-	if (this->timeSinceShoot >= 2) {
+	if (this->timeSinceShoot >= 0.5f) {
 		if (this->shoot()) {
 			this->timeSinceShoot = 0;
 		}
@@ -104,7 +104,7 @@ bool Invasion::shoot()
 	}
 	map<float, Gegner*>::iterator iter;
 	int random = rand() % untereReihe.size();
-	Gegner* gegnerToShoot;
+	Gegner* gegnerToShoot = untereReihe.begin()->second;
 	int i = 0;
 	for (iter = untereReihe.begin(); iter != untereReihe.end(); iter++) {
 		if (i == random) {
@@ -112,7 +112,7 @@ bool Invasion::shoot()
 		}
 		i++;
 	}
-	if (!gegnerToShoot->getBullet()) {
+	if (gegnerToShoot->getBullet() == nullptr) {
 		this->bulletQueue->front()->shadowCaster(true);
 		gegnerToShoot->shoot(this->bulletQueue->front());
 		this->bulletsInGame->push_back(gegnerToShoot->getBullet());
