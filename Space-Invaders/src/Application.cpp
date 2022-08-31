@@ -26,14 +26,6 @@ void Application::createGame()
 {
 	Matrix m;
 
-	TriangleBoxModel* boden = new TriangleBoxModel(this->feld->size().X * 1.5f, 1, 5);
-	pShader = new PhongShader();
-//	pShader->ambientColor(Color(0.64f, 0.16f, 0.16f));
-	pShader->diffuseColor(Color(0.64f, 0.16f, 0.16f));
-	boden->shader(pShader);
-	boden->show(Vector(this->feld->Min.X + this->feld->size().X * 0.5f, this->feld->Min.Y, 0));
-	this->drawables.push_back(boden);
-
 	PointLight* light = new PointLight();
 	light->position(Vector(0, 0, 30));
 	light->color({ 0,0,0 });
@@ -44,14 +36,14 @@ void Application::createGame()
 	pShader = new PhongShader();
 	pShader->ambientColor({ 0,0,0 });
 	spielerBullet->shader(pShader, true);
-	this->models.push_back(spielerBullet);
+	this->castsShadowList.push_back(spielerBullet);
 
 	spieler = new Spieler(ASSET_DIRECTORY "Space_Invader/Space_Invader_Small.obj", Vector(0, boden->transform().translation().Y + boden->boundingBox().size().Y * 0.5f + 0.3f, 0), 0.006f, LEBENSPUNKTE_SPIELER, spielerBullet);
 	pShader = new PhongShader();
 	pShader->ambientColor({ 0,0,0 });
 	spieler->shader(pShader, true);
 	this->drawables.push_back(spieler);
-	this->models.push_back(spieler);
+	this->castsShadowList.push_back(spieler);
 
 	int anzahlGegner = 50;
 	list<Gegner*>* tmpGegnerList = new list<Gegner*>();
@@ -62,7 +54,7 @@ void Application::createGame()
 		gegner->shader(pShader, true);
 		tmpGegnerList->push_back(gegner);
 		this->gegnerListe->push_back(gegner);
-		this->models.push_back(gegner);
+		this->castsShadowList.push_back(gegner);
 	}
 	this->invasion = new Invasion(tmpGegnerList);
 	float gegnerWidth = this->gegnerListe->front()->boundingBox().size().X;
@@ -85,13 +77,13 @@ void Application::createGame()
 		pBullet->shader(pShader, true);
 		this->bulletList->push_back(pBullet);
 		bulletQueue->push(pBullet);
-		this->models.push_back(pBullet);
+		this->castsShadowList.push_back(pBullet);
 		pBullet->shadowCaster(false);
 	}
 	this->invasion->setBulletQueue(bulletQueue);
 
 	int maxBarrieren = 3;
-	int maxPartikel = 50;
+	int maxPartikel = 1;
 	list<TriangleBoxModel*>* partikelListe;
 	TriangleBoxModel* partikel;
 	Barriere* barriere;
@@ -108,10 +100,10 @@ void Application::createGame()
 			partikel->shader(pShader, true);
 			partikelListe->push_back(partikel);
 			this->partikelList->push_back(partikel);
-			this->models.push_back(partikel);
+			this->castsShadowList.push_back(partikel);
 		}
 		barriere = new Barriere(partikelListe);
-		barriere->init(10, Vector((-abstand + i * abstand), -3, 0));
+		barriere->init(1, Vector((-abstand + i * abstand), -3, 0));
 		this->barrieren->push_back(barriere);
 		this->drawables.push_back(barriere);
 	}
@@ -150,16 +142,29 @@ void Application::createFeld() {
 
 	Matrix m;
 
+
 	background = new Background((this->feld->Max.X - this->feld->Min.X) * 1.2f, (this->feld->Max.Y - this->feld->Min.Y) * 1.2f, 0);
 	pShader = new PhongShader();
 	//pShader->ambientColor({ 0.2f,0.2f,0.2f });
 	//pShader->ambientColor(Color(0.1f, 0.1f, 0.1f));
-	//pShader->diffuseTexture(Texture::LoadShared(ASSET_DIRECTORY "texture/invasion.jpg"));
+	pShader->diffuseTexture(Texture::LoadShared(ASSET_DIRECTORY "texture/invasion2.jpg"));
 	background->shader(pShader, true);
 	m.translation(0, 0, -1);
 	background->transform(m);
 	drawables.push_back(background);
-	this->models.push_back(background);
+	this->castsShadowList.push_back(background);
+
+	this->boden = new Background(this->feld->size().X * 1.5f, 1, 5);
+	pShader = new PhongShader();
+	//	pShader->ambientColor(Color(0.64f, 0.16f, 0.16f));
+		//pShader->diffuseColor(Color(0.64f, 0.16f, 0.16f));
+	pShader->diffuseTexture(Texture::LoadShared(ASSET_DIRECTORY "texture/damagedAsphalt_C_00.dds"));
+	this->boden->shader(pShader, true);
+	this->boden->show(Vector(this->feld->Min.X + this->feld->size().X * 0.5f, this->feld->Min.Y, 0));
+	this->drawables.push_back(boden);
+	this->castsShadowList.push_back(boden);
+
+	this->feld->Min.Y += this->boden->boundingBox().size().Y * 0.5f;
 
 	list<Model*>* lebensPunkte = new list<Model*>();
 	for (int i = 0; i < LEBENSPUNKTE_SPIELER; i++) {
@@ -169,7 +174,7 @@ void Application::createFeld() {
 		lebensPunkt->shader(pShader, true);
 		lebensPunkte->push_back(lebensPunkt);
 		this->lebensPunkte->push_back(lebensPunkt);
-		this->models.push_back(lebensPunkt);
+		this->castsShadowList.push_back(lebensPunkt);
 	}
 
 	float gameBarHeight = this->lebensPunkte->front()->boundingBox().size().Y * 2;
@@ -252,12 +257,12 @@ void Application::update(float dtime)
 
 		c++;
 		gesamtDtime = (gesamtDtime + dtime);
-
+		cout << "-----------------------" << endl;
 		this->updateGame(dtime);
 		break;
 	case GameState::PAUSE:
 		avgDtime = gesamtDtime / c;
-		cout << 1 / avgDtime << endl;
+		//cout << 1 / avgDtime << endl;
 		this->updateMenu(dtime);
 		break;
 	case GameState::RESET:
@@ -274,7 +279,7 @@ void Application::updateGame(float dtime)
 		this->gameState = GameState::PAUSE;
 		this->menu->show();
 		this->menu->update(dtime);
-		this->models.push_back(this->menu);
+		this->castsShadowList.push_back(this->menu);
 	}
 	else {
 		int links = glfwGetKey(pWindow, GLFW_KEY_LEFT);
@@ -291,12 +296,10 @@ void Application::updateGame(float dtime)
 		this->collisionBullet();
 
 		if (this->spieler->getLebenspunkte() <= 0) {
-			this->gameState = GameState::BEFORE_START;
-			this->reset();
+			this->gameState = GameState::RESET;
 		}
 		if (this->invasion->getGegnerListe()->empty()) {
-			this->gameState = GameState::BEFORE_START;
-			this->reset();
+			this->gameState = GameState::RESET;
 		}
 	}
 
@@ -320,7 +323,7 @@ void Application::updateMenu(float dtime)
 	if (glfwGetKey(pWindow, GLFW_KEY_SPACE)) {
 		this->gameState = this->menu->enter();
 		this->menu->hide();
-		this->models.remove(this->menu);
+		this->castsShadowList.remove(this->menu);
 	}
 	this->menu->update(dtime);
 }
@@ -401,7 +404,7 @@ void Application::collisionBullet()
 
 void Application::draw()
 {
-	ShadowGenerator.generate(this->models);
+	ShadowGenerator.generate(this->castsShadowList);
 
 	// 1. clear screen
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);

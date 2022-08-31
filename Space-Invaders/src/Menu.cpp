@@ -48,7 +48,7 @@ Menu::~Menu()
 
 void Menu::up()
 {
-	if (this->lastInput > 0.1f) {
+	if (this->lastInput > 0.3f) {
 		switch (this->state) {
 		case MenuState::RESUME:
 			this->state = MenuState::EXIT;

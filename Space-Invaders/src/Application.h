@@ -61,7 +61,7 @@
 
 class Application
 {
-    list<BaseModel*> models;
+    list<BaseModel*> castsShadowList;
     list<Drawable*> drawables;
     list<Gegner*>* gegnerListe;
     list<Bullet*>* bulletList;
@@ -82,6 +82,7 @@ class Application
     Menu* menu;
     GameBar* gameBar;
     Background* background;
+    Background* boden;
     GameState gameState;
     SpotLight* spielerLight;
     Searchlight* searchLight;

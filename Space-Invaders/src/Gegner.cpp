@@ -29,7 +29,7 @@ void Gegner::draw(const BaseCamera& Cam) {
 void Gegner::shoot(Bullet* bullet) {
 	this->bullet = bullet;
 	if (!this->bullet->isMoving()) {
-		this->bullet->show(this->transform().translation() + Vector(0, -1, 0));
+		this->bullet->show(this->transform().translation());
 		this->bullet->down();
 	}
 }

@@ -12,6 +12,7 @@ class Bullet : public Model
 {
 	Vector upDown;
 	PointLight* light;
+	float lastDtime = 0;
 public:
 	Bullet(const char* ModelFile, Vector& positon, float size, PointLight* light = nullptr);
 	virtual ~Bullet() = default;
