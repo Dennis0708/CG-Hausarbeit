@@ -15,8 +15,9 @@
 #include "basemodel.h"
 #include "vertexbuffer.h"
 #include "indexbuffer.h"
+#include "Drawable.h"
 
-class TriangleBoxModel : public BaseModel
+class TriangleBoxModel : public BaseModel, public Drawable
 {
     AABB BoundingBox;
 public:

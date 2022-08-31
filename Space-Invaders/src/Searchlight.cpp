@@ -17,3 +17,10 @@ void Searchlight::update(float dtime)
 	this->rayPos = this->rayPos + wert;
 	this->direction((this->rayPos - this->position()).normalize());
 }
+
+void Searchlight::reset(const Vector& rayPos)
+{
+	this->rayPos = rayPos;
+	this->timer = 0;
+	this->direction((this->rayPos - this->position()).normalize());
+}

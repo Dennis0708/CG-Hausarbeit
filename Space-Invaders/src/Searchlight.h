@@ -13,5 +13,6 @@ public:
 	Searchlight(const Invasion & invasion, const Vector& rayPos);
 	~Searchlight() = default;
 	void update(float dtime);
+	void reset(const Vector& rayPos);
 };
 

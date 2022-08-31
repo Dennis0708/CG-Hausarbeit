@@ -26,6 +26,14 @@ void Application::createGame()
 {
 	Matrix m;
 
+	TriangleBoxModel* boden = new TriangleBoxModel(this->feld->size().X * 1.5f, 1, 5);
+	pShader = new PhongShader();
+//	pShader->ambientColor(Color(0.64f, 0.16f, 0.16f));
+	pShader->diffuseColor(Color(0.64f, 0.16f, 0.16f));
+	boden->shader(pShader);
+	boden->show(Vector(this->feld->Min.X + this->feld->size().X * 0.5f, this->feld->Min.Y, 0));
+	this->drawables.push_back(boden);
+
 	PointLight* light = new PointLight();
 	light->position(Vector(0, 0, 30));
 	light->color({ 0,0,0 });
@@ -36,11 +44,9 @@ void Application::createGame()
 	pShader = new PhongShader();
 	pShader->ambientColor({ 0,0,0 });
 	spielerBullet->shader(pShader, true);
-	spielerBullet->shadowCaster(false);
 	this->models.push_back(spielerBullet);
 
-
-	spieler = new Spieler(ASSET_DIRECTORY "Space_Invader/Space_Invader_Small.obj", Vector(0, -6, 0), 0.006f, LEBENSPUNKTE_SPIELER, spielerBullet);
+	spieler = new Spieler(ASSET_DIRECTORY "Space_Invader/Space_Invader_Small.obj", Vector(0, boden->transform().translation().Y + boden->boundingBox().size().Y * 0.5f + 0.3f, 0), 0.006f, LEBENSPUNKTE_SPIELER, spielerBullet);
 	pShader = new PhongShader();
 	pShader->ambientColor({ 0,0,0 });
 	spieler->shader(pShader, true);
@@ -61,7 +67,7 @@ void Application::createGame()
 	this->invasion = new Invasion(tmpGegnerList);
 	float gegnerWidth = this->gegnerListe->front()->boundingBox().size().X;
 	float gegnerHeight = this->gegnerListe->front()->boundingBox().size().Y;
-	this->invasion->start(10, Vector(this->feld->Min.X + gegnerWidth, this->feld->Max.Y - this->gameBar->boundingBox().size().Y - gegnerHeight, 0));
+	this->invasion->start(10, Vector(this->feld->Min.X + gegnerWidth, this->feld->Max.Y - gegnerHeight, 0));
 	this->drawables.push_back(this->invasion);
 
 	int maxBullets = 10;
@@ -110,11 +116,12 @@ void Application::createGame()
 		this->drawables.push_back(barriere);
 	}
 
-	this->menu = new Menu(this->feld->size().X * 0.3f, this->feld->size().Y * 0.5f, 0);
+	this->menu = new Menu(this->feld->size().X * 0.05f, this->feld->size().Y * 0.08f, 0);
 	this->menu->shadowCaster(false);
-	ConstantShader* cShader = new ConstantShader();
-	cShader->color(Color(0, 0, 0.5f));
-	this->menu->shader(cShader, true);
+	pShader = new PhongShader();
+	pShader->diffuseColor(Color(0, 0, 0));
+	pShader->ambientColor(Color(0, 0, 0.3f));
+	this->menu->shader(pShader, true);
 	m.translation(Vector(0, 0, 20));
 	this->menu->transform(m);
 	this->drawables.push_back(menu);
@@ -147,7 +154,7 @@ void Application::createFeld() {
 	pShader = new PhongShader();
 	//pShader->ambientColor({ 0.2f,0.2f,0.2f });
 	//pShader->ambientColor(Color(0.1f, 0.1f, 0.1f));
-	pShader->diffuseTexture(Texture::LoadShared(ASSET_DIRECTORY "texture/invasion.jpg"));
+	//pShader->diffuseTexture(Texture::LoadShared(ASSET_DIRECTORY "texture/invasion.jpg"));
 	background->shader(pShader, true);
 	m.translation(0, 0, -1);
 	background->transform(m);
@@ -166,10 +173,13 @@ void Application::createFeld() {
 	}
 
 	float gameBarHeight = this->lebensPunkte->front()->boundingBox().size().Y * 2;
-	this->gameBar = new GameBar(lebensPunkte, Vector(0, this->feld->Max.Y - gameBarHeight * 0.5f, 0), this->gameWidth, gameBarHeight, 0);
+
+	this->feld->Max.Y = this->feld->Max.Y - gameBarHeight;
+
+	this->gameBar = new GameBar(lebensPunkte, Vector(0, this->feld->Max.Y + gameBarHeight * 0.5, 0), this->gameWidth, gameBarHeight, 0);
 	this->gameBar->shadowCaster(false);
 	cShader = new ConstantShader();
-	cShader->color(Color(1, 0, 0));
+	cShader->color(Color(0.5f, 0, 0));
 	this->gameBar->shader(cShader, true);
 	this->gameBar->init();
 	drawables.push_back(this->gameBar);
@@ -189,10 +199,8 @@ void Application::createLights()
 	//Color c = Color(0.75f, 0.75f, 0.75f);
 	Color c = { 1,1,1 };
 
-
-
 	this->spielerLight = new SpotLight();
-	this->spielerLight->position(this->spieler->transform().translation() + Vector(0, -1, 10));
+	this->spielerLight->position(this->spieler->transform().translation() + Vector(0, 5, 4));
 	this->spielerLight->color(c);
 	this->spielerLight->direction((this->spieler->transform().translation() - this->spielerLight->position()).normalize());
 	this->spielerLight->innerRadius(innerradius);
@@ -203,10 +211,9 @@ void Application::createLights()
 
 	innerradius = 7;
 	outerradius = 10;
-	//c = Color(0.75f, 0.75f, 0.75f);
 
 	this->searchLight = new Searchlight(*this->invasion, this->feld->Min);
-	this->searchLight->position(this->spieler->transform().translation() + Vector(0, -1, 10));
+	this->searchLight->position(this->spieler->transform().translation() + Vector(0, 3, 8));
 	this->searchLight->color(c);
 	this->searchLight->innerRadius(innerradius);
 	this->searchLight->outerRadius(outerradius);
@@ -322,7 +329,6 @@ void Application::updateLights(float dtime)
 {
 	this->spielerLight->direction((this->spieler->transform().translation() - this->spielerLight->position()).normalize());
 
-	//this->searchLight->direction((this->invasion->boundingBox().center() - this->searchLight->position()).normalize());
 	this->searchLight->update(dtime);
 }
 
@@ -425,6 +431,8 @@ void Application::reset()
 {
 	this->gameState = GameState::BEFORE_START;
 	this->spieler->reset();
+	this->spielerLight->direction((this->spieler->transform().translation() - this->spielerLight->position()).normalize());
+
 	list<Gegner*>* tmpGegnerList = new list<Gegner*>();
 	for (Gegner* gegner : *this->gegnerListe) {
 		tmpGegnerList->push_back(gegner);
@@ -436,6 +444,8 @@ void Application::reset()
 		bulletQueue->push(b);
 	}
 	this->invasion->setBulletQueue(bulletQueue);
+
+	this->searchLight->reset(this->feld->Min);
 
 	int partikelProBarriere = this->partikelList->size() / this->barrieren->size();
 	list<Barriere*>::iterator barIter = this->barrieren->begin();

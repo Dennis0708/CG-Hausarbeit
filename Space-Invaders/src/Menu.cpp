@@ -13,26 +13,27 @@ Menu::Menu(float Width, float Height, float Depth)
 
 	float boxHeight = 0.2f, boxWidth = 0.8f;
 
-	this->resume = new TriangleBoxModel(Width * boxWidth, Height * boxHeight, 0.1f);
+	this->resume = new TriangleBoxModel(Width * boxWidth, Height * boxHeight, 0);
 	pShader = new PhongShader();
-	//pShader->ambientColor(Color(0, 0.5f, 0));
+	pShader->diffuseColor(Color(0, 0, 0));
 	pShader->diffuseTexture(Texture::LoadShared(ASSET_TEXTURE_DIRECTORY "RESUME.png"));
 	this->resume->shader(pShader, true);
 
 	this->reset = new TriangleBoxModel(Width * boxWidth, Height * boxHeight, 0);
 	pShader = new PhongShader();
-	//pShader->ambientColor(Color(0, 0.5f, 0));
+	pShader->diffuseColor(Color(0, 0, 0));
 	pShader->diffuseTexture(Texture::LoadShared(ASSET_TEXTURE_DIRECTORY "RESET.png"));
 	this->reset->shader(pShader, true);
 
 	this->exit = new TriangleBoxModel(Width * boxWidth, Height * boxHeight, 0);
 	pShader = new PhongShader();
-	//pShader->ambientColor(Color(0, 0.5f, 0));
+	pShader->diffuseColor(Color(0, 0, 0));
 	pShader->diffuseTexture(Texture::LoadShared(ASSET_TEXTURE_DIRECTORY "EXIT.png"));
 	this->exit->shader(pShader, true);
 
 	this->current = new TriangleBoxModel(Width * (boxWidth + 0.05f), Height * (boxHeight + 0.05f), 0);
 	pShader = new PhongShader();
+	pShader->diffuseColor(Color(0, 0, 0));
 	pShader->ambientColor(Color(0.5f, 0, 0));
 	this->current->shader(pShader, true);
 }
@@ -118,7 +119,7 @@ void Menu::show()
 	this->state = MenuState::RESUME;
 
 	Matrix posMat;
-	posMat.translation(0, 0, 1);
+	posMat.translation(0, 0, 9);
 
 	this->transform(posMat);
 }
