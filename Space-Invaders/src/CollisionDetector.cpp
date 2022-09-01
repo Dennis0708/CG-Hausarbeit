@@ -35,7 +35,7 @@ Collision CollisionDetector::borderCollision(Model* model)
 	return Collision::NONE;
 }
 
-BaseModel* CollisionDetector::collision(BaseModel* model, list<Gegner*>* gegnerList)
+Gegner* CollisionDetector::collision(BaseModel* model, list<Gegner*>* gegnerList)
 {
 	for (Gegner* gegner : *gegnerList) {
 		if (this->collision(model, gegner)) {
@@ -45,13 +45,16 @@ BaseModel* CollisionDetector::collision(BaseModel* model, list<Gegner*>* gegnerL
 	return nullptr;
 }
 
-BaseModel* CollisionDetector::collision(BaseModel* bullet, list<TriangleBoxModel*>* barriere) {
+list<TriangleBoxModel*>  CollisionDetector::collision(BaseModel* bullet, list<TriangleBoxModel*>* barriere)
+{
+	list<TriangleBoxModel*> collisionList;
 	for (TriangleBoxModel* partikel : *barriere) {
-		if (this->collision(bullet, partikel)) {
-			return partikel;
+		if (this->collision(bullet, partikel))
+		{
+			collisionList.push_back(partikel);
 		}
 	}
-	return nullptr;
+	return collisionList;
 }
 
 bool  CollisionDetector::collision(BaseModel* model1, BaseModel* model2)

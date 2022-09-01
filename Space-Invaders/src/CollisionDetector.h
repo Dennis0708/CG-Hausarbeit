@@ -16,8 +16,8 @@ public:
 	CollisionDetector(AABB* border);
 	Collision borderCollisionGegner(list<Gegner*> *modelList);
 	Collision borderCollision(Model *model);
-	BaseModel* collision(BaseModel* bullet, list<Gegner*>* gegnerList);
-	BaseModel* collision(BaseModel* bullet, list<TriangleBoxModel*>* barriere);
+	Gegner* collision(BaseModel* bullet, list<Gegner*>* gegnerList);
+	list<TriangleBoxModel*> collision(BaseModel* bullet, list<TriangleBoxModel*>* barriere);
 	bool collision(BaseModel* model1, BaseModel*  model2);
 };
 

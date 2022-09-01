@@ -52,14 +52,14 @@ void Application::createGame()
 		if (i < 10) {
 			pfad = ASSET_DIRECTORY "Space_Invader/Space_Invader_Big.obj";
 		}
-		else if(i >= 10 && i < 30) {
+		else if (i >= 10 && i < 30) {
 			pfad = ASSET_DIRECTORY "Space_Invader/Space_Invader_Medium.obj";
 		}
-		else{
+		else {
 			pfad = ASSET_DIRECTORY "Space_Invader/Space_Invader_Small.obj";
 		}
-		
-		Gegner* gegner = new Gegner( pfad, Vector(0, 0, 0), 0.006f);
+
+		Gegner* gegner = new Gegner(pfad, Vector(0, 0, 0), 0.006f);
 		pShader = new PhongShader();
 		pShader->ambientColor({ 0,0,0 });
 		gegner->shader(pShader, true);
@@ -272,7 +272,7 @@ void Application::update(float dtime)
 		break;
 	case GameState::PAUSE:
 		avgDtime = gesamtDtime / c;
-		//cout << 1 / avgDtime << endl;
+		cout << 1 / avgDtime << endl;
 		this->updateMenu(dtime);
 		break;
 	case GameState::RESET:
@@ -392,17 +392,29 @@ void Application::collisionBullet()
 	}
 	for (Bullet* bullet : *bullets) {
 		for (Barriere* barriere : *this->barrieren) {
-			TriangleBoxModel* partikel = (TriangleBoxModel*)this->collisionDetector->collision(bullet, barriere->getPartikel());
-			if (partikel) {
-				barriere->collisionBullet(partikel);
+			list<TriangleBoxModel*> collisionList = this->collisionDetector->collision(bullet, barriere->getPartikel());
+			if (!collisionList.empty()) {
+				TriangleBoxModel* highestPartikel = collisionList.front();
+				for (TriangleBoxModel* partikel : collisionList) {
+					if (partikel->transform().translation().Y > highestPartikel->transform().translation().Y) {
+						highestPartikel = partikel;
+					}
+				}
+				barriere->collisionBullet(highestPartikel);
 				bullet->collisionBullet();
 			}
 		}
 	}
 	for (Barriere* barriere : *this->barrieren) {
-		TriangleBoxModel* partikel = (TriangleBoxModel*)this->collisionDetector->collision(this->spieler->getBullet(), barriere->getPartikel());
-		if (partikel) {
-			barriere->collisionBullet(partikel);
+		list<TriangleBoxModel*> collisionList = this->collisionDetector->collision(this->spieler->getBullet(), barriere->getPartikel());
+		if (!collisionList.empty()) {
+			TriangleBoxModel* lowestPartikel = collisionList.front();
+			for (TriangleBoxModel* partikel : collisionList) {
+				if (partikel->transform().translation().Y < lowestPartikel->transform().translation().Y) {
+					lowestPartikel = partikel;
+				}
+			}
+			barriere->collisionBullet(lowestPartikel);
 			this->spieler->getBullet()->collisionBullet();
 		}
 	}
