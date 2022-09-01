@@ -1,16 +1,7 @@
 ﻿  Application.cpp
-C:\Medieninformatik\CG-Hausarbeit\Space-Invaders\src\Application.cpp(97,37): warning C4305: "Argument": Verkürzung von "double" in "float"
-C:\Medieninformatik\CG-Hausarbeit\Space-Invaders\src\Application.cpp(98,37): warning C4305: "Argument": Verkürzung von "double" in "float"
-C:\Medieninformatik\CG-Hausarbeit\Space-Invaders\src\Application.cpp(127,28): warning C4244: "Argument": Konvertierung von "int" in "float", möglicher Datenverlust
-C:\Medieninformatik\CG-Hausarbeit\Space-Invaders\src\Application.cpp(128,25): warning C4244: "Argument": Konvertierung von "int" in "float", möglicher Datenverlust
-C:\Medieninformatik\CG-Hausarbeit\Space-Invaders\src\Application.cpp(184,72): warning C4244: "Argument": Konvertierung von "double" in "float", möglicher Datenverlust
-  Bullet.cpp
-  CollisionDetector.cpp
-  Gegner.cpp
-  Invasion.cpp
-C:\Medieninformatik\CG-Hausarbeit\Space-Invaders\src\Invasion.cpp(101,30): warning C4101: "e": Unreferenzierte lokale Variable
-  Searchlight.cpp
-  Spieler.cpp
-  main.cpp
-  Code wird generiert...
-  CGVStudio.vcxproj -> C:\Medieninformatik\CG-Hausarbeit\Space-Invaders\CGVStudio\Debug\CGVStudio.exe
+C:\Users\Dennis\Desktop\CG-Hausarbeit\Space-Invaders\src\Application.cpp(108,37): warning C4305: "Argument": Verkürzung von "double" in "float"
+C:\Users\Dennis\Desktop\CG-Hausarbeit\Space-Invaders\src\Application.cpp(109,37): warning C4305: "Argument": Verkürzung von "double" in "float"
+C:\Users\Dennis\Desktop\CG-Hausarbeit\Space-Invaders\src\Application.cpp(138,28): warning C4244: "Argument": Konvertierung von "int" in "float", möglicher Datenverlust
+C:\Users\Dennis\Desktop\CG-Hausarbeit\Space-Invaders\src\Application.cpp(139,25): warning C4244: "Argument": Konvertierung von "int" in "float", möglicher Datenverlust
+C:\Users\Dennis\Desktop\CG-Hausarbeit\Space-Invaders\src\Application.cpp(195,72): warning C4244: "Argument": Konvertierung von "double" in "float", möglicher Datenverlust
+  CGVStudio.vcxproj -> C:\Users\Dennis\Desktop\CG-Hausarbeit\Space-Invaders\CGVStudio\Debug\CGVStudio.exe

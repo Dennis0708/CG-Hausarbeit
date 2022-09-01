@@ -30,7 +30,7 @@ public:
 	void addGegner(Gegner* gegner);
 	void removeGegner(Gegner* gegner);
 	void addBullet(Bullet* bullet);
-	queue<Bullet*>* getBulletQueue() { return this->bulletQueue; }
+	const queue<Bullet*>* getBulletQueue() { return this->bulletQueue; }
 	list<Gegner*>* getGegnerListe() { return this->gegnerListe; }
 	AABB boundingBox() { return this->bBox; }
 	void setBulletQueue(queue<Bullet*>* bulletQueue) { this->bulletQueue = bulletQueue; }

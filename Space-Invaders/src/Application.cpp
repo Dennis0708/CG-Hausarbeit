@@ -38,7 +38,7 @@ void Application::createGame()
 	spielerBullet->shader(pShader, true);
 	this->castsShadowList.push_back(spielerBullet);
 
-	spieler = new Spieler(ASSET_DIRECTORY "Space_Invader/Space_Invader_Small.obj", Vector(0, boden->transform().translation().Y + boden->boundingBox().size().Y * 0.5f + 0.3f, 0), 0.006f, LEBENSPUNKTE_SPIELER, spielerBullet);
+	spieler = new Spieler(ASSET_DIRECTORY "Laser_Cannon.obj", Vector(0, boden->transform().translation().Y + boden->boundingBox().size().Y * 0.5f + 0.3f, 0), 0.6f, LEBENSPUNKTE_SPIELER, spielerBullet);
 	pShader = new PhongShader();
 	pShader->ambientColor({ 0,0,0 });
 	spieler->shader(pShader, true);
@@ -48,7 +48,18 @@ void Application::createGame()
 	int anzahlGegner = 50;
 	list<Gegner*>* tmpGegnerList = new list<Gegner*>();
 	for (int i = 0; i < anzahlGegner; i++) {
-		Gegner* gegner = new Gegner(ASSET_DIRECTORY "Space_Invader/Space_Invader_Small.obj", Vector(0, 0, 0), 0.006f);
+		char* pfad;
+		if (i < 10) {
+			pfad = ASSET_DIRECTORY "Space_Invader/Space_Invader_Big.obj";
+		}
+		else if(i >= 10 && i < 30) {
+			pfad = ASSET_DIRECTORY "Space_Invader/Space_Invader_Medium.obj";
+		}
+		else{
+			pfad = ASSET_DIRECTORY "Space_Invader/Space_Invader_Small.obj";
+		}
+		
+		Gegner* gegner = new Gegner( pfad, Vector(0, 0, 0), 0.006f);
 		pShader = new PhongShader();
 		pShader->ambientColor({ 0,0,0 });
 		gegner->shader(pShader, true);
@@ -71,7 +82,7 @@ void Application::createGame()
 		light->color({ 0,0,0 });
 		light->attenuation({ 0.5f,0.1f,0.1f });
 		ShaderLightMapper::instance().addLight(light);
-		pBullet = new Bullet(ASSET_DIRECTORY "bullet_prisma.obj", Cam.position() + Vector(0, 0, 10), 0.6f, light);
+		pBullet = new Bullet(ASSET_DIRECTORY "bullet_zylinder.obj", Cam.position() + Vector(0, 0, 10), 0.3f, light);
 		pShader = new PhongShader();
 		pShader->ambientColor({ 0,0,0 });
 		pBullet->shader(pShader, true);
@@ -83,7 +94,7 @@ void Application::createGame()
 	this->invasion->setBulletQueue(bulletQueue);
 
 	int maxBarrieren = 3;
-	int maxPartikel = 1;
+	int maxPartikel = 50;
 	list<TriangleBoxModel*>* partikelListe;
 	TriangleBoxModel* partikel;
 	Barriere* barriere;
@@ -103,7 +114,7 @@ void Application::createGame()
 			this->castsShadowList.push_back(partikel);
 		}
 		barriere = new Barriere(partikelListe);
-		barriere->init(1, Vector((-abstand + i * abstand), -3, 0));
+		barriere->init(10, Vector((-abstand + i * abstand), -3, 0));
 		this->barrieren->push_back(barriere);
 		this->drawables.push_back(barriere);
 	}
@@ -168,7 +179,7 @@ void Application::createFeld() {
 
 	list<Model*>* lebensPunkte = new list<Model*>();
 	for (int i = 0; i < LEBENSPUNKTE_SPIELER; i++) {
-		Model* lebensPunkt = new Model(ASSET_DIRECTORY "Space_Invader/Space_Invader_Small.obj", Vector(0, 0, 0), 0.006f);
+		Model* lebensPunkt = new Model(ASSET_DIRECTORY "Laser_Cannon.obj", Vector(0, 0, 0), 0.3f);
 		lebensPunkt->shadowCaster(false);
 		pShader = new PhongShader();
 		lebensPunkt->shader(pShader, true);
@@ -177,7 +188,7 @@ void Application::createFeld() {
 		this->castsShadowList.push_back(lebensPunkt);
 	}
 
-	float gameBarHeight = this->lebensPunkte->front()->boundingBox().size().Y * 2;
+	float gameBarHeight = this->lebensPunkte->front()->boundingBox().size().Y * 1.5f;
 
 	this->feld->Max.Y = this->feld->Max.Y - gameBarHeight;
 
@@ -199,8 +210,8 @@ void Application::createLights()
 	dl->castShadows(false);
 	ShaderLightMapper::instance().addLight(dl);
 
-	float innerradius = 6;
-	float outerradius = 8;
+	float innerradius = 10;
+	float outerradius = 15;
 	//Color c = Color(0.75f, 0.75f, 0.75f);
 	Color c = { 1,1,1 };
 
@@ -257,7 +268,6 @@ void Application::update(float dtime)
 
 		c++;
 		gesamtDtime = (gesamtDtime + dtime);
-		cout << "-----------------------" << endl;
 		this->updateGame(dtime);
 		break;
 	case GameState::PAUSE:
@@ -354,7 +364,6 @@ void Application::collisionFeld()
 			collision = this->collisionDetector->borderCollision(gegner->getBullet());
 			if (collision != Collision::NONE) {
 				gegner->getBullet()->collisionBorder(collision);
-				this->invasion->addBullet(gegner->getBullet());
 			}
 		}
 	}
@@ -372,14 +381,12 @@ void Application::collisionBullet()
 		if (this->collisionDetector->collision(this->spieler, bullet)) {
 			bullet->collisionBullet();
 			this->spieler->collisionBullet();
-			this->invasion->addBullet(bullet);
 			this->gameBar->removeLife();
 		}
 		else if (this->spieler->getBullet()->isMoving()) {
 			if (this->collisionDetector->collision(this->spieler->getBullet(), bullet)) {
 				bullet->collisionBullet();
 				this->spieler->getBullet()->collisionBullet();
-				this->invasion->addBullet(bullet);
 			}
 		}
 	}
@@ -389,7 +396,6 @@ void Application::collisionBullet()
 			if (partikel) {
 				barriere->collisionBullet(partikel);
 				bullet->collisionBullet();
-				this->invasion->addBullet(bullet);
 			}
 		}
 	}

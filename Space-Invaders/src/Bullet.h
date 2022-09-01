@@ -7,12 +7,15 @@
 #define _USE_MATH_DEFINES
 #include <math.h>
 
+#include "LineBoxModel.h"
+#include "PhongShader.h"
 
 class Bullet : public Model
 {
 	Vector upDown;
 	PointLight* light;
 	float lastDtime = 0;
+	LineBoxModel* hitBox;
 public:
 	Bullet(const char* ModelFile, Vector& positon, float size, PointLight* light = nullptr);
 	virtual ~Bullet() = default;
@@ -33,6 +36,7 @@ public:
 	};
 	void reset();
 	bool isMoving() { return this->upDown.Y != 0; };
+	void draw(const BaseCamera& Cam) override;
 	void activateLight();
 	void deactivateLight();
 

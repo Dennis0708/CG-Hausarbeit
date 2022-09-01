@@ -8,10 +8,10 @@ Invasion::Invasion(list<Gegner*>* gegnerListe)
 
 Invasion::~Invasion()
 {
-	for (Bullet* bullet : *this->bulletsInGame) {
-		this->addBullet(bullet);
-	}
-	delete this->bulletsInGame;
+	//for (Bullet* bullet : *this->bulletsInGame) {
+	//	this->addBullet(bullet);
+	//}
+	//delete this->bulletsInGame;
 }
 
 void Invasion::start(int anzahlProReihe, const  Vector& obenLinks)
@@ -44,6 +44,7 @@ void Invasion::reset(list<Gegner*>* gegnerListe)
 		gegner->shadowCaster(true);
 		gegner->reset();
 	}
+	this->bulletsInGame->clear();
 	this->start(this->anzahlProReihe, this->obenLinks);
 }
 
@@ -72,6 +73,10 @@ void Invasion::update(float dtime)
 	}
 
 	//this->calcBoundingBox();
+
+	if (this->bulletQueue->size() + this->bulletsInGame->size() > 10) {
+		int a = 0;
+	}
 
 	this->down = 0;
 }
@@ -114,6 +119,7 @@ bool Invasion::shoot()
 	}
 	if (gegnerToShoot->getBullet() == nullptr) {
 		this->bulletQueue->front()->shadowCaster(true);
+		
 		gegnerToShoot->shoot(this->bulletQueue->front());
 		this->bulletsInGame->push_back(gegnerToShoot->getBullet());
 		this->bulletQueue->pop();

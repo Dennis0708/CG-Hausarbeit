@@ -19,7 +19,7 @@ void Spieler::steuern(int direction)
 	else if (this->collision == Collision::LEFT && direction == -1) {
 		direction = 0;
 	}
-	this->direction = direction * 1000;
+	this->direction = direction * 20;
 	this->collision = Collision::NONE;
 }
 
