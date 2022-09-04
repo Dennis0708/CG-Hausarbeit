@@ -1,12 +1,13 @@
 #include "Bullet.h"
 
 Bullet::Bullet(const char* ModelFile, Vector& positon, float size, PointLight* light)
-	: Model(ModelFile, positon, size), upDown(Vector(0, 0, 0)), light(light)
+	: Model(ModelFile, positon, size), upDown(Vector(0, 0, 0)), light(light), hitBox(NULL)
 {
 	//this->createHitBox();
 }
 
-Bullet::Bullet(const char* ModelFile, const Model& toCopy, PointLight* light) :Model(ModelFile, toCopy), light(light), upDown({ 0,0,0 })
+Bullet::Bullet(const char* ModelFile, const Model& toCopy, PointLight* light) :
+	Model(ModelFile, toCopy), light(light), upDown({ 0,0,0 }), hitBox(NULL)
 {
 	//this->createHitBox();
 }

@@ -27,4 +27,3 @@ public:
 	Bullet* buildBullet(const char* ModelFile, PointLight* light = nullptr);
 
 };
-

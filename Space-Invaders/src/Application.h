@@ -77,7 +77,7 @@ class Application
     ConstantShader* cShader;
     Camera Cam;
     ShadowMapGenerator ShadowGenerator;
-    Postprocessing postprocessing;
+    Postprocessing* postprocessing;
     Spieler* spieler;
     AABB* feld;
     Invasion* invasion;

@@ -7,6 +7,7 @@
 #include "BaseModel.h"
 #include "Texture.h"
 #include "Drawable.h"
+#include "VertexBuffer.h"
 #include <list>
 
 //class PostprocessingShader : public BaseShader
@@ -41,17 +42,16 @@ public:
 
 	void activate();
 	void deactivate();
-	void setParameter();
 	void drawPost(const BaseCamera& Cam);
 	void InitVB();
 protected:
 	Framebuffer FrameBuffer;
-	PostprocessingBildInvertierenShader Shader;
+	PostprocessingBildInvertierenShader *Shader;
 	Texture renderetScene;
-	GLuint VAO;
+	/*GLuint VAO;
 	GLuint FBO;
-	GLuint RBO;
-	unsigned int colorBuffer;
+	GLuint RBO;*/
+	VertexBuffer VB;
 
 };
 

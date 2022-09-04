@@ -142,6 +142,9 @@
     <ClCompile Include="..\..\src\Postprocessing.cpp">
       <Filter>Quelldateien\gameElements</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\ModelBuilder.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\Camera.h">
@@ -258,5 +261,6 @@
     <ClInclude Include="..\..\src\Postprocessing.h">
       <Filter>Quelldateien\gameElements</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\ModelBuilder.h" />
   </ItemGroup>
 </Project>

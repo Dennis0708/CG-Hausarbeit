@@ -17,7 +17,7 @@ Application::Application(GLFWwindow* pWin)
 	int width, height;
 	glfwGetWindowSize(pWindow, &width, &height);
 
-	this->postprocessing = Postprocessing(width, height);
+	this->postprocessing = new Postprocessing(width, height);
 
 	Cam.setPosition(Vector(0, 0, 10));
 	Cam.update();
@@ -56,7 +56,7 @@ void Application::createGame()
 	this->drawables.push_back(spieler);
 	this->castsShadowList.push_back(spieler);
 
-	int anzahlGegner = 50;
+	int anzahlGegner = 1; // TODO Hier wieder 50
 	list<Gegner*>* tmpGegnerList = new list<Gegner*>();
 	for (int i = 0; i < anzahlGegner; i++) {
 		char* pfad;
@@ -82,7 +82,7 @@ void Application::createGame()
 	this->invasion = new Invasion(tmpGegnerList);
 	float gegnerWidth = this->gegnerListe->front()->boundingBox().size().X;
 	float gegnerHeight = this->gegnerListe->front()->boundingBox().size().Y;
-	this->invasion->start(10, Vector(this->feld->Min.X + gegnerWidth, this->feld->Max.Y - gegnerHeight, 0));
+	this->invasion->start(1 /*TODO hier wieder 10*/, Vector(this->feld->Min.X + gegnerWidth, this->feld->Max.Y - gegnerHeight, 0));
 	this->drawables.push_back(this->invasion);
 
 	int maxBullets = 10;
@@ -108,7 +108,7 @@ void Application::createGame()
 	this->invasion->setBulletQueue(bulletQueue);
 
 	int maxBarrieren = 3;
-	int maxPartikel = 50;
+	int maxPartikel = 1; // TODO hier wieder 50
 	list<TriangleBoxModel*>* partikelListe;
 	TriangleBoxModel* partikel;
 	Barriere* barriere;
@@ -128,7 +128,7 @@ void Application::createGame()
 			this->castsShadowList.push_back(partikel);
 		}
 		barriere = new Barriere(partikelListe);
-		barriere->init(10, Vector((-abstand + i * abstand), -3, 0));
+		barriere->init(1 /*TODO hier wieder 10*/, Vector((-abstand + i * abstand), -3, 0));
 		this->barrieren->push_back(barriere);
 		this->drawables.push_back(barriere);
 	}
@@ -446,16 +446,14 @@ void Application::draw()
 
 	ShaderLightMapper::instance().activate();
 	// 2. setup shaders and draw models
-	this->postprocessing.activate();
+	//this->postprocessing->activate();
 	for (list<Drawable*>::iterator it = drawables.begin(); it != drawables.end(); ++it)
 	{
 		(*it)->draw(Cam);
 	}
-	//this->postprocessing.deactivate();
-	
-	//this->postprocessing.setParameter();
+	//this->postprocessing->deactivate();
 
-	//this->postprocessing.drawPost(Cam);
+	//this->postprocessing->drawPost(Cam);
 
 	ShaderLightMapper::instance().deactivate();
 
