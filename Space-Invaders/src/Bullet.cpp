@@ -3,13 +3,23 @@
 Bullet::Bullet(const char* ModelFile, Vector& positon, float size, PointLight* light)
 	: Model(ModelFile, positon, size), upDown(Vector(0, 0, 0)), light(light)
 {
+	this->createHitBox();
+}
+
+Bullet::Bullet(const char* ModelFile, const Model& toCopy, PointLight* light) :Model(ModelFile, toCopy), light(light), upDown({ 0,0,0 })
+{
+	this->createHitBox();
+}
+
+
+void Bullet::createHitBox()
+{
 	this->hitBox = new LineBoxModel(this->boundingBox().size().X, this->boundingBox().size().Y, this->boundingBox().size().Z);
 	PhongShader* pShader = new PhongShader();
-	pShader->ambientColor(Color(1,0,0));
+	pShader->ambientColor(Color(1, 0, 0));
 	this->hitBox->shader(pShader, true);
 	this->hitBox->show(this->transform().translation());
 }
-
 
 void Bullet::update(float dtime) {
 	if (this->upDown.Y != 0) {
@@ -45,7 +55,9 @@ void Bullet::reset()
 void Bullet::draw(const BaseCamera& Cam)
 {
 	Model::draw(Cam);
-	this->hitBox->draw(Cam);
+	if (this->hitBox) {
+		this->hitBox->draw(Cam);
+	}
 }
 
 void Bullet::activateLight() {
@@ -58,7 +70,7 @@ void Bullet::activateLight() {
 void Bullet::deactivateLight() {
 	if (this->light) {
 		this->light->color({ 0,0,0 });
-		
+
 	}
 
 }

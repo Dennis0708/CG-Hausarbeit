@@ -18,7 +18,9 @@ class Bullet : public Model
 	LineBoxModel* hitBox;
 public:
 	Bullet(const char* ModelFile, Vector& positon, float size, PointLight* light = nullptr);
+	Bullet(const char* ModelFile, const Model& toCopy, PointLight* light = nullptr);
 	virtual ~Bullet() = default;
+	void createHitBox();
 	void update(float dtime);
 	void collisionBorder(Collision collision);
 	void collisionBullet();

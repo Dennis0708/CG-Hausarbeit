@@ -20,6 +20,7 @@ class BaseModel
 public:
     BaseModel();
     BaseModel(Vector& positon, float size=1.0f);
+    BaseModel(const BaseModel& toCopy);
     virtual ~BaseModel();
     virtual void draw(const BaseCamera& Cam);
     const Matrix& transform() const { return Transform; }
@@ -31,6 +32,7 @@ public:
     virtual void show(const Vector& pos);
 	bool shadowCaster() const { return ShadowCaster; }
 	void shadowCaster(bool sc) { ShadowCaster = sc; }
+    void setSize(float size) { this->size = size; }
 protected:
     Matrix Transform;
     BaseShader* pShader;

@@ -6,6 +6,11 @@ Spieler::Spieler(const char* ModelFile, Vector& position, float size, int lebens
 {
 }
 
+Spieler::Spieler(const char* ModelFile, int lebenspunkte, const Model& toCopy)
+	: Model(ModelFile, toCopy), pos(toCopy.transform().translation()), lebenspunkte(lebenspunkte), direction(0), collision(Collision::NONE), spielerBullet(nullptr)
+{
+}
+
 Spieler::~Spieler()
 {
 	delete this->spielerBullet;

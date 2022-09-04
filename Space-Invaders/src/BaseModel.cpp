@@ -23,6 +23,12 @@ BaseModel::BaseModel(Vector& position, float size) : BaseModel()
     transform(posMat * scaleMat);
 }
 
+BaseModel::BaseModel(const BaseModel& toCopy)
+    : pShader(toCopy.shader()), DeleteShader(toCopy.DeleteShader), ShadowCaster(toCopy.ShadowCaster), size(toCopy.size), Transform(toCopy.transform())
+{
+
+}
+
 BaseModel::~BaseModel()
 {
     if(DeleteShader && pShader)
@@ -62,4 +68,6 @@ void BaseModel::draw(const BaseCamera& Cam)
     pShader->activate(Cam);
     
 }
+
+
 

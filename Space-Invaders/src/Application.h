@@ -39,6 +39,7 @@
 #include "Drawable.h"
 #include "Background.h"
 #include "Searchlight.h"
+#include "ModelBuilder.h"
 
 #ifdef WIN32
 #include <GL/glew.h>

@@ -17,7 +17,14 @@ Model::Model() : pMeshes(NULL), MeshCount(0), pMaterials(NULL), MaterialCount(0)
 
 Model::Model(const char* ModelFile, Vector& position, float size) : BaseModel(position, size), pMeshes(NULL), MeshCount(0), pMaterials(NULL), MaterialCount(0)
 {
-	bool ret = load(ModelFile, size);
+	bool ret = load(ModelFile, this->BaseModel::size);
+	if (!ret)
+		throw std::exception();
+}
+
+Model::Model(const char* ModelFile, const Model& toCopy) : BaseModel(toCopy), pMeshes(NULL), MeshCount(0), pMaterials(NULL), MaterialCount(0)
+{
+	bool ret = load(ModelFile, this->BaseModel::size);
 	if (!ret)
 		throw std::exception();
 }

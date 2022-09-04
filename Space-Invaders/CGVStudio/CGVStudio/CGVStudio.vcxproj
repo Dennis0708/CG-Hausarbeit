@@ -102,6 +102,7 @@
     <ClCompile Include="..\..\src\IndexBuffer.cpp" />
     <ClCompile Include="..\..\src\Invasion.cpp" />
     <ClCompile Include="..\..\src\Menu.cpp" />
+    <ClCompile Include="..\..\src\ModelBuilder.cpp" />
     <ClCompile Include="..\..\src\Searchlight.cpp" />
     <ClCompile Include="..\..\src\ShaderLightMapper.cpp" />
     <ClCompile Include="..\..\src\Lights.cpp" />
@@ -142,6 +143,7 @@
     <ClInclude Include="..\..\src\IndexBuffer.h" />
     <ClInclude Include="..\..\src\Invasion.h" />
     <ClInclude Include="..\..\src\Menu.h" />
+    <ClInclude Include="..\..\src\ModelBuilder.h" />
     <ClInclude Include="..\..\src\Searchlight.h" />
     <ClInclude Include="..\..\src\ShaderLightMapper.h" />
     <ClInclude Include="..\..\src\Lights.h" />

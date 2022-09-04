@@ -139,6 +139,9 @@
     <ClCompile Include="..\..\src\Searchlight.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\ModelBuilder.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\Camera.h">
@@ -248,5 +251,6 @@
     </ClInclude>
     <ClInclude Include="..\..\src\Background.h" />
     <ClInclude Include="..\..\src\Searchlight.h" />
+    <ClInclude Include="..\..\src\ModelBuilder.h" />
   </ItemGroup>
 </Project>
