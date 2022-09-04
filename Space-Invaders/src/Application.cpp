@@ -37,16 +37,22 @@ void Application::createGame()
 	light->attenuation({ 0.5f,0.1f,0.1f });
 	ShaderLightMapper::instance().addLight(light);
 
-	Bullet* spielerBullet = new Bullet(ASSET_DIRECTORY "bullet_zylinder.obj", Cam.position() + Vector(0, 0, 10), 0.3f, light);
+	/*Bullet* spielerBullet = new Bullet(ASSET_DIRECTORY "bullet_zylinder.obj", Cam.position() + Vector(0, 0, 10), 0.3f, light);
 	pShader = new PhongShader();
 	pShader->ambientColor({ 0,0,0 });
-	spielerBullet->shader(pShader, true);
+	spielerBullet->shader(pShader, true);*/
+	Bullet* spielerBullet = ModelBuilder::getInstance().position(Cam.position() + Vector(0, 0, 10)).size(0.3f).
+		phongShader().ambientColor({ 0,0,0 }).buildBullet(ASSET_DIRECTORY "bullet_zylinder.obj", light);
 	this->castsShadowList.push_back(spielerBullet);
 
-	spieler = new Spieler(ASSET_DIRECTORY "Laser_Cannon.obj", Vector(0, boden->transform().translation().Y + boden->boundingBox().size().Y * 0.5f + 0.3f, 0), 0.6f, LEBENSPUNKTE_SPIELER, spielerBullet);
+	/*spieler = new Spieler(ASSET_DIRECTORY "Laser_Cannon.obj", Vector(0, boden->transform().translation().Y + boden->boundingBox().size().Y * 0.5f + 0.3f, 0), 0.6f, LEBENSPUNKTE_SPIELER, spielerBullet);
 	pShader = new PhongShader();
 	pShader->ambientColor({ 0,0,0 });
-	spieler->shader(pShader, true);
+	spieler->shader(pShader, true);*/
+	this->spieler = ModelBuilder::getInstance().phongShader().ambientColor({ 0,0,0 }).size(0.6f).
+		position(Vector(0, boden->transform().translation().Y + boden->boundingBox().
+			size().Y * 0.5f + 0.3f, 0)).buildSpieler(ASSET_DIRECTORY "Laser_Cannon.obj", LEBENSPUNKTE_SPIELER);
+	this->spieler->setBullet(spielerBullet);
 	this->drawables.push_back(spieler);
 	this->castsShadowList.push_back(spieler);
 
@@ -64,10 +70,11 @@ void Application::createGame()
 			pfad = ASSET_DIRECTORY "Space_Invader/Space_Invader_Small.obj";
 		}
 
-		Gegner* gegner = new Gegner(pfad, Vector(0, 0, 0), 0.006f);
-		pShader = new PhongShader();
-		pShader->ambientColor({ 0,0,0 });
-		gegner->shader(pShader, true);
+		//Gegner* gegner = new Gegner(pfad, Vector(0, 0, 0), 0.006f);
+		//pShader = new PhongShader();
+		//pShader->ambientColor({ 0,0,0 });
+		//gegner->shader(pShader, true);
+		Gegner* gegner = ModelBuilder::getInstance().size(0.006f).phongShader().ambientColor({ 0,0,0 }).buildGegner(pfad);
 		tmpGegnerList->push_back(gegner);
 		this->gegnerListe->push_back(gegner);
 		this->castsShadowList.push_back(gegner);
@@ -87,10 +94,12 @@ void Application::createGame()
 		light->color({ 0,0,0 });
 		light->attenuation({ 0.5f,0.1f,0.1f });
 		ShaderLightMapper::instance().addLight(light);
-		pBullet = new Bullet(ASSET_DIRECTORY "bullet_prisma.obj", Cam.position() + Vector(0, 0, 10), 0.6f, light);
+		/*pBullet = new Bullet(ASSET_DIRECTORY "bullet_zylinder.obj", Cam.position() + Vector(0, 0, 10), 0.3f, light);
 		pShader = new PhongShader();
 		pShader->ambientColor({ 0,0,0 });
-		pBullet->shader(pShader, true);
+		pBullet->shader(pShader, true);*/
+		pBullet = ModelBuilder::getInstance().position(Cam.position() + Vector(0, 0, 10)).size(0.3f).
+			phongShader().ambientColor({ 0,0,0 }).buildBullet(ASSET_DIRECTORY "bullet_zylinder.obj", light);
 		this->bulletList->push_back(pBullet);
 		bulletQueue->push(pBullet);
 		this->castsShadowList.push_back(pBullet);

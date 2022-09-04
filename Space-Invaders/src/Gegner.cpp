@@ -1,7 +1,13 @@
 #include "Gegner.h"
 
 Gegner::Gegner(const char* ModelFile, Vector& position, float size)
-	: Model(ModelFile, position, size), bullet(NULL), geschwindigkeit(0), collision(Collision::NONE), linksRechts(NULL), runter(NULL)
+	: Model(ModelFile, position, size), bullet(nullptr), geschwindigkeit(0), collision(Collision::NONE), linksRechts(nullptr), runter(nullptr)
+{
+
+}
+
+Gegner::Gegner(const char* ModelFile, const Model& toCopy)
+	: Model(ModelFile, toCopy), bullet(nullptr), geschwindigkeit(0), collision(Collision::NONE), linksRechts(nullptr), runter(nullptr)
 {
 
 }

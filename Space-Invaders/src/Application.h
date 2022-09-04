@@ -40,6 +40,7 @@
 #include "Background.h"
 #include "Searchlight.h"
 #include "Postprocessing.h"
+#include "ModelBuilder.h"
 
 #ifdef WIN32
 #include <GL/glew.h>
@@ -69,7 +70,7 @@ class Application
     list<Barriere*>* barrieren;
     list<TriangleBoxModel*>* partikelList;
     list<Model*>* lebensPunkte;
-    
+
     GLFWwindow* pWindow;
     BaseModel* pModel;
     PhongShader* pShader;
