@@ -1,57 +1,9 @@
-﻿  Aabb.cpp
-  Application.cpp
-C:\Medieninformatik\CG-Hausarbeit\Space-Invaders\src\Application.cpp(108,37): warning C4305: "Argument": Verkürzung von "double" in "float"
-C:\Medieninformatik\CG-Hausarbeit\Space-Invaders\src\Application.cpp(109,37): warning C4305: "Argument": Verkürzung von "double" in "float"
-C:\Medieninformatik\CG-Hausarbeit\Space-Invaders\src\Application.cpp(138,28): warning C4244: "Argument": Konvertierung von "int" in "float", möglicher Datenverlust
-C:\Medieninformatik\CG-Hausarbeit\Space-Invaders\src\Application.cpp(139,25): warning C4244: "Argument": Konvertierung von "int" in "float", möglicher Datenverlust
-C:\Medieninformatik\CG-Hausarbeit\Space-Invaders\src\Application.cpp(195,72): warning C4244: "Argument": Konvertierung von "double" in "float", möglicher Datenverlust
-  Background.cpp
-  Barriere.cpp
-  BaseModel.cpp
-  BaseShader.cpp
-  Bullet.cpp
-  Camera.cpp
-  CollisionDetector.cpp
-  color.cpp
-  ConstantShader.cpp
-  Framebuffer.cpp
-  GameBar.cpp
-  Gegner.cpp
-  IndexBuffer.cpp
-  Invasion.cpp
-C:\Medieninformatik\CG-Hausarbeit\Space-Invaders\src\Invasion.cpp(106,30): warning C4101: "e": Unreferenzierte lokale Variable
-  Menu.cpp
-  Searchlight.cpp
-  ShaderLightMapper.cpp
-  Lights.cpp
+﻿  Application.cpp
+C:\Users\Dennis\Desktop\CG-Hausarbeit\Space-Invaders\src\Application.cpp(113,37): warning C4305: "Argument": Verkürzung von "double" in "float"
+C:\Users\Dennis\Desktop\CG-Hausarbeit\Space-Invaders\src\Application.cpp(114,37): warning C4305: "Argument": Verkürzung von "double" in "float"
+C:\Users\Dennis\Desktop\CG-Hausarbeit\Space-Invaders\src\Application.cpp(143,28): warning C4244: "Argument": Konvertierung von "int" in "float", möglicher Datenverlust
+C:\Users\Dennis\Desktop\CG-Hausarbeit\Space-Invaders\src\Application.cpp(144,25): warning C4244: "Argument": Konvertierung von "int" in "float", möglicher Datenverlust
+C:\Users\Dennis\Desktop\CG-Hausarbeit\Space-Invaders\src\Application.cpp(200,72): warning C4244: "Argument": Konvertierung von "double" in "float", möglicher Datenverlust
+  Postprocessing.cpp
   Code wird generiert...
-C:\Medieninformatik\CG-Hausarbeit\Space-Invaders\src\Menu.cpp(95): warning C4715: "Menu::enter": Nicht alle Codepfade geben einen Wert zurück.
-  Kompilieren...
-  LineBoxModel.cpp
-  LinePlaneModel.cpp
-  main.cpp
-  Matrix.cpp
-  Model.cpp
-  PhongShader.cpp
-  rgbimage.cpp
-C:\Medieninformatik\CG-Hausarbeit\Space-Invaders\src\rgbimage.cpp(53,20): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
-C:\Medieninformatik\CG-Hausarbeit\Space-Invaders\src\rgbimage.cpp(54,21): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
-C:\Medieninformatik\CG-Hausarbeit\Space-Invaders\src\rgbimage.cpp(59,59): warning C4244: "Argument": Konvertierung von "int" in "const float", möglicher Datenverlust
-C:\Medieninformatik\CG-Hausarbeit\Space-Invaders\src\rgbimage.cpp(66,60): warning C4244: "Argument": Konvertierung von "int" in "const float", möglicher Datenverlust
-C:\Medieninformatik\CG-Hausarbeit\Space-Invaders\src\rgbimage.cpp(70,94): warning C4244: "Argument": Konvertierung von "double" in "float", möglicher Datenverlust
-C:\Medieninformatik\CG-Hausarbeit\Space-Invaders\src\rgbimage.cpp(70,59): warning C4244: "Argument": Konvertierung von "double" in "float", möglicher Datenverlust
-C:\Medieninformatik\CG-Hausarbeit\Space-Invaders\src\rgbimage.cpp(70,24): warning C4244: "Argument": Konvertierung von "double" in "float", möglicher Datenverlust
-C:\Medieninformatik\CG-Hausarbeit\Space-Invaders\src\rgbimage.cpp(87,16): warning C4244: "return": Konvertierung von "float" in "unsigned char", möglicher Datenverlust
-C:\Medieninformatik\CG-Hausarbeit\Space-Invaders\src\rgbimage.cpp(136,21): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
-  ShadowMapGenerator.cpp
-  Spieler.cpp
-  Texture.cpp
-  TriangleBoxModel.cpp
-  TrianglePlaneModel.cpp
-  TriangleSphereModel.cpp
-  vector.cpp
-  VertexBuffer.cpp
-  Code wird generiert...
-C:\Medieninformatik\CG-Hausarbeit\Space-Invaders\src\rgbimage.cpp(31): warning C4172: Adresse einer lokalen Variablen oder eines temporären Werts "" wird zurückgegeben
-LINK : warning LNK4098: Standardbibliothek "MSVCRT" steht in Konflikt mit anderen Bibliotheken; /NODEFAULTLIB:Bibliothek verwenden.
-  CGVStudio.vcxproj -> C:\Medieninformatik\CG-Hausarbeit\Space-Invaders\CGVStudio\Debug\CGVStudio.exe
+  CGVStudio.vcxproj -> C:\Users\Dennis\Desktop\CG-Hausarbeit\Space-Invaders\CGVStudio\Debug\CGVStudio.exe

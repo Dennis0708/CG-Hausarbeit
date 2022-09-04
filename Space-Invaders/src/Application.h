@@ -39,6 +39,7 @@
 #include "Drawable.h"
 #include "Background.h"
 #include "Searchlight.h"
+#include "Postprocessing.h"
 
 #ifdef WIN32
 #include <GL/glew.h>
@@ -75,6 +76,7 @@ class Application
     ConstantShader* cShader;
     Camera Cam;
     ShadowMapGenerator ShadowGenerator;
+    Postprocessing postprocessing;
     Spieler* spieler;
     AABB* feld;
     Invasion* invasion;

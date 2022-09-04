@@ -118,9 +118,6 @@
     <ClCompile Include="..\..\src\Menu.cpp">
       <Filter>Quelldateien\gameElements\hud</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\BaseModel.cpp">
-      <Filter>Quelldateien\gameElements\model</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\Bullet.cpp">
       <Filter>Quelldateien\gameElements\model</Filter>
     </ClCompile>
@@ -133,11 +130,17 @@
     <ClCompile Include="..\..\src\Spieler.cpp">
       <Filter>Quelldateien\gameElements\model</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\BaseModel.cpp">
+      <Filter>Quelldateien\gameElements</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\src\Background.cpp">
-      <Filter>Quelldateien</Filter>
+      <Filter>Quelldateien\gameElements</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\Searchlight.cpp">
-      <Filter>Quelldateien</Filter>
+      <Filter>Quelldateien\gameElements</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Postprocessing.cpp">
+      <Filter>Quelldateien\gameElements</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -246,7 +249,14 @@
     <ClInclude Include="..\..\src\Drawable.h">
       <Filter>Quelldateien\gameElements</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\Background.h" />
-    <ClInclude Include="..\..\src\Searchlight.h" />
+    <ClInclude Include="..\..\src\Background.h">
+      <Filter>Quelldateien\gameElements\model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Searchlight.h">
+      <Filter>Quelldateien\gameElements</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Postprocessing.h">
+      <Filter>Quelldateien\gameElements</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

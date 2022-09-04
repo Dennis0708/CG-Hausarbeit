@@ -9,11 +9,16 @@
 #include "Application.h"
 
 Application::Application(GLFWwindow* pWin)
-	: pWindow(pWin), Cam(pWin), pModel(NULL), ShadowGenerator(2048, 2048), gegnerListe(new list<Gegner*>()),
-	bulletList(new list<Bullet*>()), menu(NULL), gameState(GameState::BEFORE_START),
+	: pWindow(pWin), Cam(pWin), pModel(NULL), ShadowGenerator(2048, 2048),
+	gegnerListe(new list<Gegner*>()), bulletList(new list<Bullet*>()), menu(NULL), gameState(GameState::BEFORE_START),
 	barrieren(new list<Barriere*>()), partikelList(new list<TriangleBoxModel*>()), gameBar(NULL),
 	lebensPunkte(new list<Model*>()), close(false)
 {
+	int width, height;
+	glfwGetWindowSize(pWindow, &width, &height);
+
+	this->postprocessing = Postprocessing(width, height);
+
 	Cam.setPosition(Vector(0, 0, 10));
 	Cam.update();
 
@@ -82,7 +87,7 @@ void Application::createGame()
 		light->color({ 0,0,0 });
 		light->attenuation({ 0.5f,0.1f,0.1f });
 		ShaderLightMapper::instance().addLight(light);
-		pBullet = new Bullet(ASSET_DIRECTORY "bullet_zylinder.obj", Cam.position() + Vector(0, 0, 10), 0.3f, light);
+		pBullet = new Bullet(ASSET_DIRECTORY "bullet_prisma.obj", Cam.position() + Vector(0, 0, 10), 0.6f, light);
 		pShader = new PhongShader();
 		pShader->ambientColor({ 0,0,0 });
 		pBullet->shader(pShader, true);
@@ -255,6 +260,7 @@ void Application::update(float dtime)
 	static float gesamtDtime = 0;
 	static float c = 0;
 	float avgDtime;
+	string s;
 
 	if (glfwGetKey(pWindow, GLFW_KEY_R)) {
 		Cam.setPosition(Vector(0, 0, 10));
@@ -265,14 +271,16 @@ void Application::update(float dtime)
 		this->updateStartscreen();
 		break;
 	case GameState::GAME_IS_ACTIVE:
-
 		c++;
 		gesamtDtime = (gesamtDtime + dtime);
+		avgDtime = gesamtDtime / c;
+		s = "Computergrafik - Hochschule Osnabrück  FPS: ";
+		s.append(to_string(1 / avgDtime));
+		glfwSetWindowTitle(pWindow, s.c_str());
+
 		this->updateGame(dtime);
 		break;
 	case GameState::PAUSE:
-		avgDtime = gesamtDtime / c;
-		cout << 1 / avgDtime << endl;
 		this->updateMenu(dtime);
 		break;
 	case GameState::RESET:
@@ -429,10 +437,17 @@ void Application::draw()
 
 	ShaderLightMapper::instance().activate();
 	// 2. setup shaders and draw models
+	this->postprocessing.activate();
 	for (list<Drawable*>::iterator it = drawables.begin(); it != drawables.end(); ++it)
 	{
 		(*it)->draw(Cam);
 	}
+	//this->postprocessing.deactivate();
+	
+	//this->postprocessing.setParameter();
+
+	//this->postprocessing.drawPost(Cam);
+
 	ShaderLightMapper::instance().deactivate();
 
 	// 3. check once per frame for opengl errors
