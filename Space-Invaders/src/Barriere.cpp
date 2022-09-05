@@ -39,7 +39,7 @@ void Barriere::reset(list<TriangleBoxModel*>* barrierePartikel)
 	this->init(this->anzahlProReihe, this->ursprung);
 }
 
-void Barriere::collisionBullet(TriangleBoxModel * partikel)
+void Barriere::collisionBullet(TriangleBoxModel* partikel)
 {
 	partikel->shadowCaster(false);
 	this->remove(partikel);
@@ -59,7 +59,6 @@ list<TriangleBoxModel*>* Barriere::getPartikel()
 
 void Barriere::remove(TriangleBoxModel* partikel)
 {
-	
 	partikel->hide();
 	this->barrierePartikel->remove(partikel);
 }

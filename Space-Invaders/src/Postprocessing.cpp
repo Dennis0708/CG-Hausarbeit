@@ -6,17 +6,6 @@
 #define ASSET_GLSL_DIRECTORY "../assets/GLSL/"
 #endif
 
-//PostprocessingShader::PostprocessingShader()
-//{
-//	bool loaded = load(ASSET_GLSL_DIRECTORY"vspostprocessing.glsl", ASSET_GLSL_DIRECTORY"fspostprocessing.glsl");
-//	if (!loaded)
-//		throw std::exception();
-//	
-//}
-//
-//void PostprocessingShader::activate(const BaseCamera& Cam) const
-//{
-//}
 
 PostprocessingBildInvertierenShader::PostprocessingBildInvertierenShader()
 {

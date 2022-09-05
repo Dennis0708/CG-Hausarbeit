@@ -94,17 +94,7 @@ ModelBuilder& ModelBuilder::diffuseColor(const Color& diffuse)
 	}
 }
 
-//ModelBuilder& ModelBuilder::diffuseTexture(const Texture* pTex)
-//{
-//	if (this->model.shader()) {
-//		/*PhongShader* pShader = dynamic_cast<PhongShader*>(this->model.shader());*/
-//		delete this->model.shader();
-//	}
-//	PhongShader* pShader = new PhongShader();
-//	pShader->diffuseTexture(pTex);
-//	this->model.shader(pShader);
-//	return this->getInstance();
-//}
+
 
 
 ModelBuilder& ModelBuilder::castShadows(bool doesCast)

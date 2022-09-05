@@ -20,7 +20,6 @@ class ModelBuilder
 
 public:
 	static ModelBuilder& getInstance();
-	//ModelBuilder& loadModel(const char* ModelFile, float size = 1);
 	ModelBuilder& position(const Vector& pos);
 	ModelBuilder& size(float size);
 	ModelBuilder& constantShader();
@@ -28,7 +27,6 @@ public:
 	ModelBuilder& phongShader();
 	ModelBuilder& ambientColor(const Color& ambient);
 	ModelBuilder& diffuseColor(const Color& diffuse);
-	//ModelBuilder& diffuseTexture(const Texture* pTex);
 	ModelBuilder& castShadows(bool doesCast);
 	Model* buildModel(const char* ModelFile, float size = 1);
 	Spieler* buildSpieler(const char* ModelFile, int lebensPunkte);

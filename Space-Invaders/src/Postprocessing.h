@@ -10,17 +10,7 @@
 #include "VertexBuffer.h"
 #include <list>
 
-//class PostprocessingShader : public BaseShader
-//{
-//public:
-//	PostprocessingShader();
-//	virtual void activate(const BaseCamera& Cam) const;
-//protected:
-//	// TODO: uniforms setzen
-//	GLint EyePosLoc;
-//	GLint ModelMatLoc;
-//	GLint ModelViewProjMatLoc;
-//};
+
 
 class PostprocessingBildInvertierenShader : public BaseShader
 {
@@ -48,9 +38,6 @@ protected:
 	Framebuffer FrameBuffer;
 	PostprocessingBildInvertierenShader *Shader;
 	Texture renderetScene;
-	/*GLuint VAO;
-	GLuint FBO;
-	GLuint RBO;*/
 	VertexBuffer VB;
 
 };
