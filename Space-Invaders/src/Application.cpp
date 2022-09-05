@@ -263,6 +263,13 @@ void Application::updateGame(float dtime)
 		this->collisionBullet();
 		this->collisionFeld();
 
+		/*if (this->postprocessing->getShakeTime() > 0.0f)
+		{
+			this->postprocessing->setShakeTime(this->postprocessing->getShakeTime() - dtime);
+			if (this->postprocessing->getShakeTime() <= 0.0f)
+				this->postprocessing->setShake(false);
+		}*/
+
 		if (this->spieler->getLebenspunkte() <= 0) {
 			this->gameState = GameState::RESET;
 		}
@@ -345,6 +352,8 @@ void Application::collisionBullet()
 			bullet->collisionBullet();
 			this->spieler->collisionBullet();
 			this->gameBar->removeLife();
+			/*this->postprocessing->setShakeTime(0.05f);
+			this->postprocessing->setShake(true);*/
 		}
 		//Spielerbullet und Gegnerbullets
 		else if (this->spieler->getBullet()->isMoving()) {

@@ -1,7 +1,2 @@
-﻿  Application.cpp
-C:\Users\tim-l\Documents\Uni\Informatik\Semester4\CG-Hausarbeit\Space-Invaders\src\Application.cpp(104,37): warning C4305: "Argument": Verkürzung von "double" in "float"
-C:\Users\tim-l\Documents\Uni\Informatik\Semester4\CG-Hausarbeit\Space-Invaders\src\Application.cpp(105,37): warning C4305: "Argument": Verkürzung von "double" in "float"
-C:\Users\tim-l\Documents\Uni\Informatik\Semester4\CG-Hausarbeit\Space-Invaders\src\Application.cpp(127,28): warning C4244: "Argument": Konvertierung von "int" in "float", möglicher Datenverlust
-C:\Users\tim-l\Documents\Uni\Informatik\Semester4\CG-Hausarbeit\Space-Invaders\src\Application.cpp(128,25): warning C4244: "Argument": Konvertierung von "int" in "float", möglicher Datenverlust
-C:\Users\tim-l\Documents\Uni\Informatik\Semester4\CG-Hausarbeit\Space-Invaders\src\Application.cpp(173,138): warning C4244: "Argument": Konvertierung von "double" in "float", möglicher Datenverlust
-  CGVStudio.vcxproj -> C:\Users\tim-l\Documents\Uni\Informatik\Semester4\CG-Hausarbeit\Space-Invaders\CGVStudio\Debug\CGVStudio.exe
+﻿  main.cpp
+  CGVStudio.vcxproj -> C:\Users\Dennis\Desktop\CG-Hausarbeit\Space-Invaders\CGVStudio\Debug\CGVStudio.exe
