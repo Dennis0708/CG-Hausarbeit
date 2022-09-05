@@ -29,26 +29,16 @@ Application::Application(GLFWwindow* pWin)
 
 void Application::createGame()
 {
-	Matrix m;
-
 	PointLight* light = new PointLight();
 	light->position(Vector(0, 0, 30));
 	light->color({ 0,0,0 });
 	light->attenuation({ 0.5f,0.1f,0.1f });
 	ShaderLightMapper::instance().addLight(light);
 
-	/*Bullet* spielerBullet = new Bullet(ASSET_DIRECTORY "bullet_zylinder.obj", Cam.position() + Vector(0, 0, 10), 0.3f, light);
-	pShader = new PhongShader();
-	pShader->ambientColor({ 0,0,0 });
-	spielerBullet->shader(pShader, true);*/
 	Bullet* spielerBullet = ModelBuilder::getInstance().position(Cam.position() + Vector(0, 0, 10)).size(0.3f).
 		phongShader().ambientColor({ 0,0,0 }).buildBullet(ASSET_DIRECTORY "bullet_zylinder.obj", light);
 	this->castsShadowList.push_back(spielerBullet);
 
-	/*spieler = new Spieler(ASSET_DIRECTORY "Laser_Cannon.obj", Vector(0, boden->transform().translation().Y + boden->boundingBox().size().Y * 0.5f + 0.3f, 0), 0.6f, LEBENSPUNKTE_SPIELER, spielerBullet);
-	pShader = new PhongShader();
-	pShader->ambientColor({ 0,0,0 });
-	spieler->shader(pShader, true);*/
 	this->spieler = ModelBuilder::getInstance().phongShader().ambientColor({ 0,0,0 }).size(0.6f).
 		position(Vector(0, boden->transform().translation().Y + boden->boundingBox().
 			size().Y * 0.5f + 0.3f, 0)).buildSpieler(ASSET_DIRECTORY "Laser_Cannon.obj", LEBENSPUNKTE_SPIELER);
@@ -70,10 +60,6 @@ void Application::createGame()
 			pfad = ASSET_DIRECTORY "Space_Invader/Space_Invader_Small.obj";
 		}
 
-		//Gegner* gegner = new Gegner(pfad, Vector(0, 0, 0), 0.006f);
-		//pShader = new PhongShader();
-		//pShader->ambientColor({ 0,0,0 });
-		//gegner->shader(pShader, true);
 		Gegner* gegner = ModelBuilder::getInstance().size(0.006f).phongShader().ambientColor({ 0,0,0 }).buildGegner(pfad);
 		tmpGegnerList->push_back(gegner);
 		this->gegnerListe->push_back(gegner);
@@ -94,10 +80,6 @@ void Application::createGame()
 		light->color({ 0,0,0 });
 		light->attenuation({ 0.5f,0.1f,0.1f });
 		ShaderLightMapper::instance().addLight(light);
-		/*pBullet = new Bullet(ASSET_DIRECTORY "bullet_zylinder.obj", Cam.position() + Vector(0, 0, 10), 0.3f, light);
-		pShader = new PhongShader();
-		pShader->ambientColor({ 0,0,0 });
-		pBullet->shader(pShader, true);*/
 		pBullet = ModelBuilder::getInstance().position(Cam.position() + Vector(0, 0, 10)).size(0.3f).
 			phongShader().ambientColor({ 0,0,0 }).buildBullet(ASSET_DIRECTORY "bullet_zylinder.obj", light);
 		this->bulletList->push_back(pBullet);
@@ -118,7 +100,6 @@ void Application::createGame()
 		for (int j = 0; j < maxPartikel; j++) {
 			partikel = new TriangleBoxModel(0.2f, 0.2f, 0.2f);
 			pShader = new PhongShader();
-			//pShader->ambientColor({ 0,0,0 });
 			pShader->ambientColor({ 0,0.2,0 });
 			pShader->diffuseColor({ 0,0.4,0 });
 			pShader->diffuseTexture(Texture::LoadShared(ASSET_DIRECTORY "texture/green_bullet.jpg"));
@@ -139,8 +120,7 @@ void Application::createGame()
 	pShader->diffuseColor(Color(0, 0, 0));
 	pShader->ambientColor(Color(0, 0, 0.3f));
 	this->menu->shader(pShader, true);
-	m.translation(Vector(0, 0, 20));
-	this->menu->transform(m);
+	this->menu->hide();
 	this->drawables.push_back(menu);
 }
 
@@ -165,24 +145,16 @@ void Application::createFeld() {
 	this->gameHeight = this->feld->size().Y;
 	this->collisionDetector = new CollisionDetector(this->feld);
 
-	Matrix m;
-
-
 	background = new Background((this->feld->Max.X - this->feld->Min.X) * 1.2f, (this->feld->Max.Y - this->feld->Min.Y) * 1.2f, 0);
 	pShader = new PhongShader();
-	//pShader->ambientColor({ 0.2f,0.2f,0.2f });
-	//pShader->ambientColor(Color(0.1f, 0.1f, 0.1f));
 	pShader->diffuseTexture(Texture::LoadShared(ASSET_DIRECTORY "texture/invasion2.jpg"));
 	background->shader(pShader, true);
-	m.translation(0, 0, -1);
-	background->transform(m);
+	background->show(Vector(0, 0, -1));
 	drawables.push_back(background);
 	this->castsShadowList.push_back(background);
 
 	this->boden = new Background(this->feld->size().X * 1.5f, 1, 5);
 	pShader = new PhongShader();
-	//	pShader->ambientColor(Color(0.64f, 0.16f, 0.16f));
-		//pShader->diffuseColor(Color(0.64f, 0.16f, 0.16f));
 	pShader->diffuseTexture(Texture::LoadShared(ASSET_DIRECTORY "texture/damagedAsphalt_C_00.dds"));
 	this->boden->shader(pShader, true);
 	this->boden->show(Vector(this->feld->Min.X + this->feld->size().X * 0.5f, this->feld->Min.Y, 0));
@@ -193,14 +165,9 @@ void Application::createFeld() {
 
 	list<Model*>* lebensPunkte = new list<Model*>();
 	for (int i = 0; i < LEBENSPUNKTE_SPIELER; i++) {
-		/*Model* lebensPunkt = new Model(ASSET_DIRECTORY "Laser_Cannon.obj", Vector(0, 0, 0), 0.3f);
-		lebensPunkt->shadowCaster(false);
-		pShader = new PhongShader();
-		lebensPunkt->shader(pShader, true);*/
 		Model* lebensPunkt = ModelBuilder::getInstance().size(0.3f).phongShader().buildModel(ASSET_DIRECTORY "Laser_Cannon.obj");
 		lebensPunkte->push_back(lebensPunkt);
 		this->lebensPunkte->push_back(lebensPunkt);
-		//this->castsShadowList.push_back(lebensPunkt);
 	}
 
 	float gameBarHeight = this->lebensPunkte->front()->boundingBox().size().Y * 1.5f;
@@ -227,7 +194,6 @@ void Application::createLights()
 
 	float innerradius = 10;
 	float outerradius = 15;
-	//Color c = Color(0.75f, 0.75f, 0.75f);
 	Color c = { 1,1,1 };
 
 	this->spielerLight = new SpotLight();
@@ -267,11 +233,6 @@ void Application::update(float dtime)
 {
 	Cam.update();
 
-	static float gesamtDtime = 0;
-	static float c = 0;
-	float avgDtime;
-	string s;
-
 	if (glfwGetKey(pWindow, GLFW_KEY_R)) {
 		Cam.setPosition(Vector(0, 0, 10));
 	}
@@ -281,13 +242,6 @@ void Application::update(float dtime)
 		this->updateStartscreen();
 		break;
 	case GameState::GAME_IS_ACTIVE:
-		c++;
-		gesamtDtime = (gesamtDtime + dtime);
-		avgDtime = gesamtDtime / c;
-		s = "Computergrafik - Hochschule Osnabrück  FPS: ";
-		s.append(to_string(1 / avgDtime));
-		glfwSetWindowTitle(pWindow, s.c_str());
-
 		this->updateGame(dtime);
 		break;
 	case GameState::PAUSE:
@@ -330,7 +284,6 @@ void Application::updateGame(float dtime)
 			this->gameState = GameState::RESET;
 		}
 	}
-
 }
 
 void Application::updateStartscreen()
@@ -348,7 +301,7 @@ void Application::updateMenu(float dtime)
 	if (glfwGetKey(pWindow, GLFW_KEY_DOWN)) {
 		this->menu->down();
 	}
-	if (glfwGetKey(pWindow, GLFW_KEY_SPACE)) {
+	if (glfwGetKey(pWindow, GLFW_KEY_ENTER)) {
 		this->gameState = this->menu->enter();
 		this->menu->hide();
 		this->castsShadowList.remove(this->menu);
@@ -447,14 +400,14 @@ void Application::draw()
 
 	ShaderLightMapper::instance().activate();
 	// 2. setup shaders and draw models
-	this->postprocessing->activate();
+	//this->postprocessing->activate();
 	for (list<Drawable*>::iterator it = drawables.begin(); it != drawables.end(); ++it)
 	{
 		(*it)->draw(Cam);
 	}
-	this->postprocessing->deactivate();
+	//this->postprocessing->deactivate();
 
-	this->postprocessing->drawPost(Cam);
+	//this->postprocessing->drawPost(Cam);
 
 	ShaderLightMapper::instance().deactivate();
 
