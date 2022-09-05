@@ -446,14 +446,14 @@ void Application::draw()
 
 	ShaderLightMapper::instance().activate();
 	// 2. setup shaders and draw models
-	//this->postprocessing->activate();
+	this->postprocessing->activate();
 	for (list<Drawable*>::iterator it = drawables.begin(); it != drawables.end(); ++it)
 	{
 		(*it)->draw(Cam);
 	}
-	//this->postprocessing->deactivate();
+	this->postprocessing->deactivate();
 
-	//this->postprocessing->drawPost(Cam);
+	this->postprocessing->drawPost(Cam);
 
 	ShaderLightMapper::instance().deactivate();
 

@@ -31,6 +31,7 @@ void PostprocessingBildInvertierenShader::activate(const BaseCamera& Cam) const
 {
 	BaseShader::activate(Cam);
 
+	Tex->activate();
 	setParameter(Tex0Loc, (int)Tex->ID());
 }
 
@@ -42,7 +43,7 @@ void PostprocessingBildInvertierenShader::setTex0(Texture* Tex)
 Postprocessing::Postprocessing(unsigned int Width, unsigned int Height): Shader(new PostprocessingBildInvertierenShader())
 {
 	// TODO: kein plan ob GL para richtig
-	bool created = this->renderetScene.create(Width, Height, GL_R32F, GL_RED, GL_FLOAT, GL_NEAREST, GL_NEAREST, GL_CLAMP_TO_EDGE, false);
+	bool created = this->renderetScene.create(Width, Height, GL_RGBA16F, GL_RGBA, GL_FLOAT, GL_LINEAR, GL_LINEAR, GL_CLAMP_TO_EDGE, false);
 	if (!created)
 		throw std::exception();
 
@@ -60,11 +61,12 @@ Postprocessing::~Postprocessing()
 void Postprocessing::activate()
 {
 	// TODO: Bin mir nicht sicher ob glClearColor und glCullFace hier schlau ist
-	glClearColor(1.0f, 0.0, 0.0f, 1);
-	glCullFace(GL_FRONT);
+	/*glClearColor(1.0f, 0.0, 0.0f, 1);
+	glCullFace(GL_FRONT);*/
 
 	FrameBuffer.attachColorTarget(renderetScene);
 	FrameBuffer.activate();
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
 void Postprocessing::deactivate()
@@ -81,16 +83,12 @@ void Postprocessing::drawPost(const BaseCamera& Cam)
 	Shader->setTex0(&renderetScene);
 
 	Shader->activate(Cam);
-
-	renderetScene.activate();
 	
 	VB.activate();
 	
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, VB.vertexCount());
 	
 	VB.deactivate();
-
-	renderetScene.deactivate();
 
 	Shader->deactivate();
 }
