@@ -46,7 +46,7 @@ void Application::createGame()
 	this->drawables.push_back(spieler);
 	this->castsShadowList.push_back(spieler);
 
-	int anzahlGegner = 1; // TODO Hier wieder 50
+	int anzahlGegner = 50; // 
 	list<Gegner*>* tmpGegnerList = new list<Gegner*>();
 	for (int i = 0; i < anzahlGegner; i++) {
 		char* pfad;
@@ -68,7 +68,7 @@ void Application::createGame()
 	this->invasion = new Invasion(tmpGegnerList);
 	float gegnerWidth = this->gegnerListe->front()->boundingBox().size().X;
 	float gegnerHeight = this->gegnerListe->front()->boundingBox().size().Y;
-	this->invasion->start(1 /*TODO hier wieder 10*/, Vector(this->feld->Min.X + gegnerWidth, this->feld->Max.Y - gegnerHeight, 0));
+	this->invasion->start(10, Vector(this->feld->Min.X + gegnerWidth, this->feld->Max.Y - gegnerHeight, 0));
 	this->drawables.push_back(this->invasion);
 
 	int maxBullets = 10;
@@ -80,8 +80,8 @@ void Application::createGame()
 		light->color({ 0,0,0 });
 		light->attenuation({ 0.5f,0.1f,0.1f });
 		ShaderLightMapper::instance().addLight(light);
-		pBullet = ModelBuilder::getInstance().position(Cam.position() + Vector(0, 0, 10)).size(0.3f).
-			phongShader().ambientColor({ 0,0,0 }).buildBullet(ASSET_DIRECTORY "bullet_zylinder.obj", light);
+		pBullet = ModelBuilder::getInstance().position(Cam.position() + Vector(0, 0, 10)).size(0.6f).
+			phongShader().ambientColor({ 0,0,0 }).buildBullet(ASSET_DIRECTORY "bullet_prisma.obj", light);
 		this->bulletList->push_back(pBullet);
 		bulletQueue->push(pBullet);
 		this->castsShadowList.push_back(pBullet);
@@ -90,7 +90,7 @@ void Application::createGame()
 	this->invasion->setBulletQueue(bulletQueue);
 
 	int maxBarrieren = 3;
-	int maxPartikel = 1; // TODO hier wieder 50
+	int maxPartikel = 50;
 	list<TriangleBoxModel*>* partikelListe;
 	TriangleBoxModel* partikel;
 	Barriere* barriere;
@@ -98,7 +98,8 @@ void Application::createGame()
 	for (int i = 0; i < maxBarrieren; i++) {
 		partikelListe = new list<TriangleBoxModel*>();
 		for (int j = 0; j < maxPartikel; j++) {
-			partikel = new TriangleBoxModel(0.2f, 0.2f, 0.2f);
+			partikel = ModelBuilder::getInstance().buildTriangleBoxModel(0.2f, 0.2f, 0.2f);
+
 			pShader = new PhongShader();
 			pShader->ambientColor({ 0,0.2,0 });
 			pShader->diffuseColor({ 0,0.4,0 });
@@ -109,76 +110,60 @@ void Application::createGame()
 			this->castsShadowList.push_back(partikel);
 		}
 		barriere = new Barriere(partikelListe);
-		barriere->init(1 /*TODO hier wieder 10*/, Vector((-abstand + i * abstand), -3, 0));
+		barriere->init(10, Vector((-abstand + i * abstand), -3, 0));
 		this->barrieren->push_back(barriere);
 		this->drawables.push_back(barriere);
 	}
 
-	this->menu = new Menu(this->feld->size().X * 0.05f, this->feld->size().Y * 0.08f, 0);
-	this->menu->shadowCaster(false);
-	pShader = new PhongShader();
-	pShader->diffuseColor(Color(0, 0, 0));
-	pShader->ambientColor(Color(0, 0, 0.3f));
-	this->menu->shader(pShader, true);
+	this->menu = ModelBuilder::getInstance().castShadows(false).phongShader().diffuseColor({ 0,0,0 }).ambientColor({ 0,0,0.3f }).buildMenu(this->feld->size().X * 0.02f, this->feld->size().Y * 0.04f, 0);
 	this->menu->hide();
-	this->drawables.push_back(menu);
 }
 
 void Application::createFeld() {
+	//Spielfeldrand ermitteln
 	int width, height;
 	glfwGetWindowSize(pWindow, &width, &height);
-
 	Vector minD, maxD, pos;
 	minD = this->calc3DRay(0, height, pos);
 	maxD = this->calc3DRay(width, 0, pos);
-
 	Vector ebene = Vector(0, 0, 1);
 	float maxS = -ebene.dot(pos) / ebene.dot(maxD);
 	float minS = -ebene.dot(pos) / ebene.dot(minD);
-
 	Vector maxRay = pos + maxD * maxS;
 	Vector minRay = pos + minD * minS;
-
 	this->feld = new AABB(minRay, maxRay);
-
 	this->gameWidth = this->feld->size().X;
 	this->gameHeight = this->feld->size().Y;
 	this->collisionDetector = new CollisionDetector(this->feld);
 
-	background = new Background((this->feld->Max.X - this->feld->Min.X) * 1.2f, (this->feld->Max.Y - this->feld->Min.Y) * 1.2f, 0);
+	//Hintergrundbild setzen
+	background = ModelBuilder::getInstance().position({ 0,0,-1 }).buildBackground((this->feld->Max.X - this->feld->Min.X) * 1.2f, (this->feld->Max.Y - this->feld->Min.Y) * 1.2f, 0);
 	pShader = new PhongShader();
 	pShader->diffuseTexture(Texture::LoadShared(ASSET_DIRECTORY "texture/invasion2.jpg"));
 	background->shader(pShader, true);
-	background->show(Vector(0, 0, -1));
 	drawables.push_back(background);
 	this->castsShadowList.push_back(background);
 
-	this->boden = new Background(this->feld->size().X * 1.5f, 1, 5);
+	//Boden setzen
+	this->boden = ModelBuilder::getInstance().position({ this->feld->Min.X + this->feld->size().X * 0.5f, this->feld->Min.Y, 0 }).buildBackground(this->feld->size().X * 1.5f, 1, 5);
 	pShader = new PhongShader();
 	pShader->diffuseTexture(Texture::LoadShared(ASSET_DIRECTORY "texture/damagedAsphalt_C_00.dds"));
 	this->boden->shader(pShader, true);
-	this->boden->show(Vector(this->feld->Min.X + this->feld->size().X * 0.5f, this->feld->Min.Y, 0));
 	this->drawables.push_back(boden);
 	this->castsShadowList.push_back(boden);
-
 	this->feld->Min.Y += this->boden->boundingBox().size().Y * 0.5f;
 
+	//Lebenspunkte fuer Gamebar erstellen
 	list<Model*>* lebensPunkte = new list<Model*>();
 	for (int i = 0; i < LEBENSPUNKTE_SPIELER; i++) {
 		Model* lebensPunkt = ModelBuilder::getInstance().size(0.3f).phongShader().buildModel(ASSET_DIRECTORY "Laser_Cannon.obj");
 		lebensPunkte->push_back(lebensPunkt);
 		this->lebensPunkte->push_back(lebensPunkt);
 	}
-
+	//Gamebar ersetllen
 	float gameBarHeight = this->lebensPunkte->front()->boundingBox().size().Y * 1.5f;
-
 	this->feld->Max.Y = this->feld->Max.Y - gameBarHeight;
-
-	this->gameBar = new GameBar(lebensPunkte, Vector(0, this->feld->Max.Y + gameBarHeight * 0.5, 0), this->gameWidth, gameBarHeight, 0);
-	this->gameBar->shadowCaster(false);
-	cShader = new ConstantShader();
-	cShader->color(Color(0.5f, 0, 0));
-	this->gameBar->shader(cShader, true);
+	this->gameBar = ModelBuilder::getInstance().constantShader().color({ 0.5f,0,0 }).buildGameBar(lebensPunkte, Vector(0, this->feld->Max.Y + gameBarHeight * 0.5, 0), this->gameWidth, gameBarHeight, 0);
 	this->gameBar->init();
 	drawables.push_back(this->gameBar);
 }
@@ -235,6 +220,7 @@ void Application::update(float dtime)
 
 	if (glfwGetKey(pWindow, GLFW_KEY_R)) {
 		Cam.setPosition(Vector(0, 0, 10));
+		Cam.setTarget({ 0,0,-1 });
 	}
 
 	switch (this->gameState) {
@@ -261,7 +247,7 @@ void Application::updateGame(float dtime)
 		this->gameState = GameState::PAUSE;
 		this->menu->show();
 		this->menu->update(dtime);
-		this->castsShadowList.push_back(this->menu);
+		this->drawables.push_back(this->menu);
 	}
 	else {
 		int links = glfwGetKey(pWindow, GLFW_KEY_LEFT);
@@ -274,8 +260,8 @@ void Application::updateGame(float dtime)
 		this->invasion->update(dtime);
 		this->updateLights(dtime);
 
-		this->collisionFeld();
 		this->collisionBullet();
+		this->collisionFeld();
 
 		if (this->spieler->getLebenspunkte() <= 0) {
 			this->gameState = GameState::RESET;
@@ -304,7 +290,7 @@ void Application::updateMenu(float dtime)
 	if (glfwGetKey(pWindow, GLFW_KEY_ENTER)) {
 		this->gameState = this->menu->enter();
 		this->menu->hide();
-		this->castsShadowList.remove(this->menu);
+		this->drawables.remove(this->menu);
 	}
 	this->menu->update(dtime);
 }
@@ -317,18 +303,13 @@ void Application::updateLights(float dtime)
 }
 
 void Application::collisionFeld()
-{
-	Collision collision = this->collisionDetector->borderCollisionGegner(this->invasion->getGegnerListe());
-	if (collision != Collision::NONE) {
-		if (collision == Collision::DOWN) {
-			this->reset();
-		}
-		this->invasion->collisionBorder(collision, -this->gameHeight * 2.f);
-	}
-	collision = this->collisionDetector->borderCollision(this->spieler);
+{	// Spieler
+	Collision collision = this->collisionDetector->borderCollision(this->spieler);
 	if (collision != Collision::NONE) this->spieler->collisionBorder(collision);
+	// Spielerbullet
 	collision = this->collisionDetector->borderCollision(this->spieler->getBullet());
 	if (collision != Collision::NONE) this->spieler->getBullet()->collisionBorder(collision);
+	//Gegnerbullets
 	list<Gegner*>* gegnerListe = this->invasion->getGegnerListe();
 	for (Gegner* gegner : *gegnerListe) {
 		if (gegner->getBullet()) {
@@ -338,22 +319,34 @@ void Application::collisionFeld()
 			}
 		}
 	}
+	//Gegner
+	collision = this->collisionDetector->borderCollisionGegner(this->invasion->getGegnerListe());
+	if (collision != Collision::NONE) {
+		if (collision == Collision::DOWN) { //Gegner haben gewonnen
+			this->gameState = GameState::RESET; 
+		}
+		this->invasion->collisionBorder(collision, -this->gameHeight * 2.f);
+	}
 }
 
 void Application::collisionBullet()
 {
+	//Gegner und Spielerbullet
 	Gegner* gegner = (Gegner*)this->collisionDetector->collision(this->spieler->getBullet(), this->invasion->getGegnerListe());
 	if (gegner) {
 		this->spieler->getBullet()->collisionBullet();
 		this->invasion->removeGegner(gegner);
 	}
+	
 	list<Bullet*>* bullets = this->invasion->getBulletsInGame();
 	for (Bullet* bullet : *bullets) {
+		//Spieler und Gegnerbullets
 		if (this->collisionDetector->collision(this->spieler, bullet)) {
 			bullet->collisionBullet();
 			this->spieler->collisionBullet();
 			this->gameBar->removeLife();
 		}
+		//Spielerbullet und Gegnerbullets
 		else if (this->spieler->getBullet()->isMoving()) {
 			if (this->collisionDetector->collision(this->spieler->getBullet(), bullet)) {
 				bullet->collisionBullet();
@@ -361,6 +354,7 @@ void Application::collisionBullet()
 			}
 		}
 	}
+	//Gegnerbullets und Barriere
 	for (Bullet* bullet : *bullets) {
 		for (Barriere* barriere : *this->barrieren) {
 			list<TriangleBoxModel*> collisionList = this->collisionDetector->collision(bullet, barriere->getPartikel());
@@ -376,6 +370,7 @@ void Application::collisionBullet()
 			}
 		}
 	}
+	//Spielerbullet und Barriere
 	for (Barriere* barriere : *this->barrieren) {
 		list<TriangleBoxModel*> collisionList = this->collisionDetector->collision(this->spieler->getBullet(), barriere->getPartikel());
 		if (!collisionList.empty()) {

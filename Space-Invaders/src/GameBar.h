@@ -14,6 +14,7 @@ class GameBar : public TriangleBoxModel, public Drawable
 	AABB BoundingBox;
 public:
 	GameBar(list<Model*>* lebensPunkte, const Vector ursprung, float Width = 1, float Height = 1, float Depth = 1);
+	GameBar(const BaseModel & toCopy, list<Model*>* lebensPunkte, const Vector ursprung, float Width = 1, float Height = 1, float Depth = 1);
 	virtual ~GameBar();
 	void init();
 	void removeLife();

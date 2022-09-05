@@ -26,7 +26,7 @@ class Model : public BaseModel
 public:
     Model();
     Model(const char* ModelFile, Vector& position = Vector(0,0,0), float size = 1.0f); // bool FitSize gegen float Size getauscht // Vector position mit uebergeben
-    Model(const char* ModelFile, const Model& toCopy);
+    Model(const char* ModelFile, const BaseModel& toCopy);
     virtual ~Model();
 
     bool load(const char* ModelFile, float size = 1.0f);

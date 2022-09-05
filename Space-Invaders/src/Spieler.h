@@ -15,7 +15,7 @@ class Spieler: public Model, public Drawable
 	Vector pos;
 public:
 	Spieler(const char* ModelFile, Vector& position, float size, int lebenspunkte, Bullet * spielerBullet);
-	Spieler(const char* ModelFile, int lebenspunkte, const Model& toCopy);
+	Spieler(const char* ModelFile, int lebenspunkte, const BaseModel& toCopy);
 	virtual ~Spieler();
 	void steuern(int direction);
 	void update(float dtime);

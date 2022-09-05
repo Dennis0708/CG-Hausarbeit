@@ -10,6 +10,17 @@
 
 TriangleBoxModel::TriangleBoxModel(float Width, float Height, float Depth): BoundingBox(Vector(0,0,0),Vector(Width,Height,Depth))
 {
+	this->init(Width, Height, Depth);
+}
+
+TriangleBoxModel::TriangleBoxModel(const BaseModel& toCopy, float Width, float Height, float Depth) : BaseModel(toCopy), BoundingBox(Vector(0, 0, 0), Vector(Width, Height, Depth))
+{
+	this->init(Width, Height, Depth);
+}
+
+void TriangleBoxModel::init(float Width, float Height, float Depth)
+{
+
 	float startx = Width * 0.5f;
 	float starty = Height * 0.5f;
 	float startz = Depth * 0.5f;
@@ -83,7 +94,7 @@ TriangleBoxModel::TriangleBoxModel(float Width, float Height, float Depth): Boun
 	// 2. setup index buffer
 
 	IB.begin();
-	
+
 	//oben
 	IB.addIndex(1);
 	IB.addIndex(2);

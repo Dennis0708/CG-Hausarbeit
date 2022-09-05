@@ -32,6 +32,9 @@
     <Filter Include="Quelldateien\gameElements\model">
       <UniqueIdentifier>{3ba63457-b7e5-40fb-a032-f4e46dd208cb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Quelldateien\gameElements\shader">
+      <UniqueIdentifier>{9b987a45-e6e8-4bbf-a6e4-54c3dbca0c64}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\main.cpp">
@@ -65,9 +68,6 @@
       <Filter>Quelldateien\utils\models</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\LinePlaneModel.cpp">
-      <Filter>Quelldateien\utils\models</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\TriangleBoxModel.cpp">
       <Filter>Quelldateien\utils\models</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\TrianglePlaneModel.cpp">
@@ -109,9 +109,6 @@
     <ClCompile Include="..\..\src\CollisionDetector.cpp">
       <Filter>Quelldateien\gameElements</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\Barriere.cpp">
-      <Filter>Quelldateien\gameElements</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\GameBar.cpp">
       <Filter>Quelldateien\gameElements\hud</Filter>
     </ClCompile>
@@ -130,20 +127,26 @@
     <ClCompile Include="..\..\src\Spieler.cpp">
       <Filter>Quelldateien\gameElements\model</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\BaseModel.cpp">
-      <Filter>Quelldateien\gameElements</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\Background.cpp">
-      <Filter>Quelldateien\gameElements</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\Searchlight.cpp">
       <Filter>Quelldateien\gameElements</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\Postprocessing.cpp">
+    <ClCompile Include="..\..\src\ModelBuilder.cpp">
       <Filter>Quelldateien\gameElements</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\ModelBuilder.cpp">
-      <Filter>Quelldateien</Filter>
+    <ClCompile Include="..\..\src\Postprocessing.cpp">
+      <Filter>Quelldateien\gameElements\shader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Background.cpp">
+      <Filter>Quelldateien\gameElements\model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Barriere.cpp">
+      <Filter>Quelldateien\gameElements\model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\BaseModel.cpp">
+      <Filter>Quelldateien\gameElements\model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\TriangleBoxModel.cpp">
+      <Filter>Quelldateien\gameElements\model</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -175,9 +178,6 @@
       <Filter>Quelldateien\utils\models</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\LinePlaneModel.h">
-      <Filter>Quelldateien\utils\models</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\TriangleBoxModel.h">
       <Filter>Quelldateien\utils\models</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\TrianglePlaneModel.h">
@@ -219,9 +219,6 @@
     <ClInclude Include="..\..\src\CollisionDetector.h">
       <Filter>Quelldateien\gameElements</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\Barriere.h">
-      <Filter>Quelldateien\gameElements</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\Collision.h">
       <Filter>Quelldateien\gameElements\enums</Filter>
     </ClInclude>
@@ -249,18 +246,26 @@
     <ClInclude Include="..\..\src\Spieler.h">
       <Filter>Quelldateien\gameElements\model</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\Drawable.h">
-      <Filter>Quelldateien\gameElements</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\Background.h">
       <Filter>Quelldateien\gameElements\model</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\Searchlight.h">
       <Filter>Quelldateien\gameElements</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\Postprocessing.h">
+    <ClInclude Include="..\..\src\ModelBuilder.h">
       <Filter>Quelldateien\gameElements</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\ModelBuilder.h" />
+    <ClInclude Include="..\..\src\Postprocessing.h">
+      <Filter>Quelldateien\gameElements\shader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Barriere.h">
+      <Filter>Quelldateien\gameElements\model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Drawable.h">
+      <Filter>Quelldateien\gameElements\model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\TriangleBoxModel.h">
+      <Filter>Quelldateien\gameElements\model</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

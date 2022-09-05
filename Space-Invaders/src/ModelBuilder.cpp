@@ -12,7 +12,6 @@ ModelBuilder& ModelBuilder::getInstance()
 ModelBuilder& ModelBuilder::position(const Vector& pos)
 {
 	this->model.show(pos);
-	//return ModelBuilder::builder;
 	return this->getInstance();
 }
 
@@ -20,6 +19,34 @@ ModelBuilder& ModelBuilder::size(float size)
 {
 	this->model.setSize(size);
 	return this->getInstance();
+}
+
+ModelBuilder& ModelBuilder::constantShader()
+{
+	if (this->model.shader()) {
+		return this->getInstance();
+
+	}
+	else {
+		this->model.shader(new ConstantShader());
+		return this->getInstance();
+
+	}
+}
+
+ModelBuilder& ModelBuilder::color(const Color& c)
+{
+	if (this->model.shader()) {
+		ConstantShader* cShader = dynamic_cast<ConstantShader*>(this->model.shader());
+		if (cShader) {
+			cShader->color(c);
+		}
+		return this->getInstance();
+	}
+	else {
+		this->constantShader();
+		return this->color(c);
+	}
 }
 
 ModelBuilder& ModelBuilder::phongShader()
@@ -47,7 +74,8 @@ ModelBuilder& ModelBuilder::ambientColor(const Color& ambient)
 
 	}
 	else {
-		return this->phongShader();
+		this->phongShader();
+		return this->ambientColor(ambient);
 	}
 }
 
@@ -59,13 +87,25 @@ ModelBuilder& ModelBuilder::diffuseColor(const Color& diffuse)
 			pShader->diffuseColor(diffuse);
 		}
 		return this->getInstance();
-
-
 	}
 	else {
-		return this->phongShader();
+		this->phongShader();
+		return this->diffuseColor(diffuse);
 	}
 }
+
+//ModelBuilder& ModelBuilder::diffuseTexture(const Texture* pTex)
+//{
+//	if (this->model.shader()) {
+//		/*PhongShader* pShader = dynamic_cast<PhongShader*>(this->model.shader());*/
+//		delete this->model.shader();
+//	}
+//	PhongShader* pShader = new PhongShader();
+//	pShader->diffuseTexture(pTex);
+//	this->model.shader(pShader);
+//	return this->getInstance();
+//}
+
 
 ModelBuilder& ModelBuilder::castShadows(bool doesCast)
 {
@@ -99,4 +139,32 @@ Bullet* ModelBuilder::buildBullet(const char* ModelFile, PointLight* light)
 	Bullet* newBullet = new Bullet(ModelFile, this->model, light);
 	this->model = { };
 	return newBullet;
+}
+
+TriangleBoxModel* ModelBuilder::buildTriangleBoxModel(float Width, float Height, float Depth)
+{
+	TriangleBoxModel* newTriangleBoxModel = new TriangleBoxModel(this->model, Width, Height, Depth);
+	this->model = {};
+	return newTriangleBoxModel;
+}
+
+Menu* ModelBuilder::buildMenu(float Width, float Height, float Depth)
+{
+	Menu* newMenu = new Menu(this->model, Width, Height, Depth);
+	this->model = { };
+	return newMenu;
+}
+
+GameBar* ModelBuilder::buildGameBar(list<Model*>* lebensPunkte, const Vector ursprung, float Width, float Height, float Depth)
+{
+	GameBar* newGameBar = new GameBar(this->model, lebensPunkte, ursprung, Width, Height, Depth);
+	this->model = {};
+	return newGameBar;
+}
+
+Background* ModelBuilder::buildBackground(float Width, float Height, float Depth)
+{
+	Background* newBackground = new Background(this->model, Width, Height, Depth);
+	this->model = {};
+	return newBackground;
 }

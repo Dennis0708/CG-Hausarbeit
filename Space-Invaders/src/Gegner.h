@@ -14,7 +14,7 @@ class Gegner : public Model
 	Bullet* bullet;
 public:
 	Gegner(const char* ModelFile, Vector& position, float size);
-	Gegner(const char* ModelFile, const Model& toCopy);
+	Gegner(const char* ModelFile, const BaseModel& toCopy);
 	virtual ~Gegner() = default;
 	void update(float dtime, int anzahlGegner);
 	void draw(const BaseCamera& Cam);

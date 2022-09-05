@@ -6,6 +6,12 @@ GameBar::GameBar(list<Model*>* lebensPunkte, const Vector ursprung, float Width,
 	this->show(ursprung);
 }
 
+GameBar::GameBar(const BaseModel& toCopy, list<Model*>* lebensPunkte, const Vector ursprung, float Width, float Height, float Depth)
+	: TriangleBoxModel(toCopy, Width, Height, Depth), ursprung(ursprung), lebensPunkte(lebensPunkte), BoundingBox(Vector(0, 0, 0), Vector(Width, Height, Depth))
+{
+	this->show(ursprung);
+}
+
 GameBar::~GameBar()
 {
 	for (Model* m : *this->lebensPunkte) {

@@ -9,6 +9,25 @@
 Menu::Menu(float Width, float Height, float Depth)
 	: TriangleBoxModel(Width, Height, Depth), state(MenuState::RESUME), height(Height), lastInput(0)
 {
+	this->init(Width, Height, Depth);
+}
+
+Menu::Menu(const BaseModel& toCopy, float Width, float Height, float Depth) : TriangleBoxModel(toCopy, Width, Height, Depth), state(MenuState::RESUME), height(Height), lastInput(0)
+
+{
+	this->init(Width, Height, Depth);
+}
+
+Menu::~Menu()
+{
+	delete this->resume;
+	delete this->reset;
+	delete this->exit;
+	delete this->current;
+}
+
+void Menu::init(float Width, float Height, float Depth)
+{
 	PhongShader* pShader;
 
 	float boxHeight = 0.2f, boxWidth = 0.8f;
@@ -36,14 +55,6 @@ Menu::Menu(float Width, float Height, float Depth)
 	pShader->diffuseColor(Color(0, 0, 0));
 	pShader->ambientColor(Color(0.5f, 0, 0));
 	this->current->shader(pShader, true);
-}
-
-Menu::~Menu()
-{
-	delete this->resume;
-	delete this->reset;
-	delete this->exit;
-	delete this->current;
 }
 
 void Menu::up()

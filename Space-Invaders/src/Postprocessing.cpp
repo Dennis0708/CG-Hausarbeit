@@ -20,7 +20,7 @@
 
 PostprocessingBildInvertierenShader::PostprocessingBildInvertierenShader()
 {
-	bool loaded = load(ASSET_GLSL_DIRECTORY"vsbildinvertieren.glsl", ASSET_GLSL_DIRECTORY"fsbildinvertieren.glsl");
+	bool loaded = load(ASSET_GLSL_DIRECTORY"vspost.glsl", ASSET_GLSL_DIRECTORY"fspost.glsl");
 	if (!loaded)
 		throw std::exception();
 

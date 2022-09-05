@@ -6,7 +6,7 @@ Bullet::Bullet(const char* ModelFile, Vector& positon, float size, PointLight* l
 	//this->createHitBox();
 }
 
-Bullet::Bullet(const char* ModelFile, const Model& toCopy, PointLight* light) :
+Bullet::Bullet(const char* ModelFile, const BaseModel& toCopy, PointLight* light) :
 	Model(ModelFile, toCopy), light(light), upDown({ 0,0,0 }), hitBox(NULL)
 {
 	//this->createHitBox();

@@ -17,7 +17,7 @@ class Bullet : public Model
 	float lastDtime = 0;
 public:
 	Bullet(const char* ModelFile, Vector& positon, float size, PointLight* light = nullptr);
-	Bullet(const char* ModelFile, const Model& toCopy, PointLight* light = nullptr);
+	Bullet(const char* ModelFile, const BaseModel& toCopy, PointLight* light = nullptr);
 	virtual ~Bullet() = default;
 	void createHitBox();
 	void update(float dtime);

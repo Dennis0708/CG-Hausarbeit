@@ -1,12 +1,7 @@
 ﻿  Application.cpp
-C:\Users\Dennis\Desktop\CG-Hausarbeit\Space-Invaders\src\Application.cpp(103,37): warning C4305: "Argument": Verkürzung von "double" in "float"
-C:\Users\Dennis\Desktop\CG-Hausarbeit\Space-Invaders\src\Application.cpp(104,37): warning C4305: "Argument": Verkürzung von "double" in "float"
-C:\Users\Dennis\Desktop\CG-Hausarbeit\Space-Invaders\src\Application.cpp(132,28): warning C4244: "Argument": Konvertierung von "int" in "float", möglicher Datenverlust
-C:\Users\Dennis\Desktop\CG-Hausarbeit\Space-Invaders\src\Application.cpp(133,25): warning C4244: "Argument": Konvertierung von "int" in "float", möglicher Datenverlust
-C:\Users\Dennis\Desktop\CG-Hausarbeit\Space-Invaders\src\Application.cpp(177,72): warning C4244: "Argument": Konvertierung von "double" in "float", möglicher Datenverlust
-  Menu.cpp
-  Searchlight.cpp
-  Code wird generiert...
-C:\Users\Dennis\Desktop\CG-Hausarbeit\Space-Invaders\src\Menu.cpp(95): warning C4715: "Menu::enter": Nicht alle Codepfade geben einen Wert zurück.
-LINK : warning LNK4098: Standardbibliothek "MSVCRT" steht in Konflikt mit anderen Bibliotheken; /NODEFAULTLIB:Bibliothek verwenden.
-  CGVStudio.vcxproj -> C:\Users\Dennis\Desktop\CG-Hausarbeit\Space-Invaders\CGVStudio\Debug\CGVStudio.exe
+C:\Users\tim-l\Documents\Uni\Informatik\Semester4\CG-Hausarbeit\Space-Invaders\src\Application.cpp(104,37): warning C4305: "Argument": Verkürzung von "double" in "float"
+C:\Users\tim-l\Documents\Uni\Informatik\Semester4\CG-Hausarbeit\Space-Invaders\src\Application.cpp(105,37): warning C4305: "Argument": Verkürzung von "double" in "float"
+C:\Users\tim-l\Documents\Uni\Informatik\Semester4\CG-Hausarbeit\Space-Invaders\src\Application.cpp(127,28): warning C4244: "Argument": Konvertierung von "int" in "float", möglicher Datenverlust
+C:\Users\tim-l\Documents\Uni\Informatik\Semester4\CG-Hausarbeit\Space-Invaders\src\Application.cpp(128,25): warning C4244: "Argument": Konvertierung von "int" in "float", möglicher Datenverlust
+C:\Users\tim-l\Documents\Uni\Informatik\Semester4\CG-Hausarbeit\Space-Invaders\src\Application.cpp(173,138): warning C4244: "Argument": Konvertierung von "double" in "float", möglicher Datenverlust
+  CGVStudio.vcxproj -> C:\Users\tim-l\Documents\Uni\Informatik\Semester4\CG-Hausarbeit\Space-Invaders\CGVStudio\Debug\CGVStudio.exe

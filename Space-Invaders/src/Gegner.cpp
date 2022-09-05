@@ -6,7 +6,7 @@ Gegner::Gegner(const char* ModelFile, Vector& position, float size)
 
 }
 
-Gegner::Gegner(const char* ModelFile, const Model& toCopy)
+Gegner::Gegner(const char* ModelFile, const BaseModel& toCopy)
 	: Model(ModelFile, toCopy), bullet(nullptr), geschwindigkeit(0), collision(Collision::NONE), linksRechts(nullptr), runter(nullptr)
 {
 
