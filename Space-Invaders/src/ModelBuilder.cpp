@@ -1,14 +1,6 @@
 #include "ModelBuilder.h"
 
-//Model* ModelBuilder::getModel()
-//{
-//	if (this->model) {
-//		return this->model;
-//	}
-//	else {
-//		this->model = new Model();
-//	}
-//}
+
 
 ModelBuilder& ModelBuilder::getInstance()
 {
@@ -16,14 +8,6 @@ ModelBuilder& ModelBuilder::getInstance()
 	return instance;
 }
 
-//ModelBuilder& ModelBuilder::loadModel(const char* ModelFile, float size)
-//{
-//	bool ret = this->model.load(ModelFile, size);
-//	if (!ret)
-//		throw std::exception();
-//	//return ModelBuilder::builder;
-//
-//}
 
 ModelBuilder& ModelBuilder::position(const Vector& pos)
 {
@@ -41,13 +25,11 @@ ModelBuilder& ModelBuilder::size(float size)
 ModelBuilder& ModelBuilder::phongShader()
 {
 	if (this->model.shader()) {
-		//return ModelBuilder::builder;
 		return this->getInstance();
 
 	}
 	else {
 		this->model.shader(new PhongShader());
-		//return ModelBuilder::builder;
 		return this->getInstance();
 
 	}
@@ -60,7 +42,6 @@ ModelBuilder& ModelBuilder::ambientColor(const Color& ambient)
 		if (pShader) {
 			pShader->ambientColor(ambient);
 		}
-		//return ModelBuilder::builder;
 		return this->getInstance();
 
 
@@ -77,7 +58,6 @@ ModelBuilder& ModelBuilder::diffuseColor(const Color& diffuse)
 		if (pShader) {
 			pShader->diffuseColor(diffuse);
 		}
-		//return ModelBuilder::builder;
 		return this->getInstance();
 
 
@@ -87,15 +67,14 @@ ModelBuilder& ModelBuilder::diffuseColor(const Color& diffuse)
 	}
 }
 
+ModelBuilder& ModelBuilder::castShadows(bool doesCast)
+{
+	this->model.shadowCaster(doesCast);
+	return this->getInstance();
+}
+
 Model* ModelBuilder::buildModel(const char* ModelFile, float size)
 {
-	//bool ret = this->model.load(ModelFile, size);
-	//if (!ret)
-	//	throw std::exception();
-	//this->model.setSize(size);
-	//Model* tmp = this->model;
-	//this->model = nullptr;
-	//return tmp;
 	Model* newModel = new Model(ModelFile, this->model);
 	this->model = {};
 	return newModel;

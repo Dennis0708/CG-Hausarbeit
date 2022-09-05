@@ -21,6 +21,7 @@ public:
 	ModelBuilder& phongShader();
 	ModelBuilder& ambientColor(const Color& ambient);
 	ModelBuilder& diffuseColor(const Color& diffuse);
+	ModelBuilder& castShadows(bool doesCast);
 	Model* buildModel(const char* ModelFile, float size = 1);
 	Spieler* buildSpieler(const char* ModelFile, int lebensPunkte);
 	Gegner* buildGegner(const char* ModelFile);

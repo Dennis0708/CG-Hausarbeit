@@ -193,13 +193,14 @@ void Application::createFeld() {
 
 	list<Model*>* lebensPunkte = new list<Model*>();
 	for (int i = 0; i < LEBENSPUNKTE_SPIELER; i++) {
-		Model* lebensPunkt = new Model(ASSET_DIRECTORY "Laser_Cannon.obj", Vector(0, 0, 0), 0.3f);
+		/*Model* lebensPunkt = new Model(ASSET_DIRECTORY "Laser_Cannon.obj", Vector(0, 0, 0), 0.3f);
 		lebensPunkt->shadowCaster(false);
 		pShader = new PhongShader();
-		lebensPunkt->shader(pShader, true);
+		lebensPunkt->shader(pShader, true);*/
+		Model* lebensPunkt = ModelBuilder::getInstance().size(0.3f).phongShader().buildModel(ASSET_DIRECTORY "Laser_Cannon.obj");
 		lebensPunkte->push_back(lebensPunkt);
 		this->lebensPunkte->push_back(lebensPunkt);
-		this->castsShadowList.push_back(lebensPunkt);
+		//this->castsShadowList.push_back(lebensPunkt);
 	}
 
 	float gameBarHeight = this->lebensPunkte->front()->boundingBox().size().Y * 1.5f;
