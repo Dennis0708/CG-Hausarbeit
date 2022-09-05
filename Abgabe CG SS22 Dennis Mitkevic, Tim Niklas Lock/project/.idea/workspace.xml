@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CMakePresetLoader"><![CDATA[{
+  "useNewFormat": true
+}]]></component>
+  <component name="CMakeRunConfigurationManager">
+    <generated>
+      <config projectName="Project" targetName="Space_Invaders" />
+    </generated>
+  </component>
+  <component name="CMakeSettings">
+    <configurations />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="1b969743-56e5-41e0-baa7-96eb0d34afa6" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/CGVStudio/.vs/CGVStudio/v17/.suo" beforeDir="false" afterPath="$PROJECT_DIR$/CGVStudio/.vs/CGVStudio/v17/.suo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CGVStudio/.vs/CGVStudio/v17/Browse.VC.db" beforeDir="false" afterPath="$PROJECT_DIR$/CGVStudio/.vs/CGVStudio/v17/Browse.VC.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CGVStudio/CGVStudio/Debug/Aabb.obj" beforeDir="false" afterPath="$PROJECT_DIR$/CGVStudio/CGVStudio/Debug/Aabb.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CGVStudio/CGVStudio/Debug/Application.obj" beforeDir="false" afterPath="$PROJECT_DIR$/CGVStudio/CGVStudio/Debug/Application.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CGVStudio/CGVStudio/Debug/BaseModel.obj" beforeDir="false" afterPath="$PROJECT_DIR$/CGVStudio/CGVStudio/Debug/BaseModel.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CGVStudio/CGVStudio/Debug/BaseShader.obj" beforeDir="false" afterPath="$PROJECT_DIR$/CGVStudio/CGVStudio/Debug/BaseShader.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CGVStudio/CGVStudio/Debug/CGVStudio.exe.recipe" beforeDir="false" afterPath="$PROJECT_DIR$/CGVStudio/CGVStudio/Debug/CGVStudio.exe.recipe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CGVStudio/CGVStudio/Debug/CGVStudio.ilk" beforeDir="false" afterPath="$PROJECT_DIR$/CGVStudio/CGVStudio/Debug/CGVStudio.ilk" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CGVStudio/CGVStudio/Debug/CGVStudio.log" beforeDir="false" afterPath="$PROJECT_DIR$/CGVStudio/CGVStudio/Debug/CGVStudio.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CGVStudio/CGVStudio/Debug/CGVStudio.tlog/CGVStudio.lastbuildstate" beforeDir="false" afterPath="$PROJECT_DIR$/CGVStudio/CGVStudio/Debug/CGVStudio.tlog/CGVStudio.lastbuildstate" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CGVStudio/CGVStudio/Debug/CGVStudio.tlog/CL.command.1.tlog" beforeDir="false" afterPath="$PROJECT_DIR$/CGVStudio/CGVStudio/Debug/CGVStudio.tlog/CL.command.1.tlog" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CGVStudio/CGVStudio/Debug/CGVStudio.tlog/CL.read.1.tlog" beforeDir="false" afterPath="$PROJECT_DIR$/CGVStudio/CGVStudio/Debug/CGVStudio.tlog/CL.read.1.tlog" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CGVStudio/CGVStudio/Debug/CGVStudio.tlog/CL.write.1.tlog" beforeDir="false" afterPath="$PROJECT_DIR$/CGVStudio/CGVStudio/Debug/CGVStudio.tlog/CL.write.1.tlog" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CGVStudio/CGVStudio/Debug/CGVStudio.tlog/link.command.1.tlog" beforeDir="false" afterPath="$PROJECT_DIR$/CGVStudio/CGVStudio/Debug/CGVStudio.tlog/link.command.1.tlog" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CGVStudio/CGVStudio/Debug/CGVStudio.tlog/link.read.1.tlog" beforeDir="false" afterPath="$PROJECT_DIR$/CGVStudio/CGVStudio/Debug/CGVStudio.tlog/link.read.1.tlog" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CGVStudio/CGVStudio/Debug/CGVStudio.tlog/link.write.1.tlog" beforeDir="false" afterPath="$PROJECT_DIR$/CGVStudio/CGVStudio/Debug/CGVStudio.tlog/link.write.1.tlog" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CGVStudio/CGVStudio/Debug/Camera.obj" beforeDir="false" afterPath="$PROJECT_DIR$/CGVStudio/CGVStudio/Debug/Camera.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CGVStudio/CGVStudio/Debug/ConstantShader.obj" beforeDir="false" afterPath="$PROJECT_DIR$/CGVStudio/CGVStudio/Debug/ConstantShader.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CGVStudio/CGVStudio/Debug/Framebuffer.obj" beforeDir="false" afterPath="$PROJECT_DIR$/CGVStudio/CGVStudio/Debug/Framebuffer.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CGVStudio/CGVStudio/Debug/IndexBuffer.obj" beforeDir="false" afterPath="$PROJECT_DIR$/CGVStudio/CGVStudio/Debug/IndexBuffer.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CGVStudio/CGVStudio/Debug/Lights.obj" beforeDir="false" afterPath="$PROJECT_DIR$/CGVStudio/CGVStudio/Debug/Lights.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CGVStudio/CGVStudio/Debug/LineBoxModel.obj" beforeDir="false" afterPath="$PROJECT_DIR$/CGVStudio/CGVStudio/Debug/LineBoxModel.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CGVStudio/CGVStudio/Debug/LinePlaneModel.obj" beforeDir="false" afterPath="$PROJECT_DIR$/CGVStudio/CGVStudio/Debug/LinePlaneModel.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CGVStudio/CGVStudio/Debug/Matrix.obj" beforeDir="false" afterPath="$PROJECT_DIR$/CGVStudio/CGVStudio/Debug/Matrix.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CGVStudio/CGVStudio/Debug/Model.obj" beforeDir="false" afterPath="$PROJECT_DIR$/CGVStudio/CGVStudio/Debug/Model.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CGVStudio/CGVStudio/Debug/PhongShader.obj" beforeDir="false" afterPath="$PROJECT_DIR$/CGVStudio/CGVStudio/Debug/PhongShader.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CGVStudio/CGVStudio/Debug/ShaderLightMapper.obj" beforeDir="false" afterPath="$PROJECT_DIR$/CGVStudio/CGVStudio/Debug/ShaderLightMapper.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CGVStudio/CGVStudio/Debug/ShadowMapGenerator.obj" beforeDir="false" afterPath="$PROJECT_DIR$/CGVStudio/CGVStudio/Debug/ShadowMapGenerator.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CGVStudio/CGVStudio/Debug/Texture.obj" beforeDir="false" afterPath="$PROJECT_DIR$/CGVStudio/CGVStudio/Debug/Texture.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CGVStudio/CGVStudio/Debug/TriangleBoxModel.obj" beforeDir="false" afterPath="$PROJECT_DIR$/CGVStudio/CGVStudio/Debug/TriangleBoxModel.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CGVStudio/CGVStudio/Debug/TrianglePlaneModel.obj" beforeDir="false" afterPath="$PROJECT_DIR$/CGVStudio/CGVStudio/Debug/TrianglePlaneModel.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CGVStudio/CGVStudio/Debug/TriangleSphereModel.obj" beforeDir="false" afterPath="$PROJECT_DIR$/CGVStudio/CGVStudio/Debug/TriangleSphereModel.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CGVStudio/CGVStudio/Debug/VertexBuffer.obj" beforeDir="false" afterPath="$PROJECT_DIR$/CGVStudio/CGVStudio/Debug/VertexBuffer.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CGVStudio/CGVStudio/Debug/color.obj" beforeDir="false" afterPath="$PROJECT_DIR$/CGVStudio/CGVStudio/Debug/color.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CGVStudio/CGVStudio/Debug/main.obj" beforeDir="false" afterPath="$PROJECT_DIR$/CGVStudio/CGVStudio/Debug/main.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CGVStudio/CGVStudio/Debug/rgbimage.obj" beforeDir="false" afterPath="$PROJECT_DIR$/CGVStudio/CGVStudio/Debug/rgbimage.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CGVStudio/CGVStudio/Debug/vc143.idb" beforeDir="false" afterPath="$PROJECT_DIR$/CGVStudio/CGVStudio/Debug/vc143.idb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CGVStudio/CGVStudio/Debug/vc143.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/CGVStudio/CGVStudio/Debug/vc143.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CGVStudio/CGVStudio/Debug/vector.obj" beforeDir="false" afterPath="$PROJECT_DIR$/CGVStudio/CGVStudio/Debug/vector.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CGVStudio/Debug/CGVStudio.exe" beforeDir="false" afterPath="$PROJECT_DIR$/CGVStudio/Debug/CGVStudio.exe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CGVStudio/Debug/CGVStudio.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/CGVStudio/Debug/CGVStudio.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Application.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Application.cpp" afterDir="false" />
+    </list>
+    <list id="6b7c85c3-b58f-4add-846f-d4a8f4492495" name="Changes by Dennis" comment="">
+      <change beforePath="$PROJECT_DIR$/src/Application.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/Application.h" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ClangdSettings">
+    <option name="formatViaClangd" value="false" />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="1b969743-56e5-41e0-baa7-96eb0d34afa6" name="Changes" comment="" />
+      <created>1660654499501</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1660654499501</updated>
+      <workItem from="1660654501136" duration="2915000" />
+    </task>
+    <servers />
+  </component>
+</project>

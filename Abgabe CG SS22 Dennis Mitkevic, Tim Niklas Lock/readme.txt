@@ -12,3 +12,6 @@ Spacebar = Schießen
 
 Zum verständniss für das Postprocessing: https://www.youtube.com/watch?v=QQ3jr-9Rc1o
 Es wurde jedoch kein Quelltext übernommen
+
+Postprocessing shake-Effekt
+https://learnopengl.com/In-Practice/2D-Game/Postprocessing
